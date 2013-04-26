@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Employee Leave Management System</title>
+  <%= stylesheet_link_tag    "application"%>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<div id='wrapper'>
+				<div id='header'>
+					<h1>Employee Leave Management System</h1>
+						<% if employee_signed_in? %>
+						<ul>
+							<li><%= link_to 'Home',leave_applications_path %> |</li>
+							<li><%= link_to 'Add Application' %> |</li>
+							<li><%= link_to 'Application Archive' %> |</li>
+							<% if current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5 %>
+								<li><%= link_to 'Report' %> |</li>
+							<% end %>
+							<% if current_employee.role_id == 4 || current_employee.role_id == 5 %>
+								<li><%= link_to 'User Management' %> |</li>
+							<% end %>
+							<li><%= link_to 'View Profile'%> |</li>
+							<li>Leave balance : <%= current_employee.leave_balance %> |</li>
+							<li><%= link_to 'Logout', destroy_employee_session_path, method: :delete %></li>
+						</ul>
+						
+					<% end %>
+					<div class='clearfix'></div>
+				</div>
+			
+			<div id='content'>
+				<center>
+					<% flash.each do |key,msg|%>
+						<%= content_tag :div, msg, id:key %>
+					<% end %>
+				</center>
+				<p>
+					<%= yield %>
+				</p>
+			</div>
+			<div id='footer'>
+				<p>
+					&copy Company 2013
+				</p>
+			</div>
+		</div>
+	</body>
+</html>

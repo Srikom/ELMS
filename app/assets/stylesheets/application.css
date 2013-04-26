@@ -1,0 +1,171 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+ */
+
+body
+{
+	background-color: #3790e8;
+	font-family: arial;
+}
+
+#wrapper
+{
+	width: 1000px;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	border-bottom: 1px solid #000;
+	margin: 0 auto;
+	background-color: #ffffff;
+	box-shadow: 10px 10px 5px #000;
+}
+
+#header,#footer
+{
+	padding: 3px;
+	border-top: 1px solid #000;
+}
+
+#content
+{
+	padding: 15px;
+	border-top: 1px solid #000;	
+}
+
+#header ul > li
+{	
+	font-weight: bold;
+	list-style-type:none;
+	float: left;
+	padding-left: 5px;
+	font-size: 12px;
+}
+
+#header a
+{
+	text-decoration: none;
+	color: #00d5f2;
+}
+
+#header li a:hover
+{
+	background-color:#5970e9;
+}
+
+
+.clearfix
+{
+	clear: both;
+}
+
+#header h1, #footer
+{
+	text-align: center;
+}
+
+#login
+{
+	width: 250px;
+	margin: 0px auto;
+	border: 2px solid #000;
+	padding: 10px;
+	box-shadow: 10px 10px 5px #888888;
+	border-radius: 10px;
+	font-size:12px;
+	font-family:tahoma;
+	font-weight:bold;
+}
+
+#welcome
+{
+	font-family: arial;
+	font-size: 12px;
+	padding: 3px;
+	text-align: justify;
+}
+
+#header,#footer
+{
+	background-color: #332929;
+	color: #fff;
+}
+
+#footer
+{
+	font-style: italic;
+	font-size: 13px;
+}
+
+#acc
+{
+	padding: 5px;
+}
+
+#notice
+{
+	border: 2px solid #000;
+	width: 200px;
+	padding: 5px;
+	background-color: #21e396;
+	font-family: tahoma;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#alert
+{
+	border: 2px solid #000;
+	width: 200px;
+	padding: 5px;
+	background-color: #e00707;
+	font-family: tahoma;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+table
+{
+	border-collapse:collapse;
+}
+
+#managerTable,th,td
+{
+	border: 1px solid #000;
+	padding: 8px;
+}
+
+th
+{
+	background-color:#3790e8;
+	color:white;
+}
+
+#staffApplication
+{
+	padding: 10px;
+	border: 1px solid #000;
+	width: 500px;
+	border-radius: 10px;
+	background-color: #d8dff2;
+}
+
+#sub
+{
+	position: relative;
+	left: 200px;
+}
+
+#sig
+{
+	position: relative;
+	left: 600px;
+}
