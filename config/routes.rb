@@ -1,7 +1,16 @@
 ELMS::Application.routes.draw do
+  get "employees/index"
+
+  get "employees/show"
+
+  get "employees/edit"
+
+  get "employees/new"
+
   devise_for :employees
 
   resources :leave_applications
+  resources :employees
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
