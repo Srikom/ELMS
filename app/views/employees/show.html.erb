@@ -1,2 +1,41 @@
-<h1>Employees#show</h1>
-<p>Find me in app/views/employees/show.html.erb</p>
+<h1>Employees</h1>
+<br>
+
+<center>
+<table>
+<tr>
+<th>Name: </th>
+<td><%= @employees.name %></td>
+</tr>
+
+<tr>
+<th>ID: </th>
+<td><%= @employees.id %></td>
+</tr>
+
+<tr>
+<th>Role: </th>
+<td><%= @employees.role_id %></td>
+</tr>
+
+<tr>
+<th>Department: </th>
+<td><%= @employees.department_id %></td>
+</tr>
+
+<tr>
+<th>Phone no: </th>
+<td><%= @employees.phone %></td>
+</tr>
+
+<tr>
+<th>E-mail: </th>
+<td><%= @employees.email %></td>
+</tr>
+
+</table>
+</center>
+<br><br>
+
+<%= link_to "Back" , employees_index_path %> | 
+<%= link_to "Remove User" , {:controller => :employees, :action => 'destroy' , :id => @employees.id }, :method => :delete , :confirm => "Are you sure?" %>

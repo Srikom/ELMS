@@ -17,7 +17,7 @@
 
 <% @employees.each do |f| %>
 <tr>
-	<td><%= f.id %></td>
+	<td><%= link_to f.id , employee_path(f.id) %></td>
 	<td><%= f.name %></td>
 	<td><%= f.department_id %></td>
 	<td><%= f.role_id %></td>
@@ -29,4 +29,4 @@
 </center>
 <br>
 
-<%= link_to 'Add User' %>
+<%= link_to 'Add User' , new_employee_registration_path %>
