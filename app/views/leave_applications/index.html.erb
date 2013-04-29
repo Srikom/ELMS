@@ -3,5 +3,12 @@
 <div id="empLeave">
 	<%= calendar do |date| %>
 		<%= date.day %>
+		<% if @leaveApplications_by_date[date]%>
+			<ul>
+				<% @leaveApplications_by_date[date].each do |e| %>
+					<li><%= e.id %></li>
+				<% end %>
+			</ul>
+		<% end %>
 	<% end %>
 </div>

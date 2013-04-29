@@ -1,7 +1,8 @@
 class LeaveApplicationsController < ApplicationController
   
   def index
-    
+    @leaveApplications = LeaveApplication.all
+    @leaveApplications_by_date = @leaveApplications.group_by(&:created_at)
   end
 
   def show_status
