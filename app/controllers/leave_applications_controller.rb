@@ -1,7 +1,7 @@
 class LeaveApplicationsController < ApplicationController
   
   def index
-
+    @leaveApplications = LeaveApplication.myDepartment(current_employee)
   end
 
   def new

@@ -1,2 +1,22 @@
-<h1>LeaveApplications#index</h1>
-<p>Find me in app/views/leave_applications/index.html.erb</p>
+<h4>Welcome, <%= current_employee.name %>. Page is still under construction.</h4>
+
+<center>
+<div>
+	<table size='100%' id='managerTable'>
+		<tr>
+			<th>ID</th>
+			<th>Department</th>
+			<th>Date Of Submission</th>
+			<th>Status</th>
+		</tr>
+		<% @leaveApplications.each do |l| %>
+			<tr>
+				<td><%= link_to l.id %></td>
+				<td><%= l.department_name %></td>
+				<td><%= l.created_at.strftime('%d/%m/%Y') %></td>
+				<td><%= l.status_name %></td>
+			</tr>
+		<% end %>
+	</table>
+</div>
+</center>

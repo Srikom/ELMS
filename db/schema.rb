@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130426071540) do
+ActiveRecord::Schema.define(:version => 20130429002936) do
 
   create_table "departments", :force => true do |t|
     t.string   "department_name", :null => false
@@ -43,13 +43,14 @@ ActiveRecord::Schema.define(:version => 20130426071540) do
   add_index "employees", ["reset_password_token"], :name => "index_employees_on_reset_password_token", :unique => true
 
   create_table "leave_applications", :force => true do |t|
-    t.datetime "start_date",                :null => false
-    t.datetime "end_date",                  :null => false
-    t.text     "reason",                    :null => false
-    t.integer  "leave_id",                  :null => false
-    t.integer  "status_id",  :default => 1
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "start_date",                 :null => false
+    t.datetime "end_date",                   :null => false
+    t.text     "reason",                     :null => false
+    t.integer  "leave_id",                   :null => false
+    t.integer  "status_id",   :default => 1
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.integer  "employee_id"
   end
 
   create_table "leaves", :force => true do |t|
