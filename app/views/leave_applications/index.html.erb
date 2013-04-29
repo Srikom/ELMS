@@ -14,7 +14,7 @@
 			<% dateLeave = l.start_date.strftime('%Y-%m-%d') %>
 		<% if date == Date.parse(dateLeave) %>
 			<ul>
-				<li><%= l.name %></li>
+				<li><%= link_to l.name, employee_path(l.id) %></li>
 			</ul>
 		<% end %>
 		<% end %>
