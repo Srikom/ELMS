@@ -1,2 +1,44 @@
-<h1>LeaveApplications#show</h1>
-<p>Find me in app/views/leave_applications/show.html.erb</p>
+<% @leaveApplication.each do |l| %>
+<h1>Application #<%= l.id %></h1>
+
+<center>
+<div id='staffApplication'>
+
+	<table>
+
+		<tr>
+			<td><b>Leave Type :</b></td>
+			<td><%= l.leave_name%></td>
+		</tr>
+
+		<tr>
+			<td><b>Reason of leave :</b></td>
+			<td><%= l.reason%></td>
+		</tr>
+
+		<tr>
+			<td><b>Date of Start Leave :</b></td>
+			<td><%= l.start_date.strftime('%d/%m/%Y') %></td>
+		</tr>
+
+		<tr>
+			<td><b>Date of End Leave :</b></td>
+			<td><%= l.end_date.strftime('%d/%m/%Y') %></td>
+		</tr>
+
+		<tr>
+			<td><b>Application Status :</b></td>
+			<td><%= l.status_name %></td>
+		</tr>
+		
+	</table>
+
+	<% if l.status_id == 1 %>
+		<p><%= button_to 'Edit',edit_leave_application_path(l.id) %></p></space>
+		<space><p><%= button_to 'Delete',id:l.id,confirm: 'Are you sure?',method: :delete %></p>	
+		<p><%= button_to 'Submit',id:l.id %></p>	
+	<% end %>
+	<%= link_to 'Back', :back %>
+<% end %>
+</div>
+</center>

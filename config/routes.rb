@@ -1,15 +1,12 @@
 ELMS::Application.routes.draw do
-  get "employees/index"
-
-  get "employees/show"
-
-  get "employees/edit"
-
-  get "employees/new"
+ 
 
   devise_for :employees
 
-  resources :leave_applications
+  resources :leave_applications do 
+    get :show_status, on: :collection
+    get :archive, on: :collection
+  end
   resources :employees
 
   # The priority is based upon order of creation:

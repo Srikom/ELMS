@@ -12,4 +12,12 @@ class LeaveApplication < ActiveRecord::Base
   	select('leave_applications.id,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where(employee_id:employee)
   end
 
+  def self.appDetails(application)
+  	select("*,leave_applications.id,(julianday(end_date)-julianday(start_date)) AS date_diff").joins(:status,:leave).where(id:application)
+  end 
+
+  def self.myArchive(employee)
+  	select('leave_applications.id,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where("employee_id = ? AND status_id = 3 OR status_id = 5",employee)
+  end
+
 end
