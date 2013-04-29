@@ -1,19 +1,15 @@
-<h1>User Management</h1>
-<p>Page under construction</p>
-<h2>List of Employees</h2>
-
-<br><br>
-
 <center>
-<tabel>
+<h2>List of Employees</h2>
+<br>
 
+
+<table>
 <tr>
-	<th>ID</th>
-	<th>Name</th>
-	<th>Department</th>
-	<th>Role</th>
+<th>ID: </th>
+<th>Name: </th>
+<th>Department: </th>
+<th>Role :</th>
 </tr>
-
 
 <% @employees.each do |f| %>
 <tr>
@@ -22,11 +18,8 @@
 	<td><%= f.department_id %></td>
 	<td><%= f.role_id %></td>
 </tr>
-
 <% end %>
-
 </table>
 </center>
 <br>
-
 <%= link_to 'Add User' , new_employee_registration_path %>
