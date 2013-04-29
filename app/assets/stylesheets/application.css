@@ -170,3 +170,12 @@ th
 	left: 600px;
 }
 
+#formError
+{
+	border: 2px solid #000;
+	background-color: red;
+	padding: 5px;
+	font-family: Arial, "MS Trebuchet", sans-serif;
+	font-size: 14px;
+	width: 400px;
+}

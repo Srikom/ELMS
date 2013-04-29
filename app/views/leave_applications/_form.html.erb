@@ -1,13 +1,22 @@
 <%= form_for (@leaveApplication) do |f| %>
-
+<% if @leaveApplication.errors.any? %>
+	<div id="formError">
+		<h2>Errors :</h2>
+		<ul>
+			<% @leaveApplication.errors.full_messages.each do |message| %>
+				<li><%= message %></li>
+			<% end %>
+		</ul>
+	</div>
+<% end %>
 <div class="form_text_box">
-        Start Date:<%= f.text_field :start_date %>
-        End Date:<%= f.text_field :end_date %>
+        <b>Start Date:</b><%= f.text_field :start_date %>
+        <b>End Date:</b><%= f.text_field :end_date %>
 </div>
 	
  <h1>Type of leave</h1>
  <div>
- <%= f.select :leave_id , options_for_select([['Normal Leave',1],['Sick Leave',2],['Emergency Leave',3],['Select Leave Type','null']],selected:"null") %>
+ <%= f.select :leave_id , options_for_select([['Normal Leave',1],['Sick Leave',2],['Emergency Leave',3],['Select Leave Type',0]],selected: 0) %>
 </div>
  <h1>Reason</h1>   
  <div class="form_text_box">

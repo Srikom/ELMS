@@ -23,25 +23,37 @@ class LeaveApplicationsController < ApplicationController
 
   def create
     @employee = Employee.find(current_employee)
-    @leaveApplication = @employee.leave_applications.new(start_date:params[:leave_application][:start_date],
-      end_date:params[:leave_application][:end_date],
-      leave_id:params[:leave_application][:leave_id],reason:params[:leave_application][:reason])
-    if @leaveApplication.save!
+    @leaveApplication = @employee.leave_applications.new(params[:leave_application])
+    if @leaveApplication.save
       flash[:notice] = "Application has been successfully created!"
+      redirect_to leave_applications_path
     else
       flash[:alert] = "Application failed to be created!"
+      flash.discard
+      render 'new'
     end
-    redirect_to leave_applications_path
+    
   end
 
-  
-
   def edit
-
+    @leaveApplication = LeaveApplication.find(params[:id])
   end
 
   def update
-
+    if params[:leave_application][:leave_id] != "0"
+      @employee = Employee.find(current_employee)
+      @leaveApplication = @employee.leave_applications.find(params[:id]).update_attributes(params[:leave_application])
+       if @leaveApplication
+         flash[:notice] = "Application has been successfully updated!"
+          redirect_to leave_applications_path
+      else
+        flash[:alert] = "Application failed to be updated!"
+        flash.discard
+        redirect_to :action => :edit
+      end
+    else
+      redirect_to :action => :edit,:alert => "PLease select a leave type!"
+    end
   end
 
   def destroy
