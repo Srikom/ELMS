@@ -7,7 +7,7 @@ class LeaveApplication < ActiveRecord::Base
   belongs_to :leave
   belongs_to :employee
 
-  scope :leaveApproved, select("employees.id,employees.name,leave_applications.start_date").joins(:employee).where(status_id:5)
+  scope :leaveApproved, select("employees.id,employees.name,leave_applications.start_date,leave_applications.end_date").joins(:employee).where(status_id:5)
 
   def self.myDepartment(employee)
   	select('leave_applications.id,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where(employee_id:employee)
