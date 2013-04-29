@@ -7,6 +7,7 @@ class LeaveApplication < ActiveRecord::Base
   belongs_to :leave
   belongs_to :employee
 
+  scope :leaveApproved, select("employees.id,employees.name,leave_applications.start_date").joins(:employee).where(status_id:5)
 
   def self.myDepartment(employee)
   	select('leave_applications.id,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where(employee_id:employee)
@@ -19,5 +20,7 @@ class LeaveApplication < ActiveRecord::Base
   def self.myArchive(employee)
   	select('leave_applications.id,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where("employee_id = ? AND status_id = 3 OR status_id = 5",employee)
   end
+
+
 
 end

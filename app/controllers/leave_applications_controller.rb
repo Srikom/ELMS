@@ -1,8 +1,8 @@
 class LeaveApplicationsController < ApplicationController
   
   def index
-    @leaveApplications = LeaveApplication.all
-    @leaveApplications_by_date = @leaveApplications.group_by(&:created_at)
+    @leaveApplications = LeaveApplication.leaveApproved
+    @date = params[:date] ? Date.parse(params[:date]) : Date.today
   end
 
   def show_status

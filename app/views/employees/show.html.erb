@@ -37,5 +37,5 @@
 </center>
 <br><br>
 
-<%= link_to "Back" , employees_path %> |
+<%= link_to "Back" , employees_index_path %> | 
 <%= link_to "Remove User" , {:controller => :employees, :action => 'destroy' , :id => @employees.id }, :method => :delete , :confirm => "Are you sure?" %>

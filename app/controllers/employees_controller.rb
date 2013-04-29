@@ -17,7 +17,7 @@ class EmployeesController < ApplicationController
   end
 
   def edit
-    
+
   end
 
   def update
@@ -29,7 +29,7 @@ class EmployeesController < ApplicationController
     @employees.destroy 
 
     flash[:notice] = "User has been deleted"
-    redirect_to employees_path
+    redirect_to employees_index_path
   end
   
 end

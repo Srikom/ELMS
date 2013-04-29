@@ -1,14 +1,22 @@
 <h4>Welcome, <%= current_employee.name %>. Page is still under construction.</h4>
-
+<p>List of on-leave employee for the current month</p>
+<h2 id='month'>
+	<center>
+		<%= link_to "<", date: @date.prev_month %>
+		<%= @date.strftime('%B %Y') %>
+		<%= link_to ">", date: @date.next_month %>
+	</center>
+</h2>
 <div id="empLeave">
-	<%= calendar do |date| %>
+	<%= calendar @date do |date| %>
 		<%= date.day %>
-		<% if @leaveApplications_by_date[date]%>
+		<% @leaveApplications.each do |l|%>
+			<% dateLeave = l.start_date.strftime('%Y-%m-%d') %>
+		<% if date == Date.parse(dateLeave) %>
 			<ul>
-				<% @leaveApplications_by_date[date].each do |e| %>
-					<li><%= e.id %></li>
-				<% end %>
+				<li><%= l.name %></li>
 			</ul>
+		<% end %>
 		<% end %>
 	<% end %>
 </div>
