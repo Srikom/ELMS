@@ -1,15 +1,17 @@
-<form id="myForm" action="_form" > 
+<%= form_for @leaveApplication do |f| %>
+
 <div class="form_text_box">
-        Start Date:<%= text_field 'leave_application', 'start_date' %>
-        End Date:<%= text_field 'leave_application', 'end_date' %>
+        Start Date:<%= f.text_field :start_date %>
+        End Date:<%= f.text_field :end_date %>
       </div>
     <h1>Reason</h1>   
       <div class="form_text_box">
-        <%= text_area 'leave_application', 'reason' %>
+        <%= f.text_area :reason %>
       </div>
  
- <%= submit_tag 'Submit',:id => "submit_btn",:alert=>"Your submission form will be processed!"%>
- </form>
+ <%= f.submit 'Submit',:id => "submit_btn",:notice=>"Your submission form will be processed!"%>
+
+<% end %>
  
 
  
