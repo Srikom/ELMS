@@ -34,8 +34,8 @@
 	</table>
 
 	<% if l.status_id == 1 %>
-		<p><%= button_to 'Edit',edit_leave_application_path(l.id), method: :get %></p></space>
-		<space><p><%= button_to 'Delete',id:l.id,confirm: 'Are you sure?',method: :delete %></p>	
+		<p><%= button_to 'Edit',edit_leave_application_path(l.id), method: :get %></p>
+		<p><%= button_to 'Delete',l,:method => :delete,confirm: 'Are you sure?' %></p>	
 		<p><%= button_to 'Submit',id:l.id %></p>	
 	<% end %>
 	<%= link_to 'Back', :back %>

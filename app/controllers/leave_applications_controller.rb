@@ -40,7 +40,7 @@ class LeaveApplicationsController < ApplicationController
   end
 
   def update
-    if params[:leave_application][:leave_id] != "0"
+    
       @employee = Employee.find(current_employee)
       @leaveApplication = @employee.leave_applications.find(params[:id]).update_attributes(params[:leave_application])
        if @leaveApplication
@@ -49,15 +49,19 @@ class LeaveApplicationsController < ApplicationController
       else
         flash[:alert] = "Application failed to be updated!"
         flash.discard
-        redirect_to :action => :edit
+        render 'edit'
       end
-    else
-      redirect_to :action => :edit,:alert => "PLease select a leave type!"
-    end
+    
   end
 
   def destroy
-
+    @leaveApplication = LeaveApplication.find(params[:id])
+    if @leaveApplication.destroy
+      flash[:notice] = "Application has been successfully deleted!"
+    else
+      flash[:alert] = "Application failed to be deleted!"
+    end
+    redirect_to show_status_leave_applications_path
   end
   
 end
