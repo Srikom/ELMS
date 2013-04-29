@@ -15,7 +15,7 @@
 				dateLeaveStart = Date.parse(l.start_date.strftime('%Y-%m-%d'))
 				dateLeaveEnd = Date.parse(l.end_date.strftime('%Y-%m-%d'))
 			 %>
-		<% if date == dateLeaveStart || dateLeaveEnd >= date %>
+		<% if date == dateLeaveStart || (dateLeaveEnd >= date && date >= dateLeaveStart) %>
 			<ul>
 				<li><%= link_to l.name, employee_path(l.id) %></li>
 			</ul>
@@ -23,3 +23,4 @@
 		<% end %>
 	<% end %>
 </div>
+<%= link_to 'Add Application', new_leave_application_path %>

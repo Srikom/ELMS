@@ -18,7 +18,7 @@ class LeaveApplicationsController < ApplicationController
   end
 
   def new
-
+    @leaveApplication = LeaveApplication.new
   end
 
   def create

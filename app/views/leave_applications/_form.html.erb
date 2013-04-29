@@ -1,0 +1,18 @@
+<form id="myForm" action="_form" > 
+<div class="form_text_box">
+        Start Date:<%= text_field 'leave_application', 'start_date' %>
+        End Date:<%= text_field 'leave_application', 'end_date' %>
+      </div>
+    <h1>Reason</h1>   
+      <div class="form_text_box">
+        <%= text_area 'leave_application', 'reason' %>
+      </div>
+ 
+ <%= submit_tag 'Submit',:id => "submit_btn",:alert=>"Your submission form will be processed!"%>
+ </form>
+ 
+
+ 
+
+ 
+ 
