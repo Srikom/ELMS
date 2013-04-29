@@ -1,15 +1,20 @@
-<%= form_for @leaveApplication do |f| %>
+<%= form_for (@leaveApplication) do |f| %>
 
 <div class="form_text_box">
         Start Date:<%= f.text_field :start_date %>
         End Date:<%= f.text_field :end_date %>
-      </div>
-    <h1>Reason</h1>   
-      <div class="form_text_box">
-        <%= f.text_area :reason %>
-      </div>
+</div>
+	
+ <h1>Type of leave</h1>
+ <div>
+ <%= f.select :leave_id , options_for_select([['Normal Leave',1],['Sick Leave',2],['Emergency Leave',3],['Select Leave Type','null']],selected:"null") %>
+</div>
+ <h1>Reason</h1>   
+ <div class="form_text_box">
+      <%= f.text_area :reason %>
+ </div>
  
- <%= f.submit 'Submit',:id => "submit_btn",:notice=>"Your submission form will be processed!"%>
+ <%= f.submit 'Submit'%>
 
 <% end %>
  

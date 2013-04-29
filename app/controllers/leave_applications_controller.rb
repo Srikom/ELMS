@@ -22,7 +22,16 @@ class LeaveApplicationsController < ApplicationController
   end
 
   def create
-
+    @employee = Employee.find(current_employee)
+    @leaveApplication = @employee.leave_applications.new(start_date:params[:leave_application][:start_date],
+      end_date:params[:leave_application][:end_date],
+      leave_id:params[:leave_application][:leave_id],reason:params[:leave_application][:reason])
+    if @leaveApplication.save!
+      flash[:notice] = "Application has been successfully created!"
+    else
+      flash[:alert] = "Application failed to be created!"
+    end
+    redirect_to leave_applications_path
   end
 
   

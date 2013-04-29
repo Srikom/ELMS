@@ -1,5 +1,5 @@
 class LeaveApplication < ActiveRecord::Base
-  attr_accessible :end_date, :leave_id, :reason, :start_date, :status_id, :employee_id
+  attr_accessible :end_date, :leave_id, :reason, :start_date, :status_id, :employee_id, :leave
 
   validates :end_date, :start_date, :leave_id, :reason, :employee_id, :status_id, presence: true
 
