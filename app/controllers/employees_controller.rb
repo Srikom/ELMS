@@ -29,7 +29,7 @@ class EmployeesController < ApplicationController
     @employees.destroy 
 
     flash[:notice] = "User has been deleted"
-    redirect_to employees_index_path
+    redirect_to employees_path
   end
   
 end
