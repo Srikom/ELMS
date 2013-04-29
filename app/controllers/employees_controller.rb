@@ -13,7 +13,7 @@ class EmployeesController < ApplicationController
   end
 
   def show
-
+    @employees = Employee.find(params[:id])
   end
 
   def edit
@@ -25,7 +25,11 @@ class EmployeesController < ApplicationController
   end
 
   def destroy
+    @employees = Employee.find(params[:id])
+    @employees.destroy 
 
+    flash[:notice] = "User has been deleted"
+    redirect_to employees_index_path
   end
   
 end
