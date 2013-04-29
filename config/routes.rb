@@ -6,6 +6,7 @@ ELMS::Application.routes.draw do
   resources :leave_applications do 
     get :show_status, on: :collection
     get :archive, on: :collection
+    get :report, on: :collection
   end
   resources :employees
 

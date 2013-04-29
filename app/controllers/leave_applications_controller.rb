@@ -63,5 +63,10 @@ class LeaveApplicationsController < ApplicationController
     end
     redirect_to show_status_leave_applications_path
   end
+
+  def report
+    @report = LeaveApplication.filterReports(params[:name],params[:department],params[:month],
+      params[:year],params[:rangeS],params[:rangeE])
+  end
   
 end

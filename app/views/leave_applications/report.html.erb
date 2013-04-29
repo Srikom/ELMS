@@ -1,0 +1,32 @@
+<h1>Report Archive</h1>
+
+<p>This section displays all the report regarding the leave application.</p>
+<center>
+<div>
+	<%= form_tag report_manager_panel_index_path, method: :get do %>
+		<p>Month : <%= select_tag :month, options_for_select([['January','January'],['February','February'],['March','March'],['April','April'],['May','May'],['June','June'],['July','July'],['August','August'],['September','September'],['October','October'],['November','November'],['December','December'],['Select Month','null']],selected:"null") %>
+			Year : <%= select_tag :year, options_for_select([['2013','2013'],['Select Year','null']],selected:"null") %>
+			<%= submit_tag "Filter"%></p>
+	<% end %>
+</div>
+
+
+<% if !@report.nil? %>
+<div>
+	<table size='100%' id='managerTable'>
+		<tr>
+			<th>ID</th>
+			<th>Report</th>
+			<th>Date of Update</th>
+		</tr>
+		<% @report.each do |r| %>
+			<tr>
+				<td><%= r.id %></td>
+				<td><%= link_to r.report_name, showReport_manager_panel_path(r.id) %></td>
+				<td><%= r.updated_at.strftime('%d/%m/%Y') %></td>
+			</tr>
+		<% end %>
+	</table>
+</div>	
+<% end %>
+</center>
