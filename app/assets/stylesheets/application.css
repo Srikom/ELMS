@@ -186,3 +186,8 @@ th
 	font-size: 12px;
 	padding: 20px 0px 40px 0px;
 }
+
+.fieldset-auto-width {
+         display: inline-block;
+         width: 550px;
+    }
