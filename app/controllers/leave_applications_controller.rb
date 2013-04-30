@@ -10,6 +10,12 @@ class LeaveApplicationsController < ApplicationController
   end
   def profile
     @leaveApplications = LeaveApplication.appProfile(current_employee)
+    if params[:edit_profile] == "Edit profile"
+render 'edit'
+end
+if params[:commit] == "Edit password"
+render 'edit'
+end
   end
 
   def archive

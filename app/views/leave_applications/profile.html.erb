@@ -1,22 +1,19 @@
+
 <table border="1">
-	<% @leaveApplications.each do |leaveApplication|  %>
-	<tr>
-		<tr></tr>
-		Name:<%= leaveApplication.name%>
+	<% @leaveApplications.each do |leaveApplication| %>
+			<tr>
+		<p>Name:<%=leaveApplication.name %></p>	
 		<p>Staff ID:<%=leaveApplication.id %></p>
 		<p>Email:<%= leaveApplication.email %></p>
 		<p>Mobile no.:<%=  leaveApplication.phone%></p>
+			</tr>
 		
+	</table>
+	<% if params[:edit_profile] %>
+  
+<% end %>
+	<p><%= submit_tag 'Edit profile',:name => 'edit_profile' %></p>
 	
 		
-		<p><%= submit_tag 'Edit profile',:name => 'edit_profile' %></p>
-		
 		<p><%= submit_tag 'Edit password',:name =>'edit_password' %></p>
-        
-		
-	</tr>
-	<tr>
-	</tr>
-
-	<%end%>
-	</table>
+		<% end %>

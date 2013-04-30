@@ -13,7 +13,8 @@ class LeaveApplication < ActiveRecord::Base
   	select('leave_applications.id,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where(employee_id:employee)
   end
   def self.appProfile(employee)
-    select("employee.id,employee.name,employee.email,employee.phone").joins(:employee=>:department)
+    @leaveApplications= LeaveApplication.find_by_sql(%q{SELECT id,email,name,phone FROM employees WHERE id="1"} )
+     
   end 
 
   def self.appDetails(application)
