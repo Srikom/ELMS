@@ -9,11 +9,13 @@
 	<%= form_tag report_leave_applications_path, method: :get do  %>
 		<fieldset>
 			<legend><b>Employees</b></legend>
-			<%= select_tag 'emp_name', options_for_select(@employees.collect{ |u| [u.name, u.id] })	%>
+			<%= select_tag 'emp_name', options_for_select(@employees.collect{ |u| [u.name, u.id] }),
+			{prompt: "Select Employee Name"}%>
 		</fieldset>
 		<fieldset>
 			<legend><b>Departments</b></legend>
-			<%= select_tag 'dept_name', options_for_select(@departments.collect{ |u| [u.department_name, u.id] })	%>
+			<%= select_tag 'dept_name', options_for_select(@departments.collect{ |u| [u.department_name, u.id] }),
+			{prompt: "Select Department"}%>
 		</fieldset>
 		<fieldset >
 			<legend><b>Date Range</b></legend>
