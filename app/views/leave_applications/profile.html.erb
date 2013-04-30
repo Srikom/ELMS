@@ -6,14 +6,15 @@
 		<p>Staff ID:<%=leaveApplication.id %></p>
 		<p>Email:<%= leaveApplication.email %></p>
 		<p>Mobile no.:<%=  leaveApplication.phone%></p>
+		
 			</tr>
 		
 	</table>
-	<% if params[:edit_profile] %>
-  
-<% end %>
-	<p><%= submit_tag 'Edit profile',:name => 'edit_profile' %></p>
 	
+
+
+<%= button_to "Edit password", edit_employee_registration_path, :class => "button", :method => :get  %>
 		
-		<p><%= submit_tag 'Edit password',:name =>'edit_password' %></p>
+<%= button_to "Edit profile", edit_employee_password_path, :class => "button", :method => :get  %>
 		<% end %>
+	

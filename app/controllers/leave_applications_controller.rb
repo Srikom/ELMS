@@ -11,7 +11,7 @@ class LeaveApplicationsController < ApplicationController
   def profile
     @leaveApplications = LeaveApplication.appProfile(current_employee)
     if params[:edit_profile] == "Edit profile"
-render 'edit'
+redirect_to 'edit_passwords_path'
 end
 if params[:commit] == "Edit password"
 render 'edit'
