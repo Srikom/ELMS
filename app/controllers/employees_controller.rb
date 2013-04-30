@@ -4,16 +4,24 @@ class EmployeesController < ApplicationController
     @employees = Employee.all
   end
 
+  def destroy
+    @employees = Employee.find(params[:id])
+    @employees.destroy 
+
+    flash[:notice] = "User has been deleted"
+    redirect_to employees_path
+  end
+
+  def show
+    @employees = Employee.find(params[:id])
+  end
+
   def new
 
   end
 
   def create
 
-  end
-
-  def show
-    @employees = Employee.find(params[:id])
   end
 
   def edit
@@ -24,12 +32,5 @@ class EmployeesController < ApplicationController
 
   end
 
-  def destroy
-    @employees = Employee.find(params[:id])
-    @employees.destroy 
-
-    flash[:notice] = "User has been deleted"
-    redirect_to employees_path
-  end
   
 end
