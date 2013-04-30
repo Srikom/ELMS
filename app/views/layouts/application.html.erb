@@ -22,7 +22,7 @@
 							<% if current_employee.role_id == 4 || current_employee.role_id == 5 %>
 								<li><%= link_to 'User Management' , employees_path %> |</li>
 							<% end %>
-							<li><%= link_to 'View Profile'%> |</li>
+							<li><%= link_to 'View Profile',profile_leave_applications_path%> |</li>
 							<li>Leave balance : <%= current_employee.leave_balance %> |</li>
 							<li><%= link_to 'Logout', destroy_employee_session_path, method: :delete %></li>
 						</ul>

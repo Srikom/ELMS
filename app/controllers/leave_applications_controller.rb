@@ -8,6 +8,9 @@ class LeaveApplicationsController < ApplicationController
   def show_status
     @leaveApplications = LeaveApplication.myDepartment(current_employee)
   end
+  def profile
+    @leaveApplications = LeaveApplication.appProfile(current_employee)
+  end
 
   def archive
     @leaveApplications = LeaveApplication.myArchive(current_employee)
