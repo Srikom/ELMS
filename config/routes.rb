@@ -8,6 +8,7 @@ ELMS::Application.routes.draw do
     get :archive, on: :collection
     get :report, on: :collection
     get :management, on: :collection
+    put :updateReview, on: :member
   end
   resources :employees
 

@@ -72,7 +72,18 @@ class LeaveApplicationsController < ApplicationController
   end
 
   def management
+    
+  end
 
+  def updateReview
+    @review = LeaveApplication.find(params[:id])
+    if @review.update_attributes(status: params[:leave_application][:status])
+        flash[:notice] = "Successfully Updated Status"
+    else
+      flash[:alert] = "Failed to Update Status"
+    end
+    flash.discard
+    redirect_to management_leave_application_path
   end
   
 end

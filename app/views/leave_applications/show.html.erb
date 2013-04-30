@@ -36,7 +36,17 @@
 	<% if l.status_id == 1 %>
 		<p><%= button_to 'Edit',edit_leave_application_path(l.id), method: :get %></p>
 		<p><%= button_to 'Delete',l,:method => :delete,confirm: 'Are you sure?' %></p>	
-		<p><%= button_to 'Submit',id:l.id %></p>	
+		<p><%= button_to 'Submit',id:l.id %></p>
+	<% elseif l.status_id == 2 && (l.role_id == 2 || l.role_id == 5)%>
+		<%= form_for(@review, :url => {:controller => "manager_panel", :action => "updateReview"}) do |f| %>
+			<%= f.select :status, [['Approve','Approved By Manager'],['Reject','Rejected']] %>
+	   		 <%= f.submit "Update Review Status" %>
+		<% end %>
+	<% elseif l.status_id == 4 && l.role_id == 4 %>	
+		<%= form_for(@review, :url => {:controller => "manager_panel", :action => "updateReview"}) do |f| %>
+			<%= f.select :status, [['Approve','Approved By Manager'],['Reject','Rejected']] %>
+	   		 <%= f.submit "Update Review Status" %>
+		<% end %>
 	<% end %>
 	<%= link_to 'Back', :back %>
 <% end %>
