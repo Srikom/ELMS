@@ -1,32 +1,37 @@
 <h1>Report Archive</h1>
 
 <p>This section displays all the report regarding the leave application.</p>
-<center>
-<div>
-	<%= form_tag report_manager_panel_index_path, method: :get do %>
-		<p>Month : <%= select_tag :month, options_for_select([['January','January'],['February','February'],['March','March'],['April','April'],['May','May'],['June','June'],['July','July'],['August','August'],['September','September'],['October','October'],['November','November'],['December','December'],['Select Month','null']],selected:"null") %>
-			Year : <%= select_tag :year, options_for_select([['2013','2013'],['Select Year','null']],selected:"null") %>
-			<%= submit_tag "Filter"%></p>
+
+<div id="reportFilter">
+	<fieldset>
+		<legend>Report filter</legend>
+	<%= form_tag report_leave_applications_path, method: :get do  %>
+		<fieldset>
+			<legend>Employees</legend>
+			<%= select_tag 'emp_name', options_for_select(@employees.collect{ |u| [u.name, u.id] })	%>
+		</fieldset>
+		<fieldset>
+			<legend>Departments</legend>
+			<%= select_tag 'dept_name', options_for_select(@departments.collect{ |u| [u.department_name, u.id] })	%>
+		</fieldset>
+		<fieldset>
+			<legend>Date Range</legend>
+			<b>From : </b><%= date_select("range", "dateS", 
+			:prompt => { :day => 'Select day', :month => 'Select month', :year => 'Select year' }) %>
+			<br/>
+			<b>To :</b> <%= date_select("range", "dateE", 
+			:prompt => { :day => 'Select day', :month => 'Select month', :year => 'Select year' }) %>
+		</fieldset>
 	<% end %>
+	</fieldset>
 </div>
 
 
-<% if !@report.nil? %>
+<center>
 <div>
 	<table size='100%' id='managerTable'>
-		<tr>
-			<th>ID</th>
-			<th>Report</th>
-			<th>Date of Update</th>
-		</tr>
-		<% @report.each do |r| %>
-			<tr>
-				<td><%= r.id %></td>
-				<td><%= link_to r.report_name, showReport_manager_panel_path(r.id) %></td>
-				<td><%= r.updated_at.strftime('%d/%m/%Y') %></td>
-			</tr>
-		<% end %>
+		
 	</table>
 </div>	
-<% end %>
+
 </center>

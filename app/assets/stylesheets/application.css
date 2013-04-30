@@ -179,3 +179,10 @@ th
 	font-size: 14px;
 	width: 400px;
 }
+
+#reportFilter
+{
+	font-family: tahoma;
+	font-size: 12px;
+	padding: 20px 0px 40px 0px;
+}

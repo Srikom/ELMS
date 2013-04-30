@@ -65,8 +65,10 @@ class LeaveApplicationsController < ApplicationController
   end
 
   def report
-    @report = LeaveApplication.filterReports(params[:name],params[:department],params[:month],
-      params[:year],params[:rangeS],params[:rangeE])
+    @employees = Employee.all
+    @departments = Department.all
+   # @report = LeaveApplication.filterReports(params[:name],params[:department],params[:month],
+      #params[:year],params[:rangeS],params[:rangeE])
   end
   
 end
