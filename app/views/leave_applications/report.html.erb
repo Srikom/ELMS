@@ -9,22 +9,24 @@
 	<%= form_tag report_leave_applications_path, method: :get do  %>
 		<fieldset>
 			<legend><b>Employees</b></legend>
-			<%= select_tag 'emp_name', options_for_select(@employees.collect{ |u| [u.name, u.id] }),
+			<%= select_tag :emp_name, options_for_select(@employees.collect{ |u| [u.name, u.id] }),
 			{prompt: "Select Employee Name"}%>
 		</fieldset>
 		<fieldset>
 			<legend><b>Departments</b></legend>
-			<%= select_tag 'dept_name', options_for_select(@departments.collect{ |u| [u.department_name, u.id] }),
+			<%= select_tag :dept_name, options_for_select(@departments.collect{ |u| [u.department_name, u.id] }),
 			{prompt: "Select Department"}%>
 		</fieldset>
 		<fieldset >
 			<legend><b>Date Range</b></legend>
-			<b>From : </b><%= date_select("range", "dateS", 
-			:prompt => { :day => 'Select day', :month => 'Select month', :year => 'Select year' }) %>
+			<b>From : </b><%= date_select(:rangeS,:dateS,
+			:prompt => { :day => 'Select day', :month => 'Select month', :year => 'Select year' },
+			:order => [:day, :month, :year],:default => nil) %>
 			<br/>
-			<b>To :</b> <%= date_select("range", "dateE", 
-			:prompt => { :day => 'Select day', :month => 'Select month', :year => 'Select year' }) %>
-		</fieldset>
+			<b>To :</b> <%= date_select(:rangeE,:dateE, 
+			:prompt => { :day => 'Select day', :month => 'Select month', :year => 'Select year' },
+			:order => [:day, :month, :year],:default => nil ) %>
+		</fieldset> 
 		<%= submit_tag "Filter"%>
 		<% end %>
 	</fieldset>
@@ -34,7 +36,14 @@
 <center>
 <div>
 	<table size='100%' id='managerTable'>
-		
+		<tr>
+			<th>Approved</th>
+			<th>Rejected</th>
+		</tr>
+		<tr>
+			<td><%= @la %></td>
+			<td><%= @la %></td>
+		</tr>
 	</table>
 </div>	
 

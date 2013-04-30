@@ -21,7 +21,7 @@ class LeaveApplication < ActiveRecord::Base
   	select('leave_applications.id,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where("employee_id = ? AND status_id = 3 OR status_id = 5",employee)
   end
 
-  def self.filterReports(name,department,month,year,rangeS,rangeE)
+  def self.filterLeaveApp(name,department,month,year,rangeS,rangeE)
     if name != 'null' && department != 'null' && year != 'null' && month != 'null' && rangeS != 'null' && rangeE != 'null' 
       if year && month
         LeaveApplication.where(report_month:month,report_year:year)

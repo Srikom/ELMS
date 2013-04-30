@@ -67,7 +67,28 @@ class LeaveApplicationsController < ApplicationController
   def report
     @employees = Employee.all
     @departments = Department.all
-   # @report = LeaveApplication.filterReports(params[:name],params[:department],params[:month],
+
+
+    if params[:emp_name] && params[:dept_name] && params[:rangeS] && params[:rangeE]
+      @la = 45
+    end
+    if params[:emp_name]
+      @la = 45
+    end
+    if params[:dept_name]
+      @la = 45
+    end
+     if params[:emp_name] && params[:dept_name]
+      @la = 45
+    end
+    elsif params[:rangeS]
+      @la = params[:rangeS].map{|k,v| v}.join("-").to_date
+      @la = @la.strftime('%d %B %Y')
+    elsif params[:rangeE]
+      @la = params[:rangeE]
+    end
+
+    #@report = LeaveApplication.filterLeaveApp(params[:name],params[:department],params[:month],
       #params[:year],params[:rangeS],params[:rangeE])
   end
 
