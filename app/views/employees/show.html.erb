@@ -3,35 +3,40 @@
 
 <center>
 <table>
+
+<% @show.each do |f| %>
+
 <tr>
 <th>Name: </th>
-<td><%= @employees.name %></td>
+<td><%= f.name %></td>
 </tr>
 
 <tr>
 <th>ID: </th>
-<td><%= @employees.id %></td>
+<td><%= f.id %></td>
 </tr>
 
 <tr>
 <th>Role: </th>
-<td><%= @employees.role_id %></td>
+<td><%= f.role_id %></td>
 </tr>
 
 <tr>
 <th>Department: </th>
-<td><%= @employees.department_id %></td>
+<td><%= f.department_name %></td>
 </tr>
 
 <tr>
 <th>Phone no: </th>
-<td><%= @employees.phone %></td>
+<td><%= f.phone %></td>
 </tr>
 
 <tr>
 <th>E-mail: </th>
-<td><%= @employees.email %></td>
+<td><%= f.email %></td>
 </tr>
+
+<% end %>
 
 </table>
 </center>
@@ -39,5 +44,4 @@
 
 <% if current_employee.role_id == 4 || current_employee.role_id == 5 %>
 <%= link_to "Back" , employees_path %> | 
-<%= link_to "Remove User" , {:controller => :employees, :action => 'destroy' , :id => @employees.id }, :method => :delete , :confirm => "Are you sure?" %>
 <% end %>
