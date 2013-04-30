@@ -70,5 +70,9 @@ class LeaveApplicationsController < ApplicationController
    # @report = LeaveApplication.filterReports(params[:name],params[:department],params[:month],
       #params[:year],params[:rangeS],params[:rangeE])
   end
+
+  def management
+
+  end
   
 end
