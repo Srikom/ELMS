@@ -81,10 +81,10 @@ class LeaveApplicationsController < ApplicationController
      if params[:emp_name] && params[:dept_name]
       @la = 45
     end
-    elsif params[:rangeS]
+    elseif params[:rangeS]
       @la = params[:rangeS].map{|k,v| v}.join("-").to_date
       @la = @la.strftime('%d %B %Y')
-    elsif params[:rangeE]
+    elseif params[:rangeE]
       @la = params[:rangeE]
     end
 
@@ -107,4 +107,4 @@ class LeaveApplicationsController < ApplicationController
     redirect_to management_leave_application_path
   end
   
-end
+
