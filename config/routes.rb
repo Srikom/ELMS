@@ -7,8 +7,6 @@ ELMS::Application.routes.draw do
     get :show_status, on: :collection
     get :archive, on: :collection
     get :report, on: :collection
-    get :profile, on: :collection
-    put :edit_devise_passwords, on: :member
     get :management, on: :collection
     put :updateReview, on: :member
   end

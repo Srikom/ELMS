@@ -17,15 +17,15 @@
 			<%= select_tag :dept_name, options_for_select(@departments.collect{ |u| [u.department_name, u.id] }),
 			{prompt: "Select Department"}%>
 		</fieldset>
-		<fieldset >
+		<fieldset>
+			<legend><b>Date</b></legend>
+			<b>Month : </b><%= select_month(nil, :field_name => 'value', :prefix => 'month',:prompt => 'Choose month') %>
+			<b>Year :</b><%= select_year(nil, :field_name => 'value', :prefix => 'year',:prompt => 'Choose year') %>
+		</fieldset> 
+		<fieldset>
 			<legend><b>Date Range</b></legend>
-			<b>From : </b><%= date_select(:rangeS,:dateS,
-			:prompt => { :day => 'Select day', :month => 'Select month', :year => 'Select year' },
-			:order => [:day, :month, :year],:default => nil) %>
-			<br/>
-			<b>To :</b> <%= date_select(:rangeE,:dateE, 
-			:prompt => { :day => 'Select day', :month => 'Select month', :year => 'Select year' },
-			:order => [:day, :month, :year],:default => nil ) %>
+			<b>From : </b><%= text_field_tag :rangeS %>
+			<b>To :</b><%= text_field_tag :rangeE %>
 		</fieldset> 
 		<%= submit_tag "Filter"%>
 		<% end %>
@@ -33,6 +33,7 @@
 </div>
 </center>
 
+<% unless @reportsA.nil? && @reportsR.nil? %>
 <center>
 <div>
 	<table size='100%' id='managerTable'>
@@ -41,10 +42,10 @@
 			<th>Rejected</th>
 		</tr>
 		<tr>
-			<td><%= @la %></td>
-			<td><%= @la %></td>
+			<td><%= @reportsA %></td>
+			<td><%= @reportsR %></td>
 		</tr>
 	</table>
 </div>	
-
 </center>
+<% end %>

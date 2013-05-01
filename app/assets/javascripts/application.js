@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery.ui.datepicker
 //= require jquery_ujs
 //= require_tree .
 
@@ -18,4 +19,6 @@ $(function(){
 
 	$('#notice').fadeOut(2000);
 	$('#alert').fadeOut(2000);
+	$('#rangeS').datepicker();
+	$('#rangeE').datepicker();
 })

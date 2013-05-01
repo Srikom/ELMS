@@ -3,47 +3,41 @@
 
 <center>
 <table>
-
-<% @show.each do |f| %>
-
 <tr>
 <th>Name: </th>
-<td><%= f.name %></td>
+<td><%= @employees.name %></td>
 </tr>
 
 <tr>
 <th>ID: </th>
-<td><%= f.id %></td>
+<td><%= @employees.id %></td>
 </tr>
 
 <tr>
 <th>Role: </th>
-<td><%= f.role_id %></td>
+<td><%= @employees.role_id %></td>
 </tr>
 
 <tr>
 <th>Department: </th>
-<td><%= f.department_name %></td>
+<td><%= @employees.department_id %></td>
 </tr>
 
 <tr>
 <th>Phone no: </th>
-<td><%= f.phone %></td>
+<td><%= @employees.phone %></td>
 </tr>
 
 <tr>
 <th>E-mail: </th>
-<td><%= f.email %></td>
+<td><%= @employees.email %></td>
 </tr>
-
-<% end %>
 
 </table>
 </center>
 <br><br>
 
 <% if current_employee.role_id == 4 || current_employee.role_id == 5 %>
+<%= link_to "Back" , employees_path %> | 
+<%= link_to "Remove User" , {:controller => :employees, :action => 'destroy' , :id => @employees.id }, :method => :delete , :confirm => "Are you sure?" %>
 <% end %>
-
-<%= link_to "Back" , employees_path %> |
-<%= link_to "Remove User" , @employees , :method => :delete , :confirm => "Are you sure ?" %>

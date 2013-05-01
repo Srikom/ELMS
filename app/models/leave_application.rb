@@ -12,10 +12,6 @@ class LeaveApplication < ActiveRecord::Base
   def self.myDepartment(employee)
   	select('leave_applications.id,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where(employee_id:employee)
   end
-  def self.appProfile(employee)
-    @leaveApplications= LeaveApplication.find_by_sql(%q{SELECT id,email,name,phone FROM employees WHERE id="1"} )
-     
-  end 
 
   def self.appDetails(application)
   	select("*,leave_applications.id,(julianday(end_date)-julianday(start_date)) AS date_diff").joins(:status,:leave).where(id:application)
@@ -25,24 +21,22 @@ class LeaveApplication < ActiveRecord::Base
   	select('leave_applications.id,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where("employee_id = ? AND status_id = 3 OR status_id = 5",employee)
   end
 
-  def self.filterLeaveApp(name,department,month,year,rangeS,rangeE)
-    if name != 'null' && department != 'null' && year != 'null' && month != 'null' && rangeS != 'null' && rangeE != 'null' 
-      if year && month
-        LeaveApplication.where(report_month:month,report_year:year)
-       else
-        LeaveApplication.all
-       end
-    elsif name != 'null'
+  def self.reportCount(emp_id,dept_id,month,year,s,e,sID)
+    reports = LeaveApplication.joins(:employee => :department).where("status_id = ?",sID)
+    reports = filter_report(reports,emp_id,dept_id,month,year,s,e) 
+    reports 
+  end
 
-    elsif department != 'null'
-
-    elsif month != 'null'
-      LeaveApplication.where(report_month:month)
-    elsif year != 'null'
-      LeaveApplication.where(report_year:year)
-    else
-      LeaveApplication.all
-   end
+  def self.filter_report(reports,emp_id,dept_id,month,year,s,e)
+    
+     m = "0" + month unless month.to_i > 10 unless month.nil?
+    reports = reports.where(employee_id:emp_id) unless emp_id == ''
+    reports = reports.where(:departments => {id: dept_id}) unless dept_id == ''
+    reports = reports.where("strftime('%m',start_date) = ?",m) unless month == ''
+    reports = reports.where("strftime('%Y',start_date) = ?",year) unless year == ''
+    reports = reports.where("strftime('%m/%d/%Y',start_date) >= ? AND strftime('%m/%d/%Y',start_date) <= ?",
+      s,e) unless s == '' && e == ''
+    reports.count
   end
 
 end

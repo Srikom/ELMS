@@ -8,15 +8,6 @@ class LeaveApplicationsController < ApplicationController
   def show_status
     @leaveApplications = LeaveApplication.myDepartment(current_employee)
   end
-  def profile
-    @leaveApplications = LeaveApplication.appProfile(current_employee)
-    if params[:edit_profile] == "Edit profile"
-redirect_to 'edit_passwords_path'
-end
-if params[:commit] == "Edit password"
-render 'edit'
-end
-  end
 
   def archive
     @leaveApplications = LeaveApplication.myArchive(current_employee)
@@ -76,29 +67,26 @@ end
   def report
     @employees = Employee.all
     @departments = Department.all
+    nID = params[:emp_name]
+    dID = params[:dept_name]
 
-
-    if params[:emp_name] && params[:dept_name] && params[:rangeS] && params[:rangeE]
-      @la = 45
-    end
-    if params[:emp_name]
-      @la = 45
-    end
-    if params[:dept_name]
-      @la = 45
-    end
-     if params[:emp_name] && params[:dept_name]
-      @la = 45
-    end
-    elseif params[:rangeS]
-      @la = params[:rangeS].map{|k,v| v}.join("-").to_date
-      @la = @la.strftime('%d %B %Y')
-    elseif params[:rangeE]
-      @la = params[:rangeE]
+    if params[:month] 
+      month = params[:month][:value]
     end
 
-    #@report = LeaveApplication.filterLeaveApp(params[:name],params[:department],params[:month],
-      #params[:year],params[:rangeS],params[:rangeE])
+    if params[:year]
+      year = params[:year][:value]
+    end
+    
+    if params[:rangeS] || params[:rangeE]
+      s = params[:rangeS]
+      e = params[:rangeE]
+    end
+
+  unless nID.nil? && dID.nil? && params[:month].nil? && params[:year].nil? && params[:rangeS].nil? && params[:rangeE].nil?
+    @reportsA = LeaveApplication.reportCount(nID,dID,month,year,s,e,5)
+    @reportsR = LeaveApplication.reportCount(nID,dID,month,year,s,e,3)
+  end
   end
 
   def management
@@ -116,4 +104,4 @@ end
     redirect_to management_leave_application_path
   end
   
-
+end
