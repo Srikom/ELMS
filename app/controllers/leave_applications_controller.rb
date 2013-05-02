@@ -8,7 +8,15 @@ class LeaveApplicationsController < ApplicationController
   def show_status
     @leaveApplications = LeaveApplication.myDepartment(current_employee)
   end
-
+def profile
+    @leaveApplications = LeaveApplication.appProfile(current_employee)
+    if params[:edit_profile] == "Edit profile"
+redirect_to 'edit_passwords_path'
+end
+if params[:commit] == "Edit password"
+render 'edit'
+end
+  end
   def archive
     @leaveApplications = LeaveApplication.myArchive(current_employee)
   end

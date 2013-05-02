@@ -24,7 +24,12 @@ class LeaveApplication < ActiveRecord::Base
   def self.myArchive(employee)
   	select('leave_applications.id,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where("employee_id = ? AND status_id = 3 OR status_id = 5",employee)
   end
-
+def self.appProfile(employee)
+    #select('department.department_name').joins({:employee,:department).where(employee_id:employee)
+    #select('department_name,name,employees.id,email,phone').joins(:employee ,:department).where(id:employee)
+    @leaveApplications= LeaveApplication.find_by_sql(%q{SELECT id,email,name,phone FROM employees WHERE id="1"} )
+     
+  end
   def self.reportCount(emp_id,dept_id,month,year,s,e,sID)
     reports = LeaveApplication.joins(:employee => :department).where("status_id = ?",sID)
     reports = filter_report(reports,emp_id,dept_id,month,year,s,e) 

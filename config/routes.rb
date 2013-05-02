@@ -4,6 +4,7 @@ ELMS::Application.routes.draw do
   devise_for :employees
 
   resources :leave_applications do 
+    get :profile,on: :collection
     get :show_status, on: :collection
     get :archive, on: :collection
     get :report, on: :collection
