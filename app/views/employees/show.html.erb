@@ -38,9 +38,10 @@
 </center>
 <br><br>
 
+<%= link_to "Back" , :back %> |
 <% if current_employee.role_id == 1%>
 	<%= button_to "Edit Profile", edit_employee_registration_path, method: :get%>
 <% elsif current_employee.role_id == 4 || current_employee.role_id == 5 %>
-	<%= link_to "Back" , employees_path %> |
+	
 	<%= link_to "Remove User" , @employees , :method => :delete , :confirm => "Are you sure ?" %>
 <% end %>
