@@ -17,7 +17,7 @@
 							<li><%= link_to 'Application Archive', archive_leave_applications_path %> |</li>
 							<% if current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5 %>
 								<li><%= link_to 'Report',report_leave_applications_path %> |</li>
-								<li><%= link_to 'Application Management',report_leave_applications_path %> |</li>
+								<li><%= link_to 'Application Management',management_leave_applications_path %> |</li>
 							<% end %>
 							<% if current_employee.role_id == 4 || current_employee.role_id == 5 %>
 								<li><%= link_to 'User Management' , employees_path %> |</li>
@@ -26,7 +26,6 @@
 							<li>Leave balance : <%= current_employee.leave_balance %> |</li>
 							<li><%= link_to 'Logout', destroy_employee_session_path, method: :delete %></li>
 						</ul>
-						
 					<% end %>
 					<div class='clearfix'></div>
 				</div>

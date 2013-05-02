@@ -15,6 +15,7 @@ class LeaveApplicationsController < ApplicationController
 
   def show
     @leaveApplication = LeaveApplication.appDetails(params[:id])  
+    @review = LeaveApplication.find(params[:id])
   end
 
   def new
@@ -51,7 +52,6 @@ class LeaveApplicationsController < ApplicationController
         flash.discard
         render 'edit'
       end
-    
   end
 
   def destroy
@@ -86,22 +86,45 @@ class LeaveApplicationsController < ApplicationController
   unless nID.nil? && dID.nil? && params[:month].nil? && params[:year].nil? && params[:rangeS].nil? && params[:rangeE].nil?
     @reportsA = LeaveApplication.reportCount(nID,dID,month,year,s,e,5)
     @reportsR = LeaveApplication.reportCount(nID,dID,month,year,s,e,3)
+    end  
   end
+
+  def pdfGen
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = ReportPdf.new(params[:approve],params[:reject])
+        send_data pdf.render, type: "application/pdf", disposition: "inline"
+      end
+    end
   end
 
   def management
-    
+    if current_employee.role_id == 2 || current_employee.role_id == 5
+      @leaveApplications = LeaveApplication.findByDepartment(current_employee.department_id,2)
+    elsif current_employee.role_id == 3 
+       @leaveApplications = LeaveApplication.findByDepartment(current_employee.department_id,4)
+    end
   end
 
   def updateReview
     @review = LeaveApplication.find(params[:id])
-    if @review.update_attributes(status: params[:leave_application][:status])
+    @emp = Employee.find(@review.employee_id)
+    if @review.update_attributes(status_id: params[:leave_application][:status])
+          
+          if current_employee.role_id == 4
+            if @review.status_id == 5
+              newBal = @emp.leave_balance - 1
+              @emp.update_attributes(leave_balance: newBal)
+            end
+          end
+            
         flash[:notice] = "Successfully Updated Status"
     else
       flash[:alert] = "Failed to Update Status"
     end
     flash.discard
-    redirect_to management_leave_application_path
+    redirect_to management_leave_applications_path
   end
   
 end

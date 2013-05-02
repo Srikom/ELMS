@@ -9,6 +9,7 @@ ELMS::Application.routes.draw do
     get :report, on: :collection
     get :management, on: :collection
     put :updateReview, on: :member
+    get :pdfGen, on: :collection
   end
   resources :employees
 

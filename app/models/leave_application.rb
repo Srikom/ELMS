@@ -13,6 +13,10 @@ class LeaveApplication < ActiveRecord::Base
   	select('leave_applications.id,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where(employee_id:employee)
   end
 
+  def self.findByDepartment(dept,status)
+    select('leave_applications.id,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where(:employees => {:department_id => dept},status_id:status)
+  end
+
   def self.appDetails(application)
   	select("*,leave_applications.id,(julianday(end_date)-julianday(start_date)) AS date_diff").joins(:status,:leave).where(id:application)
   end 
@@ -28,7 +32,6 @@ class LeaveApplication < ActiveRecord::Base
   end
 
   def self.filter_report(reports,emp_id,dept_id,month,year,s,e)
-    
      m = "0" + month unless month.to_i > 10 unless month.nil?
     reports = reports.where(employee_id:emp_id) unless emp_id == ''
     reports = reports.where(:departments => {id: dept_id}) unless dept_id == ''
