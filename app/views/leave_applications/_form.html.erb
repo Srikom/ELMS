@@ -1,4 +1,8 @@
 <%= form_for (@leaveApplication) do |f| %>
+<center>
+<div id="reportFilter2">
+<fieldset>
+	<legend><b>New Application</b></legend>
 <% if @leaveApplication.errors.any? %>
 	<div id="formError">
 		<h2>Errors :</h2>
@@ -24,7 +28,9 @@
  </div>
  
  <%= f.submit 'Submit'%>
-
+</fieldset>
+</div>
+</center>
 <% end %>
  
 

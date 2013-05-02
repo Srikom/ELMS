@@ -188,7 +188,16 @@ th
 	padding: 20px 0px 40px 0px;
 }
 
+#reportFilter2
+{
+	font-family: tahoma;
+	font-size: 13px;
+	padding: 20px 0px 40px 0px;
+	width: 700px;
+}
+
 .fieldset-auto-width {
          display: inline-block;
          width: 550px;
     }
+
