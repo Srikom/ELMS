@@ -9,7 +9,7 @@ class Employee < ActiveRecord::Base
 
   validates :name, :phone, :role_id,:department_id, presence: true
 
-  has_one :role
+  belongs_to :role
   belongs_to :department
   has_many :leave_applications
 end

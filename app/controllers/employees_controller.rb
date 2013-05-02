@@ -1,7 +1,7 @@
 class EmployeesController < ApplicationController
 
   def index
-    @employees = Employee.select("*").joins(:department)
+    @employees = Employee.select("*").joins(:department , :role)
   end
 
   def destroy
@@ -13,7 +13,7 @@ class EmployeesController < ApplicationController
   end
 
   def show
-    @show = Employee.select("*").joins(:department).where(id:params[:id])
+    @show = Employee.select("*").joins(:department , :role).where(id:params[:id])
   end
 
   def new
