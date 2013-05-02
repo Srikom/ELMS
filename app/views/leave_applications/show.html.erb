@@ -42,7 +42,7 @@
 			<%= f.select :status, [['Approve',4],['Reject',3]] %>
 	   		 <%= f.submit "Update Review Status" %>
 		<% end %>
-	<% elsif l.status_id == 4 && current_employee.role_id == 4 %>	
+	<% elsif l.status_id == 4 && current_employee.role_id == 3 %>	
 		<%= form_for(@review, :url => {:controller => "leave_applications", :action => "updateReview"}) do |f| %>
 			<%= f.select :status, [['Approve',5],['Reject',3]] %>
 	   		 <%= f.submit "Update Review Status" %>

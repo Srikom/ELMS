@@ -22,7 +22,7 @@ class LeaveApplication < ActiveRecord::Base
   end 
 
   def self.myArchive(employee)
-  	select('leave_applications.id,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where("employee_id = ? AND status_id = 3 OR status_id = 5",employee)
+  	select('leave_applications.id,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where("employee_id = ? AND (status_id = 3 OR status_id = 5)",employee)
   end
 def self.appProfile(employee)
     #select('department.department_name').joins({:employee,:department).where(employee_id:employee)

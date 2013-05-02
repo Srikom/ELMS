@@ -41,7 +41,6 @@ class LeaveApplicationsController < ApplicationController
   end
 
   def update
-    
       @employee = Employee.find(current_employee)
       @leaveApplication = @employee.leave_applications.find(params[:id]).update_attributes(params[:leave_application])
        if @leaveApplication
@@ -111,19 +110,16 @@ class LeaveApplicationsController < ApplicationController
     @review = LeaveApplication.find(params[:id])
     @emp = Employee.find(@review.employee_id)
     if @review.update_attributes(status_id: params[:leave_application][:status])
-          
           if current_employee.role_id == 4
             if @review.status_id == 5
               newBal = @emp.leave_balance - 1
               @emp.update_attributes(leave_balance: newBal)
             end
           end
-            
         flash[:notice] = "Successfully Updated Status"
     else
       flash[:alert] = "Failed to Update Status"
     end
-    flash.discard
     redirect_to management_leave_applications_path
   end
   
