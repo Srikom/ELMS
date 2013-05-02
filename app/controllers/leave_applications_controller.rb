@@ -123,4 +123,14 @@ class LeaveApplicationsController < ApplicationController
     redirect_to management_leave_applications_path
   end
   
+
+  def submitApp
+    @leaveApplication = LeaveApplication.find(params[:id])
+    if @leaveApplication.update_attributes(status_id: 2)
+      flash[:notice] = "Successfully Submit form!"
+    else
+      flash[:notice] = "Form failed to be submitted!"
+    end
+    redirect_to show_status_leave_applications_path
+  end
 end
