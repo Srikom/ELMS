@@ -3,7 +3,11 @@ class EmployeesController < ApplicationController
   def index
     @employees = Employee.all
   end
-
+def profile
+    @employees = Employee.appProfile(current_employee)
+    
+end
+  end
   def destroy
     @employees = Employee.find(params[:id])
     @employees.destroy 
