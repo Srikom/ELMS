@@ -12,9 +12,5 @@ class ApplicationController < ActionController::Base
   	new_employee_session_path          
   end
 
-  def after_sign_up_path_for(resource)
-    employees_path
-  end
-
 
 end

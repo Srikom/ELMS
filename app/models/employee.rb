@@ -4,7 +4,7 @@ class Employee < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
  
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :phone, :role_id,:department_id
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :phone, :role_id,:department_id,:leave_balance
   
 
   validates :name, :phone, :role_id,:department_id, presence: true

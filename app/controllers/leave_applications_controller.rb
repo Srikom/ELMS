@@ -109,11 +109,13 @@ class LeaveApplicationsController < ApplicationController
   def updateReview
     @review = LeaveApplication.find(params[:id])
     @emp = Employee.find(@review.employee_id)
+    lb = @emp.leave_balance.to_i
+    diff = params[:leave_application][:bal].to_i
+    date_bal = (lb - diff)
     if @review.update_attributes(status_id: params[:leave_application][:status])
-          if current_employee.role_id == 4
+          if current_employee.role_id == 3
             if @review.status_id == 5
-              newBal = @emp.leave_balance - 1
-              @emp.update_attributes(leave_balance: newBal)
+              @emp.update_attributes(leave_balance: date_bal)
             end
           end
         flash[:notice] = "Successfully Updated Status"

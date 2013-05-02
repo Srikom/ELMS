@@ -16,6 +16,14 @@ class EmployeesController < ApplicationController
     @show = Employee.select("*").joins(:department , :role).where(id:params[:id])
   end
 
+  def new
+
+  end
+
+  def create
+
+  end
+
   def edit
 
   end
