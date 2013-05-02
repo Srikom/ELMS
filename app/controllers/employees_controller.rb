@@ -4,11 +4,6 @@ class EmployeesController < ApplicationController
     @employees = Employee.select("*").joins(:department , :role)
   end
 
-  def profile
-    @employees = Employee.appProfile(current_employee)
-    
-  end
-
   def destroy
     @employees = Employee.find(params[:id])
     @employees.destroy 
