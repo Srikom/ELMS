@@ -171,7 +171,7 @@ th
 	left: 600px;
 }
 
-#formError
+#formError,#error_explanation
 {
 	border: 2px solid #000;
 	background-color: red;
@@ -200,4 +200,6 @@ th
          display: inline-block;
          width: 550px;
     }
+
+
 
