@@ -6,7 +6,8 @@ $(function(){
 	changeYear: true,
 	duration:"fast",
 	stepMonths:0,
-	minDate: 0 
+	minDate: 0 ,
+	showButtonPanel:true
 			});
 });
 $(function(){
@@ -17,7 +18,7 @@ $("#leave_application_end_date").datepicker({
 	duration:"fast",
 	stepMonths:0,
 	minDate: 0 
-	
+	showButtonPanel:true
 			});
 });
  
