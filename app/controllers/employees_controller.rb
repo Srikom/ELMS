@@ -13,7 +13,7 @@ class EmployeesController < ApplicationController
   end
 
   def show
-    @employees = Employee.find(params[:id])
+    @show = Employee.select("*").joins(:department).where(id:params[:id])
   end
 
   def new
