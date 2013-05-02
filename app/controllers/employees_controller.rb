@@ -1,13 +1,14 @@
 class EmployeesController < ApplicationController
 
   def index
-    @employees = Employee.all
+    @employees = Employee.select("*").joins(:department , :role)
   end
-def profile
+
+  def profile
     @employees = Employee.appProfile(current_employee)
     
-end
   end
+
   def destroy
     @employees = Employee.find(params[:id])
     @employees.destroy 
@@ -17,7 +18,7 @@ end
   end
 
   def show
-    @employees = Employee.find(params[:id])
+    @show = Employee.select("*").joins(:department , :role).where(id:params[:id])
   end
 
   def new
