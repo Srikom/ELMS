@@ -3,34 +3,35 @@
 
 <center>
 <table>
+<% @show.each do |f| %>
 <tr>
 <th>Name: </th>
-<td><%= @employees.name %></td>
+<td><%= f.name %></td>
 </tr>
 
 <tr>
 <th>ID: </th>
-<td><%= @employees.id %></td>
+<td><%= f.id %></td>
 </tr>
 
 <tr>
 <th>Role: </th>
-<td><%= @employees.role_id %></td>
+<td><%= f.role_id %></td>
 </tr>
 
 <tr>
 <th>Department: </th>
-<td><%= @employees.department_name %></td>
+<td><%= f.department_name %></td>
 </tr>
 
 <tr>
 <th>Phone no: </th>
-<td><%= @employees.phone %></td>
+<td><%= f.phone %></td>
 </tr>
 
 <tr>
 <th>E-mail: </th>
-<td><%= @employees.email %></td>
+<td><%= f.email %></td>
 </tr>
 
 </table>
