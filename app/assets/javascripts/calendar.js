@@ -24,8 +24,8 @@ $("#leave_application_end_date").datepicker({
 
 $('submit_btn').click(function() {
 	$("#myForm").submit();
-        var start = $('#leave_application_start_date').datepicker('getDate');
-        var end   = $('#leave_application_end_date').datepicker('getDate');
+        var start = $('#leave_application_start_date').datepicker();
+        var end   = $('#leave_application_end_date').datepicker();
         var days   = (end - start)/1000/60/60/24;
         alert(days);
         if ((end - start) > 30)
