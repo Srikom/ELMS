@@ -1,8 +1,8 @@
 
 $(function(){
 	function getDiff() {
-        var from = $(".start").val();
-        var till = $(".fin").val();
+        var from = $("#leave_application_start_date").val();
+        var till = $("#leave_application_end_date").val();
         var c = from.split("/");
         beg = new Date(c[2], c[1] - 1, c[0]);
         var d = till.split("/");
@@ -13,9 +13,8 @@ $(function(){
         var start = $('#leave_application_start_date').datepicker('getDate');
         var end   = $('#leave_application_end_date').datepicker('getDate');
         var days   = (end - start)/1000/60/60/24;
-        alert(days);
         if (days > 30)
-                confirm("Selected time period is of more than 1 month duration");
+                confirm("Selected time period is of more than 1 month duration.Please select again!");
     }
 
 	$("#leave_application_start_date").datepicker({
