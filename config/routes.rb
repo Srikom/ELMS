@@ -14,7 +14,7 @@ ELMS::Application.routes.draw do
     put :submitApp, on: :member
     get :pdfGen, on: :collection
   end
-  resources :employees
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
