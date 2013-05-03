@@ -1,35 +1,53 @@
-$(document).ready(function(){
+
 $(function(){
+	function getDiff() {
+        var from = $(".start").val();
+        var till = $(".fin").val();
+        var c = from.split("/");
+        beg = new Date(c[2], c[1] - 1, c[0]);
+        var d = till.split("/");
+        en = new Date(d[2], d[1] - 1, d[0]);
+        var rest = (en - beg) / 86400000;
+        var txt = rest == 0 ? "" : rest + " days"
+        $("#res").text(txt);
+        var start = $('#leave_application_start_date').datepicker('getDate');
+        var end   = $('#leave_application_end_date').datepicker('getDate');
+        var days   = (end - start)/1000/60/60/24;
+        alert(days);
+        if (days > 30)
+                confirm("Selected time period is of more than 1 month duration");
+    }
+
 	$("#leave_application_start_date").datepicker({
 	dateFormat:"dd/mm/yy",
+	showButtonPanel: true,
 	changeMonth: true,
 	changeYear: true,
+	 showAnim: "fadeIn",
+	  
 	duration:"fast",
 	stepMonths:0,
-	minDate: 0 
-			});
+	minDate: 0,
+	 onSelect: function (dateText, inst) {
+            $("#leave_application_end_date").val(dateText);
+            $("#leave_application_end_date").datepicker("option", "minDate", dateText);
+            getDiff();
+			}
 });
-$(function(){
+
 $("#leave_application_end_date").datepicker({
 	dateFormat:"dd/mm/yy",
+	 showButtonPanel: true,
 	changeMonth: true,
 	changeYear: true,
 	duration:"fast",
 	stepMonths:0,
-	minDate: 0 
+	minDate: 0,
+	showAnim: "fadeIn",
+	
+    onSelect: getDiff
 	
 			});
 });
  
 
-$('submit_btn').click(function() {
-	$("#myForm").submit();
-        var start = $('#leave_application_start_date').datepicker();
-        var end   = $('#leave_application_end_date').datepicker();
-        var days   = (end - start)/1000/60/60/24;
-        alert(days);
-        if ((end - start) > 30)
-                confirm("Selected time period is of more than 1 month duration");
-
-    });
-});
