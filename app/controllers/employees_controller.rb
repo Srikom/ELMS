@@ -1,7 +1,7 @@
 class EmployeesController < ApplicationController
 
   def index
-    @employees = Employee.select("*").joins(:department , :role)
+    @employees = Employee.all
   end
 
   def destroy
@@ -13,21 +13,23 @@ class EmployeesController < ApplicationController
   end
 
   def show
-    @show = Employee.select("*").joins(:department , :role).where(id:params[:id])
+    @show = Employee.find(params[:id])
   end
 
   def new
+    @departments = Department.all
+    @roles = Role.all
     @employees = Employee.new
   end
 
   def create
     @employees = Employee.new(params[:employee])
-
     if @employees.save
       flash[:notice] = "Successfully created User!"
       redirect_to employees_path
     else
-      redirect_to employees_new_path
+      flash[:alert] = "Error creating the User!"
+      render 'new'
     end
   end
 

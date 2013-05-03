@@ -1,29 +1,48 @@
 <h1>Sign Up</h1><br>
-
-<%= form_for @employees, :url => new_employee_path do |f| %>
- 
-<div><%= f.label :name %><br />
-<%= f.text_field :name %></div><br>
- 
-<div><%= f.label :password %><br />
-<%= f.password_field :password %></div><br>
- 
-<div><%= f.label :password_confirmation %><br />
-<%= f.password_field :password_confirmation %></div><br>
-
-<div><%= f.label :department %><br />
-<%= f.text_field :department_id %></div><br>
-
-<div><%= f.label :role %><br />
-<%= f.text_field :role_id %></div><br>
-
-<div><%= f.label :phone %><br />
-<%= f.text_field :phone %></div><br>
-
-<div><%= f.label :email %><br />
-<%= f.email_field :email, :autofocus => true %></div><br>
-
- 
-<div><%= f.submit "Sign up" %></div>
-
+<center>
+<% if @employees.errors.any? %>
+	<div id="formError">
+		<h2>Errors :</h2>
+		<ul>
+			<% @employees.errors.full_messages.each do |message| %>
+				<li><%= message %></li>
+			<% end %>
+		</ul>
+	</div>
 <% end %>
+</center>
+<center>
+<div id="reportFilter2">
+	<fieldset>
+		<legend><b>Sign Up Form</b></legend>
+	<%= form_for @employees do |f| %>
+	 
+	<div><b><%= f.label :name %></b><br />
+	<%= f.text_field :name %></div><br>
+	 
+	<div><b><%= f.label :password %></b><br/>
+	<%= f.password_field :password %></div><br>
+	 
+	<div><b><%= f.label :password_confirmation %></b><br />
+	<%= f.password_field :password_confirmation %></div><br>
+
+	<div><b><%= f.label :department %></b><br />
+		<%= f.select :department_id, [["Software",1],["Network",2],["Sales",3],["Marketing",4]],
+			{prompt: "Select Department"}%></div><br>
+
+	<div><b><%= f.label :role %></b><br />
+	<%= f.select :role_id, [["Staff",1],["Manager",2],["Management",3],["Administrator",4],["Manager/Administrator",5]],
+			{prompt: "Select Role"}%></div><br>
+
+	<div><b><%= f.label :phone %></b><br />
+	<%= f.text_field :phone %></div><br>
+
+	<div><b><%= f.label :email %></b><br />
+	<%= f.email_field :email, :autofocus => true %></div><br>
+
+	<div><%= f.submit "Sign up" %></div>
+
+	<% end %>
+	</fieldset>
+</div>
+</center>

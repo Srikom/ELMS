@@ -3,35 +3,34 @@
 
 <center>
 <table>
-<% @show.each do |f| %>
 <tr>
 <th>Name: </th>
-<td><%= f.name %></td>
+<td><%= @show.name %></td>
 </tr>
 
 <tr>
 <th>ID: </th>
-<td><%= f.id %></td>
+<td><%= @show.id %></td>
 </tr>
 
 <tr>
 <th>Role: </th>
-<td><%= f.role_name %></td>
+<td><%= Role.where(id:@show.role_id).pluck("role_name").join("") %></td>
 </tr>
 
 <tr>
 <th>Department: </th>
-<td><%= f.department_name %></td>
+<td><%= Department.where(id:@show.department_id).pluck("department_name").join("")  %></td>
 </tr>
 
 <tr>
 <th>Phone no: </th>
-<td><%= f.phone %></td>
+<td><%= @show.phone %></td>
 </tr>
 
 <tr>
 <th>E-mail: </th>
-<td><%= f.email %></td>
+<td><%= @show.email %></td>
 </tr>
 
 </table>
@@ -39,9 +38,8 @@
 <br><br>
 
 <%= link_to "Back" , :back %> |
-<% if current_employee.id == f.id %>
-	<%= link_to "Edit Profile", edit_employee_registration_path, method: :get%>
+<% if current_employee.id == @show.id %>
+	<%= link_to "Edit Profile", edit_employee_path(@show.id)%>
 <% elsif current_employee.role_id == 4 || current_employee.role_id == 5 %>
 	<%= link_to "Remove User" , @employees , :method => :delete , :confirm => "Are you sure ?" %>
-<% end %>
 <% end %>

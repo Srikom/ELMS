@@ -15,8 +15,8 @@
 <tr>
 	<td><%= link_to f.id , employee_path(f.id) %></td>
 	<td><%= f.name %></td>
-	<td><%= f.department_name %></td>
-	<td><%= f.role_name %></td>
+	<td><%= Department.where(id:f.department_id).pluck("department_name").join("") %></td>
+	<td><%= Role.where(id:f.role_id).pluck("role_name").join("") %></td>
 </tr>
 <% end %>
 </table>
