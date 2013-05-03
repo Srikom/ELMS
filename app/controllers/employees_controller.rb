@@ -17,11 +17,18 @@ class EmployeesController < ApplicationController
   end
 
   def new
-
+    @employees = Employee.new
   end
 
   def create
+    @employees = Employee.new(params[:employee])
 
+    if @employees.save
+      flash[:notice] = "Successfully created User!"
+      redirect_to employees_path
+    else
+      redirect_to employees_new_path
+    end
   end
 
   def edit
