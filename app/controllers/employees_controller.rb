@@ -1,7 +1,8 @@
 class EmployeesController < ApplicationController
 
   def index
-    @employees = Employee.all
+    @search = Employee.search(params[:q])
+    @employees = @search.result(:distinct => true)
   end
 
   def destroy
