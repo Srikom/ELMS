@@ -4,19 +4,21 @@
 <center>
 <div>
 	<table size='100%' id='managerTable'>
-		<tr>
-			<th>ID</th>
+		<th>No.</th>
 			<th>Department</th>
 			<th>Date Of Submission</th>
 			<th>Status</th>
+			<th></th>
 		</tr>
 		<% @leaveApplications.each do |l| %>
 			<tr>
-				<td><%= link_to l.id,leave_application_path(l.id)%></td>
+				<td></td>
 				<td><%= l.department_name %></td>
 				<td><%= l.created_at.strftime('%d/%m/%Y') %></td>
 				<td><%= l.status_name %></td>
+				<td><%= link_to '[View]',leave_application_path(l.id)%></td>
 			</tr>
+
 		<% end %>
 	</table>
 </div>
