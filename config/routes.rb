@@ -3,7 +3,7 @@ ELMS::Application.routes.draw do
 
   devise_for :employees
   resources :employees
-  
+ 
   resources :leave_applications do 
     get :profile,on: :collection
     get :show_status, on: :collection
@@ -15,6 +15,7 @@ ELMS::Application.routes.draw do
     get :pdfGen, on: :collection
   end
 
+   resources :deletions
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

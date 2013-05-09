@@ -1,8 +1,9 @@
 class EmployeesController < ApplicationController
 
+ 
+
   def index
-    @search = Employee.search(params[:q])
-    @employees = @search.result(:distinct => true)
+    @employees = Employee.all
   end
 
   def destroy
@@ -25,8 +26,10 @@ class EmployeesController < ApplicationController
 
   def create
     @employees = Employee.new(params[:employee])
+    @curr_emp = Employee.find(current_employee)
     if @employees.save
       flash[:notice] = "Successfully created User!"
+      sign_in @curr_emp, :bypass => true
       redirect_to employees_path
     else
       flash[:alert] = "Error creating the User!"
@@ -35,12 +38,20 @@ class EmployeesController < ApplicationController
   end
 
   def edit
-
+    @employees = Employee.find(params[:id])
   end
 
   def update
+    @employees = Employee.find(params[:id])
 
+  if @employees.update_attributes(params[:employee])
+      flash[:notice] = "Successfully updated User details!"
+      sign_in @employees, :bypass => true
+      redirect_to employee_path(params[:id])
+    else
+      flash[:alert] = "Error creating updating the User details!"
+      render 'edit'
+    end
   end
 
-  
 end

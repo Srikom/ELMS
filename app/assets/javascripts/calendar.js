@@ -18,7 +18,7 @@ $(function(){
     }
 
 	$("#leave_application_start_date").datepicker({
-	dateFormat:"dd/mm/yy",
+	dateFormat: 'yy-mm-dd',
 	showButtonPanel: true,
 	changeMonth: true,
 	changeYear: true,
@@ -35,7 +35,7 @@ $(function(){
 });
 
 $("#leave_application_end_date").datepicker({
-	dateFormat:"dd/mm/yy",
+	dateFormat: 'yy-mm-dd',
 	 showButtonPanel: true,
 	changeMonth: true,
 	changeYear: true,

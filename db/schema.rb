@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130429002936) do
+ActiveRecord::Schema.define(:version => 20130508092943) do
+
+  create_table "deletions", :force => true do |t|
+    t.text     "reason",               :null => false
+    t.integer  "leave_application_id", :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "employee_id"
+  end
 
   create_table "departments", :force => true do |t|
     t.string   "department_name", :null => false
@@ -37,6 +47,7 @@ ActiveRecord::Schema.define(:version => 20130429002936) do
     t.integer  "leave_balance",          :default => 30
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.integer  "leave_bal",              :default => 30
   end
 
   add_index "employees", ["email"], :name => "index_employees_on_email", :unique => true

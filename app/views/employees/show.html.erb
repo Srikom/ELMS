@@ -38,8 +38,8 @@
 <br><br>
 
 <%= link_to "Back" , :back %> |
-<% if current_employee.id == @show.id %>
-	<%= link_to "Edit Profile", edit_employee_path(@show.id)%>
+<% if current_employee == @show %>
+	<%= link_to "Edit Profile", edit_employee_path(@show)%>
 <% elsif current_employee.role_id == 4 || current_employee.role_id == 5 %>
 	<%= link_to "Remove User" , @employees , :method => :delete , :confirm => "Are you sure ?" %>
 <% end %>
