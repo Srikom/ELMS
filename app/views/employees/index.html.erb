@@ -1,6 +1,16 @@
 <center>
 <h2>List of Employees</h2>
-<br>
+
+<p><%= search_form_for @search do |f| %>
+	
+  <%= f.label :role_id_eq, "Role :" %>
+  <%= f.select :role_id_eq, options_for_select([["Staff",1],["Manager",2],["Management",3],["Administrator",4],["Manager/Administrator",5]]) %>
+	
+  <%= f.label :department_id_eq, "Department :" %>
+  <%= f.select :department_id_eq, options_for_select([["Software",1],["Network",2],["Sales",3],["Marketing",4]]) %>
+  
+  <%= f.submit "Search" %></p>
+<% end %>
 
 
 <table>

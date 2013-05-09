@@ -9,6 +9,9 @@ class EmployeesController < ApplicationController
       flash[:alert] = "You are not allowed to access this page!"
       redirect_to leave_applications_path
     end
+    
+    @search = Employee.search(params[:q])
+    @employees = @search.result(:distinct => true)
   end
 
   def destroy
