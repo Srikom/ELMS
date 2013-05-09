@@ -1,12 +1,17 @@
 <h4>Welcome, <%= current_employee.name %>. Page is still under construction.</h4>
 <p>List of on-leave employee for the current month</p>
 <h2 id='month'>
+    
 	<center>
 		<%= link_to "<", date: @date.prev_month %>
 		<%= @date.strftime('%B %Y') %>
 		<%= link_to ">", date: @date.next_month %>
 	</center>
+
 </h2>
+<%= form_tag leave_applications_path, method: :get do  %>
+    <b>Filter :</b><%= select_month(nil, :field_name => 'value', :prefix => 'month',:prompt => 'Choose month') %> <%= select_year(nil, :field_name => 'value', :prefix => 'year',:prompt => 'Choose year') %> <%= submit_tag "Filter"%><br/>
+    <% end %>
 <div id="empLeave">
 	<%= calendar @date do |date| %>
  

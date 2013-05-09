@@ -11,7 +11,37 @@ class LeaveApplicationsController < ApplicationController
       @leaveApplications = LeaveApplication.findAvApp(current_employee)
     end
     @del = Deletion.new
+    
+
+    if params[:month] 
+      month = params[:month][:value]
+      if month == ""
+        month = Date.today.strftime('%m')
+      end
+    end
+
+    if params[:year]
+      year = params[:year][:value]
+      if year == ""
+        year = Date.today.strftime('%Y')
+      end
+    end
+
+    if year && month
+      day = Date.today.strftime('%d')
+      params[:date] = "#{year}-#{month}-#{day}"
+    elsif year
+      day = Date.today.strftime('%d')
+      month = Date.today.strftime('%m')
+      params[:date] = "#{year}-#{month}-#{day}"
+    elsif month
+      day = Date.today.strftime('%d')
+      year = Date.today.strftime('%Y')
+      params[:date] = "#{year}-#{month}-#{day}"
+    end
+
     @date = params[:date] ? Date.parse(params[:date]) : Date.today
+
   end
 
   def show_status
@@ -100,28 +130,33 @@ class LeaveApplicationsController < ApplicationController
   end
 
   def report
-    @employees = Employee.all
-    @departments = Department.all
-    nID = params[:emp_name]
-    dID = params[:dept_name]
+    if current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5
+        @employees = Employee.all
+        @departments = Department.all
+        nID = params[:emp_name]
+        dID = params[:dept_name]
 
-    if params[:month] 
-      month = params[:month][:value]
-    end
+        if params[:month] 
+          month = params[:month][:value]
+        end
 
-    if params[:year]
-      year = params[:year][:value]
-    end
-    
-    if params[:rangeS] || params[:rangeE]
-      s = params[:rangeS]
-      e = params[:rangeE]
-    end
+        if params[:year]
+          year = params[:year][:value]
+        end
+        
+        if params[:rangeS] || params[:rangeE]
+          s = params[:rangeS]
+          e = params[:rangeE]
+        end
 
-  unless nID.nil? && dID.nil? && params[:month].nil? && params[:year].nil? && params[:rangeS].nil? && params[:rangeE].nil?
-    @reportsA = LeaveApplication.reportCount(nID,dID,month,year,s,e,5)
-    @reportsR = LeaveApplication.reportCount(nID,dID,month,year,s,e,3)
-    end  
+      unless nID.nil? && dID.nil? && params[:month].nil? && params[:year].nil? && params[:rangeS].nil? && params[:rangeE].nil?
+        @reportsA = LeaveApplication.reportCount(nID,dID,month,year,s,e,5)
+        @reportsR = LeaveApplication.reportCount(nID,dID,month,year,s,e,3)
+        end  
+    else
+      flash[:alert] = "You are not allowed to access this page!"
+      redirect_to leave_applications_path
+    end
   end
 
   def pdfGen
@@ -135,10 +170,15 @@ class LeaveApplicationsController < ApplicationController
   end
 
   def management
+  if current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5
     if current_employee.role_id == 2 || current_employee.role_id == 5
       @leaveApplications = LeaveApplication.findByDepartment(current_employee.department_id,2)
     elsif current_employee.role_id == 3 
        @leaveApplications = LeaveApplication.findByDepartment(current_employee.department_id,4)
+    end
+   else
+      flash[:alert] = "You are not allowed to access this page!"
+      redirect_to leave_applications_path
     end
   end
 

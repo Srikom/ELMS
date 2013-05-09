@@ -3,7 +3,12 @@ class EmployeesController < ApplicationController
  
 
   def index
-    @employees = Employee.all
+    if current_employee.role_id == 4 || current_employee.role_id == 5
+      @employees = Employee.all
+    else
+      flash[:alert] = "You are not allowed to access this page!"
+      redirect_to leave_applications_path
+    end
   end
 
   def destroy
@@ -19,9 +24,14 @@ class EmployeesController < ApplicationController
   end
 
   def new
-    @departments = Department.all
-    @roles = Role.all
-    @employees = Employee.new
+    if current_employee.role_id == 4 || current_employee.role_id == 5
+      @departments = Department.all
+      @roles = Role.all
+      @employees = Employee.new
+    else
+      flash[:alert] = "You are not allowed to access this page!"
+      redirect_to leave_applications_path
+    end
   end
 
   def create
