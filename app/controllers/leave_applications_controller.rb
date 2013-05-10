@@ -45,7 +45,7 @@ class LeaveApplicationsController < ApplicationController
   end
 
   def show_status
-    @leaveApplications = LeaveApplication.myDepartment(current_employee)
+    @leaveApplications = LeaveApplication.myDepartment(current_employee).page(params[:page]).per(1)
   end
 
   def archive

@@ -1,6 +1,7 @@
 <% if @leaveApplications.empty? %>
 	<center><h3><i>There is no Leave Applications at the moment</i></h3></center>
 <% else %>
+<%= paginate @leaveApplications,:window => 4%>
 <center>
 <div>
 	<table size='100%' id='managerTable'>
