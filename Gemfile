@@ -24,6 +24,7 @@ end
 gem 'jquery-rails'
 gem 'devise'
 gem 'prawn', git: 'https://github.com/prawnpdf/prawn.git'
+gem 'kaminari'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
