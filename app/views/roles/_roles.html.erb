@@ -1,0 +1,16 @@
+<center>
+<table>
+	<tr>
+		<th>No</th>
+		<th>Role Name</th>
+		<th>Action</th>
+	</tr>
+		<% @roles.each_with_index do |r,i| %>
+			<tr>
+				<td><%= i+1 %></td>
+				<td><%= r.role_name %></td>
+				<td><%= link_to 'Edit Role', edit_role_path(r.id)%></td>
+			</tr>
+		<% end %>
+</table>
+</center>

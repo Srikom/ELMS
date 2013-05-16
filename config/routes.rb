@@ -16,7 +16,7 @@ ELMS::Application.routes.draw do
   end
 
    resources :deletions
-
+   resources :roles
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

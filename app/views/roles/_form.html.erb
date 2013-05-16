@@ -1,0 +1,24 @@
+<%= form_for @role do |f|%>
+<center>
+<div id="reportFilter2">
+<fieldset>
+	<legend><b>New Application</b></legend>
+<% if @role.errors.any? %>
+	<div id="formError">
+		<h2>Errors :</h2>
+		<ul>
+			<% @role.errors.full_messages.each do |message| %>
+				<li><%= message %></li>
+			<% end %>
+		</ul>
+	</div>
+<% end %>
+<div>
+	<%= f.label :role_name %>:<br/>
+	<%= f.text_field :role_name %>
+</div>
+ <%= f.submit 'Submit'%>
+</fieldset>
+</div>
+</center>
+<% end %>
