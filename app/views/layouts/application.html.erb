@@ -33,7 +33,6 @@
 									<li><%= link_to 'View Profile',employee_path(current_employee)%></li>
 										<% if current_employee.role_id == 4 || current_employee.role_id == 5 %>
 											<li><%= link_to 'User Management' , employees_path %></li>
-											<li><%= link_to 'Role Management' , roles_path %></li>
 										<% end %>
 								</ul>
 							</li>
