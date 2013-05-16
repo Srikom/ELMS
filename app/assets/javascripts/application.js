@@ -22,8 +22,8 @@
 
 $(function(){
 
-	$('#notice').fadeOut(2000);
-	$('#alert').fadeOut(2000);
+	$('#notice').fadeOut(4000);
+	$('#alert').fadeOut(4000);
 	$('#rangeS').datepicker();
 	$('#rangeE').datepicker();
 });

@@ -1,7 +1,12 @@
 class DeletionsController < ApplicationController
 
     def index
-        @del = Deletion.findDel(current_employee)
+        if current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5
+            @del = Deletion.all
+        else
+          flash[:alert] = "You are not allowed to access this page!"
+          redirect_to leave_applications_path
+        end
     end
 
 	def create

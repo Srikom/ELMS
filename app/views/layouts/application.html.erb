@@ -13,20 +13,31 @@
 				<div id='header'>
 					<h1>Employee Leave Management System</h1>
 						<% if employee_signed_in? %>
-						<ul>
-							<li><%= link_to 'Home',leave_applications_path %> |</li>
-							<li><%= link_to 'Application Status', show_status_leave_applications_path %> |</li>
-							<li><%= link_to 'Application Archive', archive_leave_applications_path %> |</li>
-							<% if current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5 %>
-								<li><%= link_to 'Report',report_leave_applications_path %> |</li>
-								<li><%= link_to 'Application Management',management_leave_applications_path %> |</li>
-							<% end %>
-							<% if current_employee.role_id == 4 || current_employee.role_id == 5 %>
-								<li><%= link_to 'User Management' , employees_path %> |</li>
-							<% end %>
-							<li><%= link_to 'Removed Application Notifications ',deletions_path %> |</li>
-							<li><%= link_to 'View Profile',employee_path(current_employee)%> |</li>
-							<li>Leave balance : <%= current_employee.leave_balance %> |</li>
+						<ul id='nav'>
+							<li><%= link_to 'Home',leave_applications_path %></li>
+							<li>
+								<a href="#">Leave Application</a>
+								<ul class="nav">
+									<li><%= link_to 'Application Status', show_status_leave_applications_path %></li>
+									<li><%= link_to 'Application Archive', archive_leave_applications_path %></li>
+										<% if current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5 %>
+											<li><%= link_to 'Report',report_leave_applications_path %></li>
+											<li><%= link_to 'Application Management',management_leave_applications_path %></li>
+											<li><%= link_to 'Deletion Application Notifications',deletions_path %></li>
+										<% end %>
+								</ul>
+
+							<li>
+								<a href="#">User Profile</a>
+								<ul class="nav">
+									<li><%= link_to 'View Profile',employee_path(current_employee)%></li>
+										<% if current_employee.role_id == 4 || current_employee.role_id == 5 %>
+											<li><%= link_to 'User Management' , employees_path %></li>
+										<% end %>
+								</ul>
+							</li>
+
+							<li>Leave balance : <%= current_employee.leave_balance %></li>
 							<li><%= link_to 'Logout', destroy_employee_session_path, method: :delete %>	</li>
 						</ul>
 					<% end %>
@@ -34,11 +45,9 @@
 				</div>
 			
 			<div id='content'>
-				<center>
 					<% flash.each do |key,msg|%>
 						<%= content_tag :div, msg, id:key %>
 					<% end %>
-				</center>
 				<p>
 				
 					<%= yield %>
@@ -46,7 +55,7 @@
 			</div>
 			<div id='footer'>
 				<p>
-					&copy Company 2013
+					&copy Internship Sri Komputer 2013
 				</p>
 			</div>
 		</div>

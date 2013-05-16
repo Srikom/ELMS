@@ -14,23 +14,19 @@
 
 
 <table>
-<% i = 0 %>
 <tr>
-<th>No</th>
+<th>ID</th>
 <th>Name</th>
 <th>Department</th>
 <th>Role</th>
-<th></th>
 </tr>
 
 <% @employees.each do |f| %>
-<% i += 1 %>
 <tr>
-	<td><%= i %></td>
+	<td><%= link_to f.id , employee_path(f.id) %></td>
 	<td><%= f.name %></td>
 	<td><%= Department.where(id:f.department_id).pluck("department_name").join("") %></td>
 	<td><%= Role.where(id:f.role_id).pluck("role_name").join("") %></td>
-	<td><%= link_to "[View]" , employee_path(f.id)%></td>
 </tr>
 <% end %>
 </table>

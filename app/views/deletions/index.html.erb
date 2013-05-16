@@ -1,22 +1,20 @@
 <h2>List Of Leave Applications that has been removed</h2>
 
 <% if @del.empty? %>
-	<center><h3><i>There is no Leave Applications Removed Notifications at the moment</i></h3></center>
+	<center><h3><i>There is no Leave Applications Deletion Notifications at the moment</i></h3></center>
 <% else %>
 <center>
 <div>
 	<table size='100%' id='managerTable'>
 		<tr>
-			<th>ID</th>
-			<th>Leave Application ID</th>
+			<th>No.</th>
 			<th>Start Date</th>
 			<th>End Date</th>
 			<th>Reason</th>
 		</tr>
-		<% @del.each do |l| %>
+		<% @del.each_with_index do |l,i| %>
 			<tr>
-				<td><%= l.id%></td>
-				<td><%= l.leave_application_id%></td>
+				<td><%= (i+1)%></td>
 				<td><%= l.start_date.strftime('%d/%m/%Y') %></td>
 				<td><%= l.end_date.strftime('%d/%m/%Y') %></td>
 				<td><%= l.reason %></td>

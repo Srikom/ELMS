@@ -45,7 +45,7 @@ class LeaveApplicationsController < ApplicationController
   end
 
   def show_status
-    @leaveApplications = LeaveApplication.myDepartment(current_employee).page(params[:page]).per(1)
+    @leaveApplications = LeaveApplication.myDepartment(current_employee)
   end
 
   def archive
@@ -69,28 +69,32 @@ class LeaveApplicationsController < ApplicationController
     diff = ((ed - sd) + 1)
     bal = @employee.leave_bal - diff.to_i
 
-    if bal > 0
-      @leaveApplication = @employee.leave_applications.new(params[:leave_application])
-
-      if params[:submit] && (current_employee.role_id == 1 || current_employee.role_id == 2)
-         @leaveApplication.status_id = 2 
-      elsif params[:submit] && current_employee.role_id == 3
-          @leaveApplication.update_attributes(status_id: 4)
-      end
-
-      if @leaveApplication.save && @employee.update_attributes(leave_bal: bal)
-          flash[:notice] = "Application has been successfully created!"
-          redirect_to leave_applications_path
-      else
-        flash[:alert] = "Application failed to be created!"
-        flash.discard
-        render 'new'
-      end
+    if sd > ed
+       flash[:alert] = "The end date cannot be the past date!"
+       redirect_to new_leave_application_path
     else
-        flash[:alert] = "Cannot apply for leave due to unsufficient leave balance!"
-        flash.discard
-        render 'new'
-      end
+        if bal > 0
+          @leaveApplication = @employee.leave_applications.new(params[:leave_application])
+
+          if params[:submit] && (current_employee.role_id == 1 || current_employee.role_id == 2)
+             @leaveApplication.status_id = 2 
+          elsif params[:submit] && current_employee.role_id == 3
+              @leaveApplication.update_attributes(status_id: 4)
+          end
+
+          if @leaveApplication.save && @employee.update_attributes(leave_bal: bal)
+              flash[:notice] = "Application has been successfully created!"
+              redirect_to leave_applications_path
+          else
+            flash[:alert] = "Application failed to be created!"
+            redirect_to new_leave_application_path
+          end
+        else
+            flash[:alert] = "Cannot apply for leave due to unsufficient leave balance!"
+            redirect_to new_leave_application_path
+        end
+    end 
+
   end
 
   def edit
@@ -140,19 +144,28 @@ class LeaveApplicationsController < ApplicationController
           month = params[:month][:value]
         end
 
-        if params[:year]
+        if params[:year] 
           year = params[:year][:value]
         end
         
-        if params[:rangeS] || params[:rangeE]
+        if params[:rangeS] || params[:rangeE] 
           s = params[:rangeS]
           e = params[:rangeE]
         end
 
-      unless nID.nil? && dID.nil? && params[:month].nil? && params[:year].nil? && params[:rangeS].nil? && params[:rangeE].nil?
-        @reportsA = LeaveApplication.reportCount(nID,dID,month,year,s,e,5)
-        @reportsR = LeaveApplication.reportCount(nID,dID,month,year,s,e,3)
-        end  
+         if (nID == "" && dID == "" && month == "" && year == "" && s == "" && e == "") 
+            flash[:alert] = "Enter atleast one particular field!"
+            flash.discard
+        else
+          unless (nID.nil? || nID == "") && (dID.nil? || dID == "") && (params[:month].nil? || params[:month] == "") && (params[:year].nil? || params[:year] == "" ) && (params[:rangeS].nil? || params[:rangeS] == "") && (params[:rangeE].nil? || params[:rangeE] == "") 
+            @reportsA = LeaveApplication.reportCount(nID,dID,month,year,s,e,5)
+            @reportsR = LeaveApplication.reportCount(nID,dID,month,year,s,e,3)
+              if @reportsA == 0 && @reportsR == 0
+                flash[:alert] = "No data found!"
+                flash.discard
+              end
+            end  
+        end
     else
       flash[:alert] = "You are not allowed to access this page!"
       redirect_to leave_applications_path

@@ -1,25 +1,24 @@
 <% if @leaveApplications.empty? %>
 	<center><h3><i>There is no Leave Applications at the moment</i></h3></center>
 <% else %>
-<%= paginate @leaveApplications,:window => 4%>
 <center>
 <div>
 	<table size='100%' id='managerTable'>
-		<th>No.</th>
+		<tr>
+			<th>No</th>
 			<th>Department</th>
 			<th>Date Of Submission</th>
 			<th>Status</th>
-			<th></th>
+			<th>Action</th>
 		</tr>
 		<% @leaveApplications.each_with_index do |l,i| %>
 			<tr>
-				<td><%=(i+1)%></td>
+				<td><%= (i+1) %></td>
 				<td><%= l.department_name %></td>
 				<td><%= l.created_at.strftime('%d/%m/%Y') %></td>
 				<td><%= l.status_name %></td>
-				<td><%= link_to '[View]',leave_application_path(l.id)%></td>
+				<td><%= link_to 'Details',leave_application_path(l.id)%></td>
 			</tr>
-
 		<% end %>
 	</table>
 </div>

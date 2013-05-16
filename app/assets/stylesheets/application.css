@@ -120,6 +120,11 @@ body
 	font-family: tahoma;
 	font-size: 11px;
 	font-weight: bold;
+    position: absolute;
+    left: 40%;
+    opacity: 0.8;
+    -moz-opacity: 0.8;
+    filter:alpha(opacity=8);
 }
 
 #alert
@@ -131,6 +136,11 @@ body
 	font-family: tahoma;
 	font-size: 11px;
 	font-weight: bold;
+    position: absolute;
+    left: 40%;
+    opacity: 0.8;
+    -moz-opacity: 0.8;
+    filter:alpha(opacity=8);
 }
 
 table
@@ -372,4 +382,65 @@ th
 #deletion_reason
 {
    height:100px;
+}
+
+ul .nav
+{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul .nav li
+{
+    float:left;
+    background:#000;
+    display:block;
+    padding:5px 10px;
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.8;
+    -moz-opacity: 0.8;
+    filter:alpha(opacity=8);
+}
+
+ul#nav li a:hover{
+    background:#fff;
+}
+
+ul#nav li ul li{
+    float:none;
+}
+
+ul#nav li ul {
+    display:none;
+    position:absolute;
+}
+
+ul#nav li:hover ul{
+    display:block;
+}
+
+
+html,
+body {
+   margin:0;
+   padding:0;
+   height:100%;
+}
+#wrapper {
+   min-height:100%;
+   position:relative;
+}
+#header {
+   padding:10px;
+}
+#content {
+   padding:10px;
+   padding-bottom:60px;   /* Height of the footer */
+}
+#footer {
+   position:absolute;
+   bottom:0;
+   width:994px;
 }

@@ -10,7 +10,7 @@
 
 </h2>
 <%= form_tag leave_applications_path, method: :get do  %>
-    <b>Filter :</b><%= select_month(nil, :field_name => 'value', :prefix => 'month',:prompt => 'Choose month') %> <%= select_year(nil, :field_name => 'value', :prefix => 'year',:prompt => 'Choose year') %> <%= submit_tag "Filter"%><br/>
+    <b>Traverse Calendar(By Month or Year) :</b><%= select_month(nil, :field_name => 'value', :prefix => 'month',:prompt => 'Choose month') %> <%= select_year(nil, :field_name => 'value', :prefix => 'year',:prompt => 'Choose year') %> <%= submit_tag "Go"%><br/>
     <% end %>
 <div id="empLeave">
 	<%= calendar @date do |date| %>
@@ -64,21 +64,21 @@
                     <div><b>Application Status :</b><br/>
                     <%= b.status_name %></div>
 
-                            <% if current_employee.id == l.eid && l.status_id == 1 && l.start_date >= date %>
+                            <% if current_employee.id == l.eid && l.status_id == 1 && (date > Date.today) %>
                                 <p><%= button_to 'Edit',edit_leave_application_path(l.lid), method: :get %></p>
                                 <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?' %></p>  
                                 <p><%= button_to 'Submit' ,submitApp_leave_application_path(l.lid), method: :put %></p>
                             <% elsif  current_employee.department_id == l.department_id && l.status_id == 2 %>
-                            <% if (current_employee.role_id == 2 || current_employee.role_id == 5) && l.start_date >= date %>
-                            <% @review = LeaveApplication.find(l.lid) %>
-                                <%= form_for(@review, :url => updateReview_leave_application_path(l.lid)) do |f| %>
-                                    <%= f.select :status, [['Approve',4],['Reject',3]] %>
-                                     <%= f.submit "Update Review Status" %>
-                                <% end %>
-                                <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?' %></p>
-                            <% else %>
-                                <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?' %></p>
-                            <% end %>  
+                            <% if (current_employee.role_id == 2 || current_employee.role_id == 5) && (date > Date.today) %>
+                                <% @review = LeaveApplication.find(l.lid) %>
+                                    <%= form_for(@review, :url => updateReview_leave_application_path(l.lid)) do |f| %>
+                                        <%= f.select :status, [['Approve',4],['Reject',3]] %>
+                                         <%= f.submit "Update Review Status" %>
+                                    <% end %>
+                                    <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?' %></p>
+                                <% else %>
+                                        <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?' %></p>
+                                <% end %>  
                             <% elsif current_employee.department_id == l.department_id && l.status_id == 4 %>   
                             <% if (current_employee.role_id == 3) && l.start_date >= date %>
                             <% @review = LeaveApplication.find(l.lid) %>

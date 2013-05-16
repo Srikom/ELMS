@@ -34,22 +34,27 @@
 </center>
 
 <% unless @reportsA.nil? && @reportsR.nil? %>
-<center>
-<div id="reportFilter">
-	<fieldset class="fieldset-auto-width">
-		<legend><b>Search Result</b></legend>
-	<table size='100%' id='managerTable'>
-		<tr>
-			<th>Approved</th>
-			<th>Rejected</th>
-		</tr>
-		<tr>
-			<td><%= @reportsA %></td>
-			<td><%= @reportsR %></td>
-		</tr>
-	</table>
-	</fieldset>
-</div>	
-</center>
-<%= link_to "Download PDF", pdfGen_leave_applications_path(format:"pdf")+'?approve='+@reportsA.to_s+'&reject='+@reportsR.to_s%>
+	<% if @reportsA == 0 && @reportsR == 0 %>
+
+	<% else %>
+		<center>
+		<div id="reportFilter">
+			<fieldset class="fieldset-auto-width">
+				<legend><b>Search Result</b></legend>
+			<table size='100%' id='managerTable'>
+				<tr>
+					<th>Approved</th>
+					<th>Rejected</th>
+				</tr>
+				<tr>
+					<td><%= @reportsA %></td>
+					<td><%= @reportsR %></td>
+				</tr>
+			</table>
+			</fieldset>
+		</div>	
+		</center>
+		<%= link_to "Download PDF", pdfGen_leave_applications_path(format:"pdf")+'?approve='+@reportsA.to_s+'&reject='+@reportsR.to_s%>
+	<% end %>
+
 <% end %>
