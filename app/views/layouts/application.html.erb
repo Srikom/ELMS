@@ -23,21 +23,22 @@
 										<% if current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5 %>
 											<li><%= link_to 'Report',report_leave_applications_path %></li>
 											<li><%= link_to 'Application Management',management_leave_applications_path %></li>
-											<li><%= link_to 'Deletion Application Notifications',deletions_path %></li>
+											<li><%= link_to 'Removed Application Notifications',deletions_path %></li>
 										<% end %>
 								</ul>
 
 							<li>
-								<a href="#">User Profile</a>
+								<a href="#">Profile Management</a>
 								<ul class="nav">
 									<li><%= link_to 'View Profile',employee_path(current_employee)%></li>
 										<% if current_employee.role_id == 4 || current_employee.role_id == 5 %>
 											<li><%= link_to 'User Management' , employees_path %></li>
+											<li><%= link_to 'Role Management' , roles_path %></li>
 										<% end %>
 								</ul>
 							</li>
 
-							<li>Leave balance : <%= current_employee.leave_balance %></li>
+							<li>Leave balance : <%= current_employee.leave_balance %><%= current_employee.role_id%></li>
 							<li><%= link_to 'Logout', destroy_employee_session_path, method: :delete %>	</li>
 						</ul>
 					<% end %>
