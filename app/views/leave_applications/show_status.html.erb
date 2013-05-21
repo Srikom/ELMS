@@ -1,11 +1,10 @@
 <h3>List Of Application</h3>
 
-<p><%= search_form_for @search do |f| %>
+<p><%= form_tag show_status_leave_applications_path,method: :get do%>
 	
-  <%= f.label :status_id_eq, "Role :" %>
-  <%= f.select :status_id_eq, options_for_select([["Please Select",nil],["Not Submitted",1],["Approved by Manager",4],["Rejected",3]]) %>
-	
-  <%= f.submit "Search" %></p>
-<% end %>
+  <%= select_tag :status_name, options_for_select([["Not Submitted",1],["Pending",2],["Rejected",3],["Approved by Manager",4],["Approved",5]]),{prompt: "Please Select"}%>
+  	
+  <%= submit_tag "Search" %><br/>
+  <% end %>
 
 <%= render 'leaveApplications'%>

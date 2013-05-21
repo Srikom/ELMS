@@ -1,12 +1,13 @@
 <h3>Application Archive</h3>
 
-<p><%= search_form_for @search do |f| %>
+<p><%= form_tag archive_leave_applications_path,method: :get do%>
 	
-  <%= f.label :status_id_eq, "Status :" %>
-  <%= f.select :status_id_eq, options_for_select([["Please Select",nil],["Approved",5],["Pending",2]]) %>
+  <%= select_tag :status_name, options_for_select([["Approved",5],["Rejected",3]]),
+			{prompt: "Please Select"}%>
+  	
+  <%= submit_tag "Search" %><br/>
+  <% end %>
   
-  <%= f.submit "Search" %></p>
-  
-<% end %>
+
 
 <%= render 'leaveApplications'%>

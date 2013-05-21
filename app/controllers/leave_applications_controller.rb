@@ -45,17 +45,43 @@ class LeaveApplicationsController < ApplicationController
   end
 
   def show_status
-    @search = LeaveApplication.search(params[:q])
-    @leaveApplication = @search.result(:distinct => true)
 
-    @leaveApplications = LeaveApplication.myDepartment(current_employee)
+    @statuses = Status.all
+    sID = params[:status_name]
+
+    if sID.to_i == 1 
+      @leaveApplications = LeaveApplication.filterArchive(sID,current_employee)
+    elsif sID.to_i == 2
+      @leaveApplications = LeaveApplication.filterArchive(sID,current_employee)
+    elsif sID.to_i == 3
+      @leaveApplications = LeaveApplication.filterArchive(sID,current_employee)
+    elsif sID.to_i == 4
+      @leaveApplications = LeaveApplication.filterArchive(sID,current_employee)
+    elsif sID.to_i == 5
+      @leaveApplications = LeaveApplication.filterArchive(sID,current_employee)
+    elsif sID == ""
+     @leaveApplications = LeaveApplication.myArchive(current_employee)
+    end
+
+    @leaveApplications = params[:status_name] ? @leaveApplications : LeaveApplication.myArchive(current_employee)
+    
   end
 
   def archive
-    @search = LeaveApplication.search(params[:q])
-    @leaveApplication = @search.result(:distinct => true)
+    
 
-    @leaveApplications = LeaveApplication.myArchive(current_employee)
+    @statuses = Status.all
+    sID = params[:status_name]
+
+    if sID.to_i == 5 
+      @leaveApplications = LeaveApplication.filterArchive(sID,current_employee)
+    elsif sID.to_i == 2
+      @leaveApplications = LeaveApplication.filterArchive(sID,current_employee)
+    elsif sID == ""
+     @leaveApplications = LeaveApplication.myArchive(current_employee)
+    end
+
+     @leaveApplications = params[:status_name] ? @leaveApplications : LeaveApplication.myArchive(current_employee)
   end
 
   def show
