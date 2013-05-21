@@ -45,10 +45,16 @@ class LeaveApplicationsController < ApplicationController
   end
 
   def show_status
+    @search = LeaveApplication.search(params[:q])
+    @leaveApplication = @search.result(:distinct => true)
+
     @leaveApplications = LeaveApplication.myDepartment(current_employee)
   end
 
   def archive
+    @search = LeaveApplication.search(params[:q])
+    @leaveApplication = @search.result(:distinct => true)
+
     @leaveApplications = LeaveApplication.myArchive(current_employee)
   end
 
@@ -184,6 +190,10 @@ class LeaveApplicationsController < ApplicationController
   end
 
   def management
+    
+    @search = LeaveApplication.search(params[:q])
+    @leaveApplication = @search.result(:distinct => true)
+
   if current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5
     if current_employee.role_id == 2 || current_employee.role_id == 5
       @leaveApplications = LeaveApplication.findByDepartment(current_employee.department_id,2)
