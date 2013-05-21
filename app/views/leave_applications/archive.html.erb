@@ -1,3 +1,11 @@
 <h3>Application Archive</h3>
 
+<p><%= search_form_for @search do |f| %>
+	
+  <%= f.label :status_id_eq, "Status :" %>
+  <%= f.select :status_id_eq, options_for_select([["Please Select",nil],["Pending",2],["Approved",5]]) %>
+  
+  <%= f.submit "Search" %></p>
+<% end %>
+
 <%= render 'leaveApplications'%>
