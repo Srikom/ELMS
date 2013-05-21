@@ -26,4 +26,16 @@ $(function(){
 	$('#alert').fadeOut(4000);
 	$('#rangeS').datepicker();
 	$('#rangeE').datepicker();
+
+	$("#showL").click(function(){
+		$("#right").fadeIn(1000);
+		$(this).fadeOut();
+	});
+
+	$("#right").click(function(){
+		$("#showL").fadeIn(1000);
+		$(this).fadeOut();
+	})
+
+	
 });

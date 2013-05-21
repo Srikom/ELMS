@@ -66,10 +66,11 @@ class LeaveApplicationsController < ApplicationController
     @employee = Employee.find(current_employee)
     sd = Date.parse(params[:leave_application][:start_date])
     ed = Date.parse(params[:leave_application][:end_date])
+    dt = Date.today
     diff = ((ed - sd) + 1)
     bal = @employee.leave_bal - diff.to_i
 
-    if sd > ed
+    if sd > ed || ((sd <= dt) && (sd >= ed))
        flash[:alert] = "The end date cannot be the past date!"
        redirect_to new_leave_application_path
     else

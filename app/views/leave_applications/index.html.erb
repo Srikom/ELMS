@@ -1,17 +1,51 @@
-<h4>Welcome, <%= current_employee.name %>. Page is still under construction.</h4>
+<div id='left'>
+<h4>Welcome, <%= current_employee.name %>.</h4>
 <p>List of on-leave employee for the current month</p>
+<br/><br/>
+<div id='navCal'>
 <h2 id='month'>
-    
 	<center>
 		<%= link_to "<", date: @date.prev_month %>
 		<%= @date.strftime('%B %Y') %>
 		<%= link_to ">", date: @date.next_month %>
 	</center>
-
 </h2>
+</div>
 <%= form_tag leave_applications_path, method: :get do  %>
     <b>Traverse Calendar(By Month or Year) :</b><%= select_month(nil, :field_name => 'value', :prefix => 'month',:prompt => 'Choose month') %> <%= select_year(nil, :field_name => 'value', :prefix => 'year',:prompt => 'Choose year') %> <%= submit_tag "Go"%><br/>
     <% end %>
+</div>
+<span id="showL">Click to show Legend</span>
+<div id='right'>
+    <center>
+    <table id='lTable'>
+        <tr>
+            <td colspan="2"><center><span id='lt'><b>Legend</b></span></center></td>
+        </tr>
+        <tr>
+            <td><div id='red'></div></td>
+            <td><span id='lt'>Not Submitted</span></td>
+        </tr>
+        <tr>
+            <td><div id='orange'></td>
+            <td><span id='lt'>Submitted/Pending</span></td>
+        </tr>
+        <tr>
+            <td><div id='blue'></div></td>
+            <td><span id='lt'>Under management review</span></td>
+        </tr>
+        <tr>
+            <td><div id='green'></div></td>
+            <td><span id='lt'>Application Approved</span></td>
+        </tr>
+        <tr>
+            <td><div id='grey'></div></td>
+            <td><span id='lt'>Application Rejected</span></td>
+        </tr>
+    </table>
+     </center>
+</div>
+<div class='clearfix'></div>
 <div id="empLeave">
 	<%= calendar @date do |date| %>
  
@@ -86,16 +120,13 @@
                                     <%= f.select :status, [['Approve',5],['Reject',3]] %>
                                     <%= f.hidden_field :bal, :value => b.date_diff.to_i %>
                                      <%= f.submit "Update Review Status" %>
-                                <% end %>
-                                <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?' %></p>
-                            <% else %>
-                                <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?' %></p>
+                                <% end %> 
                             <% end %>
-    
+                            <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?' %></p>
                             <% elsif  l.status_id == 5 %>
-                                <% if (current_employee.role_id = 1 || current_employee.role_id = 4) && date >= Date.today && current_employee.id == l.eid %> 
+                                <% if (current_employee.role_id == 1 || current_employee.role_id == 4) && date >= Date.today && current_employee.id == l.eid %> 
                                     <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?' %></p>
-                                <% elsif (current_employee.role_id = 2 || current_employee.role_id = 3) || date <= Date.today%>
+                                <% elsif (current_employee.role_id == 2 || current_employee.role_id == 3) || date <= Date.today%>
                                 <div>
                                     <%= form_for @del do |f| %>
                                         <div><b><%= f.label :reason %>:</b><br/>
@@ -110,7 +141,7 @@
                                 </div>
                                 <% end %>
                             <% end %>
-                            
+                        
                         
                 <% end %>
                 </div>

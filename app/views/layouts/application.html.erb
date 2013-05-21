@@ -9,10 +9,13 @@
 <div class="myModalContainer">
 </div>
 <body>
+	
 	<div id='wrapper'>
 				<div id='header'>
+					<%= image_tag("logo.jpg", :alt => "rss feed", :id=>"img") %>
 					<h1>Employee Leave Management System</h1>
 						<% if employee_signed_in? %>
+					
 						<ul id='nav'>
 							<li><%= link_to 'Home',leave_applications_path %></li>
 							<li>
@@ -37,8 +40,8 @@
 								</ul>
 							</li>
 
-							<li>Leave balance : <%= current_employee.leave_balance %><%= current_employee.role_id%></li>
-							<li><%= link_to 'Logout', destroy_employee_session_path, method: :delete %>	</li>
+							<li>Leave balance : <%= current_employee.leave_balance %></li>
+							<li><%= link_to 'Logout', destroy_employee_session_path, method: :delete %></li>
 						</ul>
 					<% end %>
 					<div class='clearfix'></div>

@@ -7,7 +7,6 @@ class LeaveApplication < ActiveRecord::Base
   belongs_to :leave
   belongs_to :employee
 
-  
 
   def self.dateDiff(lid)
     select("(julianday(Date(end_date)) - julianday(start_date))+1 AS diff").where(id:lid)
