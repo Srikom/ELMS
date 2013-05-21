@@ -1,5 +1,6 @@
 class LeaveApplicationsController < ApplicationController
   
+  
 
   def index
     if current_employee.role_id == 2 || current_employee.role_id == 5
@@ -123,15 +124,25 @@ class LeaveApplicationsController < ApplicationController
   def destroy
     @leaveApplication = LeaveApplication.find(params[:id])
     @employee = Employee.find(@leaveApplication.employee_id)
-
+    @res = false
     @bal = LeaveApplication.dateDiff(params[:id])
 
     @bal.each do |d|
       @diff = d.diff
     end
-
     newBal = @employee.leave_bal + @diff
-    if @leaveApplication.destroy && @employee.update_attributes(leave_bal: newBal)
+
+    if @leaveApplication.status_id == 5
+      if @leaveApplication.destroy && @employee.update_attributes(leave_bal: newBal, leave_balance: newBal)
+        @res = true
+      end 
+    else
+      if @leaveApplication.destroy && @employee.update_attributes(leave_bal: newBal)
+        @res = true
+      end 
+    end
+
+    if @res == true
       flash[:notice] = "Application has been successfully deleted!"
     else
       flash[:alert] = "Application failed to be deleted!"
@@ -189,6 +200,10 @@ class LeaveApplicationsController < ApplicationController
   end
 
   def management
+    
+    @search = LeaveApplication.search(params[:q])
+    @leaveApplication = @search.result(:distinct => true)
+
   if current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5
     if current_employee.role_id == 2 || current_employee.role_id == 5
       @leaveApplications = LeaveApplication.findByDepartment(current_employee.department_id,2)
@@ -211,6 +226,9 @@ class LeaveApplicationsController < ApplicationController
           if current_employee.role_id == 3
             if @review.status_id == 5
               @emp.update_attributes(leave_balance: date_bal)
+            elsif @review.status_id == 3
+              lbal = @emp.leave_bal + diff
+              @emp.update_attributes(leave_bal: lbal)
             end
           end
         flash[:notice] = "Successfully Updated Status"

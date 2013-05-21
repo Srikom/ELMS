@@ -15,12 +15,12 @@ class ReportPdf < Prawn::Document
 		move_down 5
 		text "as on #{Date.today.strftime('%d %B %Y')}",style: :bold,:align => :center
 		move_down 20
-		text "Total number of applicants : #{@total}"
+		text "Total number of application's : #{@total}"
 		move_down 10
 	end
 
 	def table_data
-		text "Application Review Amount : "
+		text "Amount of Reviewed Application's: "
 		move_down 10
 		table datas do
 			row(0).font_style = :bold

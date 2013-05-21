@@ -1,11 +1,21 @@
 <% if @leaveApplications.empty? %>
 	<center><h3><i>There is no Leave Applications at the moment</i></h3></center>
 <% else %>
+
+<p><%= search_form_for @search do |f| %>
+	
+  <%= f.label :status_id_eq, "Status :" %>
+  <%= f.select :status_id_eq, options_for_select([["Please Select",nil],["Not Submitted",1],["Pending",2],["Rejected",3],["Approved by Manager",4],["Approved",5]]) %>
+  
+  <%= f.submit "Search" %></p>
+<% end %>
+
 <center>
 <div>
 	<table size='100%' id='managerTable'>
 		<tr>
 			<th>No</th>
+			<th>Name of Applicant</th>
 			<th>Department</th>
 			<th>Date Of Submission</th>
 			<th>Status</th>
@@ -14,6 +24,7 @@
 		<% @leaveApplications.each_with_index do |l,i| %>
 			<tr>
 				<td><%= (i+1) %></td>
+				<td><%= l.name %></td>
 				<td><%= l.department_name %></td>
 				<td><%= l.created_at.strftime('%d/%m/%Y') %></td>
 				<td><%= l.status_name %></td>

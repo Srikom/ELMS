@@ -53,11 +53,11 @@
            
              
             <% if !@availability.any? && (date.strftime('%a') != 'Sat' && date.strftime('%a') != 'Sun') && Date.today < date %>    
-                 <a href="/leave_applications/new?date=<%= date %>"><%= date.day %></a>
+                 <a href="/leave_applications/new?date=<%= date %>" id="day"><%= date.day %></a>
             <% else %>
                 <%= date.day %>
             <% end %>
-
+            <br/>
         		<% @leaveApplications.each do |l|%>
         			<% 
         				dateLeaveStart = Date.parse(l.start_date.strftime('%Y-%m-%d'))
@@ -71,6 +71,8 @@
         				<% cl = "ns" %>
         			<% elsif  l.status_id == 2 %>
         				<% cl = "p" %>
+                    <% elsif  l.status_id == 3 %>
+                        <% cl = "r" %>
         			<% elsif  l.status_id == 4 %>
         				<% cl = "am" %>
         			<% elsif  l.status_id == 5 %>
@@ -98,12 +100,14 @@
                     <div><b>Application Status :</b><br/>
                     <%= b.status_name %></div>
 
-                            <% if current_employee.id == l.eid && l.status_id == 1 && (date > Date.today) %>
-                                <p><%= button_to 'Edit',edit_leave_application_path(l.lid), method: :get %></p>
+                            <% if current_employee.id == l.eid && l.status_id == 1 %>
+                                <% if (date > Date.today)%>
+                                    <p><%= button_to 'Edit',edit_leave_application_path(l.lid), method: :get %></p>
+                                    <p><%= button_to 'Submit' ,submitApp_leave_application_path(l.lid), method: :put %></p>
+                                <% end %>
                                 <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?' %></p>  
-                                <p><%= button_to 'Submit' ,submitApp_leave_application_path(l.lid), method: :put %></p>
-                            <% elsif  current_employee.department_id == l.department_id && l.status_id == 2 %>
-                            <% if (current_employee.role_id == 2 || current_employee.role_id == 5) && (date > Date.today) %>
+                            <% elsif  (current_employee.role_id == 2 || current_employee.role_id == 5) && current_employee.department_id == l.department_id && l.status_id == 2 %>
+                            <% if (date > Date.today) %>
                                 <% @review = LeaveApplication.find(l.lid) %>
                                     <%= form_for(@review, :url => updateReview_leave_application_path(l.lid)) do |f| %>
                                         <%= f.select :status, [['Approve',4],['Reject',3]] %>

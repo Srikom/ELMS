@@ -31,11 +31,11 @@ class LeaveApplication < ActiveRecord::Base
   end
 
   def self.myDepartment(employee)
-  	select('leave_applications.id,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where(employee_id:employee)
+  	select('leave_applications.id,employees.name,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where(employee_id:employee)
   end
 
   def self.findByDepartment(dept,status)
-    select('leave_applications.id,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where(:employees => {:department_id => dept},status_id:status)
+    select('leave_applications.id,employees.name,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where(:employees => {:department_id => dept},status_id:status)
   end
 
   def self.appDetails(application)
@@ -43,7 +43,7 @@ class LeaveApplication < ActiveRecord::Base
   end 
 
   def self.myArchive(employee)
-  	select('leave_applications.id,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where("employee_id = ? AND (status_id = 3 OR status_id = 5)",employee)
+  	select('leave_applications.id,employees.name,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where("employee_id = ? AND (status_id = 3 OR status_id = 5)",employee)
   end
 
   def self.reportCount(emp_id,dept_id,month,year,s,e,sID)
