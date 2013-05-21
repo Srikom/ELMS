@@ -237,6 +237,9 @@ class LeaveApplicationsController < ApplicationController
       flash[:alert] = "You are not allowed to access this page!"
       redirect_to leave_applications_path
     end
+
+    @pages = LeaveApplication.page(params[:page]).per(5)
+
   end
 
   def updateReview
