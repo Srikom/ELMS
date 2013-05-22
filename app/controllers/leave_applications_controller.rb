@@ -243,17 +243,14 @@ class LeaveApplicationsController < ApplicationController
 
   if current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5
     if current_employee.role_id == 2 || current_employee.role_id == 5
-      @leaveApplications = LeaveApplication.findByDepartment(current_employee.department_id,2)
+      @leaveApplications = LeaveApplication.findByDepartment(current_employee.department_id,2).paginate(:page => params[:page], :per_page => 5)
     elsif current_employee.role_id == 3 
-       @leaveApplications = LeaveApplication.findByDepartment(current_employee.department_id,4)
+       @leaveApplications = LeaveApplication.findByDepartment(current_employee.department_id,4).paginate(:page => params[:page], :per_page => 5)
     end
    else
       flash[:alert] = "You are not allowed to access this page!"
       redirect_to leave_applications_path
     end
-
-    @pages = LeaveApplication.page(params[:page]).per(5)
-
   end
 
   def updateReview
