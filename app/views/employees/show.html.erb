@@ -40,5 +40,8 @@
 <% if current_employee == @show %>
 		<center><%= button_to "Edit Profile", edit_employee_path(@show),method: :get%></center>
 <% elsif current_employee.role_id == 4 || current_employee.role_id == 5 %>
-	<%= link_to "Remove User" , @employees , :method => :delete , :confirm => "Are you sure ?" %>
+<center>
+<%= button_to "Edit Employee", edit_employee_path(@show),method: :get%>
+<%= button_to "Remove User", @employees , :method => :delete , :confirm => "Are you sure ?"%>
+</center>
 <% end %>

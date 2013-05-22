@@ -46,6 +46,10 @@ class LeaveApplication < ActiveRecord::Base
     select('leave_applications.id,employees.name,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where("employee_id = ? AND (status_id = 3 OR status_id = 5)",employee)
   end
 
+  def self.myStatus(employee)
+    select('leave_applications.id,employees.name,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where("employee_id = ?",employee)
+  end
+
   def self.reportCount(emp_id,dept_id,month,year,s,e,sID)
     reports = LeaveApplication.joins(:employee => :department).where("status_id = ?",sID)
     reports = filter_report(reports,emp_id,dept_id,month,year,s,e) 

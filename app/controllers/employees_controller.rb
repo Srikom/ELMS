@@ -5,15 +5,14 @@ class EmployeesController < ApplicationController
   def index
 
     if current_employee.role_id == 4 || current_employee.role_id == 5
-      @employees = Employee.all
-      @pages = Employee.page(params[:page]).per(5)
+      @search = Employee.search(params[:q])
+      @employees = @search.result(:distinct => true).paginate(:page => params[:page], :per_page => 5)
     else
       flash[:alert] = "You are not allowed to access this page!"
       redirect_to leave_applications_path
     end
 
-      @search = Employee.search(params[:q])
-      @employees = @search.result(:distinct => true)
+      
     
   end
 

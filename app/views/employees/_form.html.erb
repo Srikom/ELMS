@@ -26,6 +26,7 @@
 	<div><b><%= f.label :password_confirmation %></b><br />
 	<%= f.password_field :password_confirmation %></div><br>
 
+	<% if current_employee.role_id == 4 || current_employee.role_id == 5 %>
 	<div><b><%= f.label :department %></b><br />
 		<%= f.select :department_id, [["Software",1],["Network",2],["Sales",3],["Marketing",4]],
 			{prompt: "Select Department"}%></div><br>
@@ -33,6 +34,7 @@
 	<div><b><%= f.label :role %></b><br />
 	<%= f.select :role_id, [["Staff",1],["Manager",2],["Management",3],["Administrator",4],["Manager/Administrator",5]],
 			{prompt: "Select Role"}%></div><br>
+	<% end %>
 
 	<div><b><%= f.label :phone %></b><br />
 	<%= f.text_field :phone %></div><br>
