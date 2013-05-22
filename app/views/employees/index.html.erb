@@ -32,9 +32,10 @@
 </tr>
 <% end %>
 </table>
+<%= paginate @pages %> 
 </center>
 
-<%= paginate @pages %> 
+
 
 <br>
 <%= button_to 'Add User' , new_employee_path, method: :get %>
