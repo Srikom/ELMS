@@ -65,6 +65,11 @@ class LeaveApplicationsController < ApplicationController
 
     @leaveApplications = params[:status_name] ? @leaveApplications : LeaveApplication.myArchive(current_employee).paginate(:page => params[:page], :per_page => 5)
   
+    respond_to do |format|
+      format.html
+      format.json { render json: @leaveApplications }
+      format.js
+    end
 
   end
 
@@ -76,7 +81,7 @@ class LeaveApplicationsController < ApplicationController
 
     if sID.to_i == 5 
       @leaveApplications = LeaveApplication.filterArchive(sID,current_employee).paginate(:page => params[:page], :per_page => 5)
-    elsif sID.to_i == 2
+    elsif sID.to_i == 3
       @leaveApplications = LeaveApplication.filterArchive(sID,current_employee).paginate(:page => params[:page], :per_page => 5)
     elsif sID == ""
      @leaveApplications = LeaveApplication.myArchive(current_employee).paginate(:page => params[:page], :per_page => 5)
@@ -84,6 +89,11 @@ class LeaveApplicationsController < ApplicationController
 
      @leaveApplications = params[:status_name] ? @leaveApplications : LeaveApplication.myArchive(current_employee).paginate(:page => params[:page], :per_page => 5)
 
+     respond_to do |format|
+      format.html
+      format.json { render json: @leaveApplications }
+      format.js
+    end
     
   end
 

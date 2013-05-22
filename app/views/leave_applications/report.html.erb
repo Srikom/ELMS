@@ -53,8 +53,9 @@
 			</table>
 			</fieldset>
 		</div>	
-		</center>
 		<%= link_to "Download PDF", pdfGen_leave_applications_path(format:"pdf")+'?approve='+@reportsA.to_s+'&reject='+@reportsR.to_s%>
+		</center>
+		
 	<% end %>
 
 <% end %>

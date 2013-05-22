@@ -1,6 +1,6 @@
 <h3>Application Archive</h3>
 
-<p><%= form_tag archive_leave_applications_path,method: :get do%>
+<p><%= form_tag archive_leave_applications_path,method: :get,id:"archive" do%>
 	
   <%= select_tag :status_name, options_for_select([["Approved",5],["Rejected",3]]),
 			{prompt: "Please Select"}%>
@@ -10,5 +10,7 @@
   
 
 
-<%= render 'leaveApplications'%>
+<div id='x'>
+	<%= render 'leaveApplications'%>
+</div>
 

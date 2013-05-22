@@ -1,10 +1,11 @@
 <h3>List Of Application</h3>
 
-<p><%= form_tag show_status_leave_applications_path,method: :get do%>
+<p><%= form_tag show_status_leave_applications_path,method: :get,id: "formStat" do%>
 	
   <%= select_tag :status_name, options_for_select([["Not Submitted",1],["Pending",2],["Rejected",3],["Approved by Manager",4],["Approved",5]]),{prompt: "Please Select"}%>
   	
-  <%= submit_tag "Search" %><br/>
+  <%= submit_tag "Search" , id: "stat"%><br/>
   <% end %>
-
-<%= render 'leaveApplications'%>
+<div id='x'>
+	<%= render 'leaveApplications'%>
+</div>

@@ -37,5 +37,37 @@ $(function(){
 		$(this).fadeOut();
 	})
 
+	$('form#formStat').submit(function(e){
+		var choice = $("#status_name").val();
+		$.ajax({
+				url: "/leave_applications/show_status",
+				data: $(this).serialize(),
+				beforeSend: function(){
+					$('div#x').append("<div class='loader'></div>");
+				},
+				success: function(){
+					$('.loader').remove();
+				},
+				dataType: 'script'
+		});
+		e.preventDefault();
+	});
+
+	$('form#archive').submit(function(e){
+		var choice = $("#status_name").val();
+		$.ajax({
+				url: "/leave_applications/archive",
+				data: $(this).serialize(),
+				beforeSend: function(){
+					$('div#x').append("<div class='loader'></div>");
+				},
+				success: function(){
+					$('.loader').remove();
+				},
+				dataType: 'script'
+		});
+		e.preventDefault();
+	});
+
 	
 });
