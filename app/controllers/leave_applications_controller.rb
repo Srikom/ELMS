@@ -65,6 +65,8 @@ class LeaveApplicationsController < ApplicationController
 
     @leaveApplications = params[:status_name] ? @leaveApplications : LeaveApplication.myArchive(current_employee)
     
+    @pages = LeaveApplication.page(params[:page]).per(5)
+
   end
 
   def archive
@@ -82,6 +84,8 @@ class LeaveApplicationsController < ApplicationController
     end
 
      @leaveApplications = params[:status_name] ? @leaveApplications : LeaveApplication.myArchive(current_employee)
+
+     @pages = LeaveApplication.page(params[:page]).per(5)
   end
 
   def show
