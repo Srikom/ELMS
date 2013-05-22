@@ -75,15 +75,16 @@ class LeaveApplicationsController < ApplicationController
     sID = params[:status_name]
 
     if sID.to_i == 5 
-      @leaveApplications = LeaveApplication.filterArchive(sID,current_employee).paginate(:page => params[:page], :per_page => 5)
+      @leaveApplications = LeaveApplication.filterArchive(sID,current_employee)
     elsif sID.to_i == 2
-      @leaveApplications = LeaveApplication.filterArchive(sID,current_employee).paginate(:page => params[:page], :per_page => 5)
+      @leaveApplications = LeaveApplication.filterArchive(sID,current_employee)
     elsif sID == ""
-     @leaveApplications = LeaveApplication.myArchive(current_employee).paginate(:page => params[:page], :per_page => 5)
+     @leaveApplications = LeaveApplication.myArchive(current_employee)
     end
 
-     @leaveApplications = params[:status_name] ? @leaveApplications : LeaveApplication.myArchive(current_employee).paginate(:page => params[:page], :per_page => 5)
+     @leaveApplications = params[:status_name] ? @leaveApplications : LeaveApplication.myArchive(current_employee)
 
+     @pages = LeaveApplication.page(params[:page]).per(5)
   end
 
   def show
@@ -103,33 +104,44 @@ class LeaveApplicationsController < ApplicationController
     dt = Date.today
     diff = ((ed - sd) + 1)
     bal = @employee.leave_bal - diff.to_i
+    checkAvailable = LeaveApplication.checkDateApp(current_employee,sd,ed)
+    if checkAvailable.empty?
+      if sd > ed || ((sd <= dt) && (sd >= ed))
+         flash[:alert] = "The end date cannot be the past date!"
+         redirect_to new_leave_application_path
+      else
+          if bal > 0
+            @leaveApplication = @employee.leave_applications.new(params[:leave_application])
 
-    if sd > ed || ((sd <= dt) && (sd >= ed))
-       flash[:alert] = "The end date cannot be the past date!"
-       redirect_to new_leave_application_path
-    else
-        if bal > 0
-          @leaveApplication = @employee.leave_applications.new(params[:leave_application])
+            if params[:submit] && (current_employee.role_id == 1 || current_employee.role_id == 2 || current_employee.role_id == 4 || current_employee.role_id == 5)
+               @leaveApplication.status_id = 2 
+            elsif params[:submit] && current_employee.role_id == 3
+                @leaveApplication.update_attributes(status_id: 4)
+            end
 
-          if params[:submit] && (current_employee.role_id == 1 || current_employee.role_id == 2)
-             @leaveApplication.status_id = 2 
-          elsif params[:submit] && current_employee.role_id == 3
-              @leaveApplication.update_attributes(status_id: 4)
-          end
-
-          if @leaveApplication.save && @employee.update_attributes(leave_bal: bal)
-              flash[:notice] = "Application has been successfully created!"
-              redirect_to leave_applications_path
+            if @leaveApplication.save && @employee.update_attributes(leave_bal: bal)
+                flash[:notice] = "Application has been successfully created!"
+                
+            else
+              flash[:alert] = "Application failed to be created!"
+              
+            end
           else
-            flash[:alert] = "Application failed to be created!"
-            redirect_to new_leave_application_path
+              flash[:alert] = "Cannot apply for leave due to unsufficient leave balance!"
+              
           end
-        else
-            flash[:alert] = "Cannot apply for leave due to unsufficient leave balance!"
-            redirect_to new_leave_application_path
-        end
-    end 
+      end 
+    else
+       flash[:alert] = "Application on this date exists!"
+       
+    end
 
+    if flash[:notice]
+      redirect_to leave_applications_path
+    else
+      redirect_to new_leave_application_path
+    end
+    
   end
 
   def edit

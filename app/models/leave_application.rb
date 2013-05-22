@@ -8,6 +8,14 @@ class LeaveApplication < ActiveRecord::Base
   belongs_to :employee
 
 
+  def self.checkDateApp(eid,sd,ed)
+    find_by_sql ["SELECT id FROM leave_applications WHERE employee_id = ?
+                    AND
+                        ((start_date between (strftime('%Y-%m-%d',?)) AND (strftime('%Y-%m-%d',?)))
+                    OR 
+                        (end_date between (strftime('%Y-%m-%d',?)) AND (strftime('%Y-%m-%d',?))))",eid,sd,ed,sd,ed]
+  end
+
   def self.dateDiff(lid)
     select("(julianday(Date(end_date)) - julianday(start_date))+1 AS diff").where(id:lid)
   end
