@@ -10,6 +10,6 @@ class Employee < ActiveRecord::Base
 
   belongs_to :role
   belongs_to :department
-  has_many :leave_applications
+  has_many :leave_applications, :dependent => :destroy
  
 end

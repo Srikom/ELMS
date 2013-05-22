@@ -2,12 +2,11 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 
-# Bundl e edge Rails instead:
+# Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
 gem 'ransack'
-gem 'kaminari'
 
 
 # Gems used only for assets and not required
