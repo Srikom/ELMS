@@ -75,16 +75,16 @@ class LeaveApplicationsController < ApplicationController
     sID = params[:status_name]
 
     if sID.to_i == 5 
-      @leaveApplications = LeaveApplication.filterArchive(sID,current_employee)
+      @leaveApplications = LeaveApplication.filterArchive(sID,current_employee).paginate(:page => params[:page], :per_page => 5)
     elsif sID.to_i == 2
-      @leaveApplications = LeaveApplication.filterArchive(sID,current_employee)
+      @leaveApplications = LeaveApplication.filterArchive(sID,current_employee).paginate(:page => params[:page], :per_page => 5)
     elsif sID == ""
-     @leaveApplications = LeaveApplication.myArchive(current_employee)
+     @leaveApplications = LeaveApplication.myArchive(current_employee).paginate(:page => params[:page], :per_page => 5)
     end
 
-     @leaveApplications = params[:status_name] ? @leaveApplications : LeaveApplication.myArchive(current_employee)
+     @leaveApplications = params[:status_name] ? @leaveApplications : LeaveApplication.myArchive(current_employee).paginate(:page => params[:page], :per_page => 5)
 
-     @pages = LeaveApplication.page(params[:page]).per(5)
+    
   end
 
   def show
