@@ -1,0 +1,115 @@
+<div id="empLeave">
+	<%= calendar @date do |date| %>
+ 
+        <% @availability = LeaveApplication.findAv(current_employee,date)%>
+           
+             
+            <% if !@availability.any? && (date.strftime('%a') != 'Sat' && date.strftime('%a') != 'Sun') && Date.today < date %>    
+                 <a href="/leave_applications/new?date=<%= date %>" id="day"><%= date.day %></a>
+            <% else %>
+                <%= date.day %>
+            <% end %>
+            <br/>
+        		<% @leaveApplications.each do |l|%>
+        			<% 
+        				dateLeaveStart = Date.parse(l.start_date.strftime('%Y-%m-%d'))
+        				dateLeaveEnd = Date.parse(l.end_date.strftime('%Y-%m-%d'))
+        			 %>
+
+                   
+        		<% if date == dateLeaveStart || (dateLeaveEnd >= date && date >= dateLeaveStart)  %>
+               
+        			<% if l.status_id == 1 %>
+        				<% cl = "ns" %>
+        			<% elsif  l.status_id == 2 %>
+        				<% cl = "p" %>
+                    <% elsif  l.status_id == 3 %>
+                        <% cl = "r" %>
+        			<% elsif  l.status_id == 4 %>
+        				<% cl = "am" %>
+        			<% elsif  l.status_id == 5 %>
+        				<% cl = "a" %>
+        		  <% end %>
+                        
+    	           <a href="#info_<%= l.lid %>" class="<%= cl %>"><%= l.name %></a><br/>
+
+                   <a href="#x" class="overlay" id="info_<%= l.lid %>"></a>
+   <div class="popup">
+         <% @leaveApplication = LeaveApplication.appDetails(l.lid) %> 
+            <% @review = LeaveApplication.find(l.lid)%>
+            <% @leaveApplication.each do |b| %>
+                <h2>Application #<%= b.id %></h2>
+        <center>
+                <div id='staffApplication'>
+                    <div><b>Leave Type :</b><br/>
+                    <%= b.leave_name%></div>
+                    <div><b>Reason of leave :</b><br/>
+                    <%= b.reason%></div>
+                    <div><b>Date of Start Leave :</b><br/>
+                    <%= b.start_date.strftime('%d/%m/%Y') %></div>
+                    <div><b>Date of End Leave :</b><br/>
+                    <%= b.end_date.strftime('%d/%m/%Y') %></div>
+                    <div><b>Application Status :</b><br/>
+                    <%= b.status_name %></div>
+
+                            <% if current_employee.id == l.eid && l.status_id == 1 %>
+                                <% if (date > Date.today)%>
+                                    <p><%= button_to 'Edit',edit_leave_application_path(l.lid), method: :get %></p>
+                                    <p><%= button_to 'Submit' ,submitApp_leave_application_path(l.lid), method: :put %></p>
+                                <% end %>
+                                <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?' %></p>  
+                            <% elsif  (current_employee.role_id == 2 || current_employee.role_id == 5) && current_employee.department_id == l.department_id && l.status_id == 2 %>
+                            <% if (date > Date.today) %>
+                                <% @review = LeaveApplication.find(l.lid) %>
+                                    <%= form_for(@review, :url => updateReview_leave_application_path(l.lid)) do |f| %>
+                                        <%= f.select :status, [['Approve',4],['Reject',3]] %>
+                                         <%= f.submit "Update Review Status" %>
+                                    <% end %>
+                                    <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?' %></p>
+                                <% else %>
+                                        <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?' %></p>
+                                <% end %>  
+                            <% elsif current_employee.department_id == l.department_id && l.status_id == 4 %>   
+                            <% if (current_employee.role_id == 3) && l.start_date >= date %>
+                            <% @review = LeaveApplication.find(l.lid) %>
+                                <%= form_for(@review, :url => updateReview_leave_application_path(l.lid)) do |f| %>
+                                    <%= f.select :status, [['Approve',5],['Reject',3]] %>
+                                    <%= f.hidden_field :bal, :value => b.date_diff.to_i %>
+                                     <%= f.submit "Update Review Status" %>
+                                <% end %> 
+                            <% end %>
+                            <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?' %></p>
+                            <% elsif  l.status_id == 5 %>
+                                <% if (current_employee.role_id == 1 || current_employee.role_id == 4) && date >= Date.today && current_employee.id == l.eid %> 
+                                    <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?' %></p>
+                                <% elsif (current_employee.role_id == 2 || current_employee.role_id == 3) || date <= Date.today%>
+                                <div>
+                                    <%= form_for @del do |f| %>
+                                        <div><b><%= f.label :reason %>:</b><br/>
+                                        <%= f.text_area :reason %></div><br/>
+                                        <%= f.hidden_field :eid , value: l.eid %>
+                                        <%= f.hidden_field :lid , value: l.lid %>
+                                        <%= f.hidden_field :sDate , value: dateLeaveStart %>
+                                        <%= f.hidden_field :eDate , value: dateLeaveEnd %>
+                                        <%= f.hidden_field :bal, :value => b.date_diff.to_i %>
+                                        <%= f.submit "Confirm Deletion" %>
+                                    <% end %>
+                                </div>
+                                <% end %>
+                            <% end %>
+                        
+                        
+                <% end %>
+                </div>
+        </center>
+           
+
+        <a class="close" href="#close"></a>
+    </div>
+
+
+        		<% end %>
+        		<% end %>
+        
+	<% end %>
+</div>

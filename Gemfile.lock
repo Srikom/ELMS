@@ -69,9 +69,6 @@ GEM
       jquery-rails
       railties (>= 3.1.0)
     json (1.7.7)
-    kaminari (0.14.1)
-      actionpack (>= 3.0.0)
-      activesupport (>= 3.0.0)
     mail (2.5.3)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -150,7 +147,6 @@ DEPENDENCIES
   devise
   jquery-rails
   jquery-ui-rails
-  kaminari
   prawn!
   rails (= 3.2.13)
   ransack
