@@ -7,10 +7,13 @@
   	
   <%= submit_tag "Search" %><br/>
   <% end %>
-  
+ 
 
 
 <div id='x'>
 	<%= render 'leaveApplications'%>
 </div>
 
+
+
+<%= will_paginate @leaveApplications %> 
