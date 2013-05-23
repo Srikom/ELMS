@@ -16,9 +16,11 @@ $(function(){
         if (days > 30)
                 confirm("Selected time period is of more than 1 month duration.Please select again!");
     }
-
+    var curr_date = $("#leave_application_start_date").val();
+    $("#leave_application_end_date").val(curr_date);
 	$("#leave_application_start_date").datepicker({
 	dateFormat: 'yy-mm-dd',
+	
 	showButtonPanel: true,
 	changeMonth: true,
 	changeYear: true,
@@ -29,7 +31,7 @@ $(function(){
 	minDate: 0,
 	 onSelect: function (dateText, inst) {
             $("#leave_application_end_date").val(dateText);
-            $("#leave_application_end_date").datepicker("option", "minDate", dateText);
+            
             getDiff();
 			}
 });
@@ -37,6 +39,7 @@ $(function(){
 $("#leave_application_end_date").datepicker({
 	dateFormat: 'yy-mm-dd',
 	 showButtonPanel: true,
+	 setDate: curr_date,
 	changeMonth: true,
 	changeYear: true,
 	duration:"fast",
