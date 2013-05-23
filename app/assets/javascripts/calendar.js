@@ -16,9 +16,14 @@ $(function(){
         if (days > 30)
                 confirm("Selected time period is of more than 1 month duration.Please select again!");
     }
+    function saturdayAndSunday(date){
+    	var day=date.getDay();
+    	 return [(day != 0 && day != 6), ''];
+    }
     var curr_date = $("#leave_application_start_date").val();
     $("#leave_application_end_date").val(curr_date);
 	$("#leave_application_start_date").datepicker({
+		 beforeShowDay: saturdayAndSunday,
 	dateFormat: 'yy-mm-dd',
 	
 	showButtonPanel: true,
@@ -37,6 +42,7 @@ $(function(){
 });
 
 $("#leave_application_end_date").datepicker({
+	beforeShowDay: saturdayAndSunday,
 	dateFormat: 'yy-mm-dd',
 	 showButtonPanel: true,
 	 setDate: curr_date,
