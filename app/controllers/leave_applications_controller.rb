@@ -168,12 +168,18 @@ class LeaveApplicationsController < ApplicationController
   end
 
   def update
-      @updated = false
-     
+            @updated = false
+            checkAvailable = LeaveApplication.checkDateApp(current_employee,@sd,@ed)
             @employee = Employee.find(current_employee)
+            @ld = @employee.leave_applications.find(params[:id])
+            @sd = @ld.start_date
+            @ed = @ld.end_date
+            @sd2 = params[:leave_application][:start_date]
+            @ed2 = params[:leave_application][:end_date]
+          if checkAvailable.empty? || ((@sd == @sd2) && (@ed == @ed2))
+            
             @leaveApplication = @employee.leave_applications.find(params[:id]).update_attributes(params[:leave_application])
-           @ld = @employee.leave_applications.find(params[:id])
-
+           
               if params[:submit] && (current_employee.role_id == 1 || current_employee.role_id == 2 || current_employee.role_id == 4 || current_employee.role_id == 5)
                    @ld.status_id = 2 
               elsif params[:submit] && current_employee.role_id == 3
@@ -193,6 +199,9 @@ class LeaveApplicationsController < ApplicationController
                 flash.discard
                 render 'edit'
               end
+            else
+           flash[:alert] = "Application on this date exists!"
+          end
 
             
 
