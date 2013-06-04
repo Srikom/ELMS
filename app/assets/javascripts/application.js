@@ -25,6 +25,10 @@ $(function(){
  	login_employee();
  	new_app_val();
 	edit_leave_app();
+
+
+	 
+
  	
 	$("div#empLeave").delegate("span#day","click",function(e){
 		
@@ -165,8 +169,14 @@ function getDiff() {
 }
     }
 
+ function saturdayAndSunday(date){
+ 		var day=date.getDay();
+ 	   	return [(day != 0 && day != 6), ''];
+ }
+
 $('body').on('click', '#leave_application_start_date', function(event) {
 		$(this).datepicker({
+		beforeShowDay: saturdayAndSunday,
 		dateFormat: 'yy-mm-dd',
 		showButtonPanel: true,
 		changeMonth: true,
@@ -186,6 +196,7 @@ $('body').on('click', '#leave_application_start_date', function(event) {
 
 $('body').on('click', '#leave_application_end_date', function(event) {
 	$(this).datepicker({
+		beforeShowDay: saturdayAndSunday,
 		dateFormat: 'yy-mm-dd',
 		 showButtonPanel: true,
 		changeMonth: true,
