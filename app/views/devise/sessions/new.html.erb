@@ -8,7 +8,7 @@
 	<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 	  <span></span>
 	  <div id='acc'><%= f.label :email %>
-	  <%= f.email_field :email, :autofocus => true %></div>
+	  <%= f.email_field :email, :autofocus => true ,:placeholder=>"e.g. user@gmail.com"  %></div>
 
 	  <div id='acc'><%= f.label :password %>
 	  <%= f.password_field :password %></div>
