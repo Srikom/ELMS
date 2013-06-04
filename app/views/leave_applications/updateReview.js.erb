@@ -1,0 +1,40 @@
+<% if @update == true %>
+	<% if @review.status_id == 3 %>
+		<% stat = "Rejected" %>
+		<% cl = "r" %>
+	<% elsif @review.status_id == 4 %>
+		<% stat = "Approved By Manager" %>
+		<% cl = "am" %>
+	<% elsif @review.status_id == 5 %>
+		<% stat = "Approved" %>
+		<% cl = "a" %>
+		$("span#lb").text("<%= @emp.leave_balance %>");
+	<% end %>
+	$("span#status").html("<%= stat %>").hide().fadeIn(1000);
+
+	<% if (current_employee.id == @review.employee_id) || @review.status_id == 5  %>
+			$("option#d_<%= @review.id %>").removeClass().addClass("<%= cl %>").hide().fadeIn(1000);
+	<% else  %>
+			$("option#d_<%= @review.id %>").remove();
+	<% end %>
+
+	$.ajax({
+     type: "POST",
+	 timeout: 10000,
+     url: "/leave_applications/showDetails",
+     data: {lid:<%= @review.id %>,eid:<%= @review.employee_id %>,sid:<%= @review.status_id %>,did:<%= @did %>,sd:"<%= @sd %>",ed:"<%= @ed %>",dt:"<%= @dt %>"},
+     success: function(data) {
+     	  $('#selection option#d_<%= @review.id %>').data('sid', '<%= @review.status_id %>');
+          $("div.popup").html(data).hide().show(); 
+     },
+      error:function(){
+      		alert("Error detected!");
+      	}
+   });
+	alert("Application reviewed successfully! <%= @lBal %>");
+<% else %>
+	<% flash.each do |key,msg|%>
+		var err_msg = "<%= msg %>";
+	<% end %>
+	alert("Leave Application failed to be Reviewed!Due to \n"+err_msg);
+<% end %>

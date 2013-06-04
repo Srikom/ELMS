@@ -33,8 +33,71 @@
 		
 	</table>
 	
-<% end %>
-</div>
+
+
+                            <% if current_employee.id == @ld.employee_id && @ld.status_id == 1 %>
+                                <% if (@ld.start_date > Date.today)%>
+                                    <%= button_to 'Edit',edit_leave_application_path(l.id), method: :get , id: "edit" %>
+                                    <%= button_to 'Submit' ,submitApp_leave_application_path(l.id,:submission => { :did => @ld.employee_id, :date => @ld.start_date }), method: :put %>
+                                <% end %>
+                                <%= button_to 'Delete',l,:method => :delete,confirm: 'Are you sure?' %>  
+                            <% elsif  (current_employee.role_id == 2 || current_employee.role_id == 5) && current_employee.department_id == @emp.department_id && @ld.status_id == 2 %>
+                            <% if (@ld.start_date > Date.today) %>
+                                    <%= form_for(@ld, :url => updateReview_leave_application_path(l.id)) do |f| %>
+                                        <%= f.select :status, [['Approve',4],['Reject',3]] %>
+                                        <%= f.hidden_field :did , value: @emp.department_id %>
+                                        <%= f.hidden_field :date , value: @ld.start_date %>
+                                         <%= f.submit "Update Review Status" %>
+                                    <% end %>
+                                    <p><%= button_to 'Delete',l,:method => :delete,confirm: 'Are you sure?' %></p>
+                                <% else %>
+                                        <p><%= button_to 'Delete',l,:method => :delete,confirm: 'Are you sure?'%></p>
+                                <% end %>  
+                            <% elsif current_employee.department_id == @emp.department_id && @ld.status_id == 4 %>   
+                            <% if (current_employee.role_id == 3) && @ld.start_date >= @ld.start_date %>
+                                <%= form_for(@ld, :url => updateReview_leave_application_path(l.id)) do |f| %>
+                                    <%= f.select :status, [['Approve',5],['Reject',3]] %>
+                                    <%= f.hidden_field :did , value: @emp.department_id %>
+                                    <%= f.hidden_field :date , value: @ld.start_date %>
+                                    <%= f.hidden_field :bal, :value => l.date_diff.to_i %>
+                                     <%= f.submit "Update Review Status" %>
+                                <% end %> 
+                            <% end %>
+                            <p><%= button_to 'Delete',l,:method => :delete,confirm: 'Are you sure?'  %></p>
+                            <% elsif  @ld.status_id == 5 %>
+                                <% if (current_employee.role_id == 1 || current_employee.role_id == 4) && @ld.start_date >= Date.today && current_employee.id == @ld.employee_id %> 
+                                    <p><%= button_to 'Delete',l,:method => :delete,confirm: 'Are you sure?' %></p>
+                                <% elsif (current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5) && (@ld.start_date <= Date.today || @ld.start_date >= Date.today)%>
+                                <div>
+                                    <%= form_for @del do |f|%>
+                                        <div><b><%= f.label :reason %>:</b><br/>
+                                        <%= f.text_area :reason %></div><br/>
+                                        <%= f.hidden_field :eid , value: @ld.employee_id %>
+                                        <%= f.hidden_field :lid , value: l.id %>
+                                        <%= f.hidden_field :sDate , value: @ld.start_date %>
+                                        <%= f.hidden_field :eDate , value: @ld.end_date %>
+                                        <%= f.hidden_field :bal, :value => l.date_diff.to_i %>
+                                        <%= f.submit "Confirm Deletion",confirm: 'Are you sure?'%>
+                                    <% end %>
+                                </div>
+                                <% end %>
+                            <% end %>
+
+
+                  <% end %>
+                        </div>
+                
+
+
+
+
+
+
+
+
+
+
+
 
 </center>
-<center><%= button_to 'Back', :back,method: :get %></center>
+<%= link_to 'Back', :back %>

@@ -41,7 +41,7 @@
 								</ul>
 							</li>
 
-							<li>Leave balance : <%= current_employee.leave_balance %></li>
+							<li>Leave balance : <span id="lb"><%= current_employee.leave_balance %></span></li>
 							<li><%= link_to 'Logout', destroy_employee_session_path, method: :delete %></li>
 						</ul>
 					<% end %>

@@ -1,0 +1,72 @@
+
+            <% leaveApplication.each do |b| %>
+                <h2>Application #<%= b.id %></h2>
+        <center>
+                <div id='staffApplication'>
+                    <div><b>Leave Type :</b><br/>
+                    <%= b.leave_name%></div>
+                    <div><b>Reason of leave :</b><br/>
+                    <%= b.reason%></div>
+                    <div><b>Date of Start Leave :</b><br/>
+                    <%= b.start_date.strftime('%d/%m/%Y') %></div>
+                    <div><b>Date of End Leave :</b><br/>
+                    <%= b.end_date.strftime('%d/%m/%Y') %></div>
+                    <div><b>Application Status :</b><br/>
+                    <span id="status"><%= b.status_name %></span></div>
+
+                        <div id="command">
+                            <% if current_employee.id == eid && sid == 1 %>
+                                <% if (date > Date.today)%>
+                                    <%= button_to 'Edit',edit_leave_application_path(b.id,:submission => { :date => date }), method: :get , remote: true, id: "edit" %>
+                                    <%= button_to 'Submit' ,submitApp_leave_application_path(b.id,:submission => { :did => did, :date => date }), method: :put , remote: true %>
+                                <% end %>
+                                <%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?', remote: true %>  
+                            <% elsif  (current_employee.role_id == 2 || current_employee.role_id == 5) && current_employee.department_id == did && sid == 2 %>
+                            <% if (date > Date.today) %>
+                                    <%= form_for(review, :url => updateReview_leave_application_path(b.id),remote: true) do |f| %>
+                                        <%= f.select :status, [['Approve',4],['Reject',3]] %>
+                                        <%= f.hidden_field :did , value: did %>
+                                        <%= f.hidden_field :date , value: date %>
+                                         <%= f.submit "Update Review Status" %>
+                                    <% end %>
+                                    <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?', remote: true  %></p>
+                                <% else %>
+                                        <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?' , remote: true %></p>
+                                <% end %>  
+                            <% elsif current_employee.department_id == did && sid == 4 %>   
+                            <% if (current_employee.role_id == 3) && sd >= date %>
+                                <%= form_for(review, :url => updateReview_leave_application_path(b.id),remote: true) do |f| %>
+                                    <%= f.select :status, [['Approve',5],['Reject',3]] %>
+                                    <%= f.hidden_field :did , value: did %>
+                                    <%= f.hidden_field :date , value: date %>
+                                    <%= f.hidden_field :bal, :value => b.date_diff.to_i %>
+                                     <%= f.submit "Update Review Status" %>
+                                <% end %> 
+                            <% end %>
+                            <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?', remote: true  %></p>
+                            <% elsif  sid == 5 %>
+                                <% if (current_employee.role_id == 1 || current_employee.role_id == 4) && date >= Date.today && current_employee.id == eid %> 
+                                    <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?', remote: true  %></p>
+                                <% elsif (current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5) && (date <= Date.today || date >= Date.today)%>
+                                <div>
+                                    <%= form_for @del,remote: true do |f|%>
+                                        <div><b><%= f.label :reason %>:</b><br/>
+                                        <%= f.text_area :reason %></div><br/>
+                                        <%= f.hidden_field :eid , value: eid %>
+                                        <%= f.hidden_field :lid , value: b.id %>
+                                        <%= f.hidden_field :sDate , value: sd %>
+                                        <%= f.hidden_field :eDate , value: ed %>
+                                        <%= f.hidden_field :bal, :value => b.date_diff.to_i %>
+                                        <%= f.submit "Confirm Deletion",confirm: 'Are you sure?'%>
+                                    <% end %>
+                                </div>
+                                <% end %>
+                            <% end %>
+                        </div>
+                <% end %>
+                </div>
+        </center>
+           
+
+        <a class="close" href="#close"></a>
+    </div>

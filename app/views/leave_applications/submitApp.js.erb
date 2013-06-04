@@ -1,0 +1,32 @@
+<% if @submission == true %>
+	<% if @leaveApplication.status_id == 2 %>
+		<% stat = "Pending" %>
+		<% cl = "p" %>
+  <% else %>
+    <% stat = "Approved By Manager" %>
+    <% cl = "am" %>
+	<% end %>
+	$("span#status").html("<%= stat %>").hide().fadeIn(1000);
+	$("option#d_<%= @leaveApplication.id %>").removeClass().addClass("<%= cl %>").hide().fadeIn(1000);
+
+	$.ajax({
+     type: "POST",
+	 timeout: 10000,
+      url: "/leave_applications/showDetails",
+     data: {lid:<%= @leaveApplication.id %>,eid:<%= @leaveApplication.employee_id %>,sid:<%= @leaveApplication.status_id %>,did:<%= @did %>,sd:"<%= @sd %>",ed:"<%= @ed %>",dt:"<%= @dt %>"},
+     success: function(data) {
+     	  $('#selection option#d_<%= @leaveApplication.id %>').data('sid', '<%= @leaveApplication.status_id %>');
+          $("div.popup").html(data).hide().show(); 
+     },
+      error:function(){
+      		alert("Error detected!");
+      	}
+   });
+  alert("Application Submitted successfully!");
+	
+<% else %>
+  <% flash.each do |key,msg|%>
+    var err_msg = "<%= msg %>";
+  <% end %>
+	alert("Leave Application failed to be Submitted!Due to \n"+ err_msg);
+<% end %>

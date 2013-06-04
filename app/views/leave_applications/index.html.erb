@@ -5,7 +5,9 @@
 <div id='navCal'>
 <h2 id='month'>
 	<center>
+        <%= link_to "<", {date: @date.prev_month}, :id => "prevMonth", remote: true %>
 		<span id='month'><%= @date.strftime('%B %Y') %></span>
+        <%= link_to ">", {date: @date.next_month}, :id => "nextMonth", remote: true %>
 	</center>
 </h2>
 </div>
@@ -45,7 +47,6 @@
 </div>
 <div class='clearfix'></div>
 <div id="empLeave">
-<%= render "calendar" %>
+    <%= render "calendar" %>
 </div>
-    
     

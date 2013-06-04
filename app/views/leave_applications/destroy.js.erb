@@ -1,0 +1,37 @@
+<% if @res == true %>
+	$( "select#selection" ).each(function( index ) {
+		var date1 = $(this).find('option#d_<%= @leaveApplication.id %>').data('date');
+		var day1 = $(this).find('option#d_<%= @leaveApplication.id %>').data('day');
+		var sel1 = $("#e_"+date1);
+		var d1 = new Date(date1);
+		var td = new Date();
+		$(this).find("option#d_<%= @leaveApplication.id %>").remove();
+		
+		var len = $(this).find("option").length;
+		
+		if(len == 0){
+			$(this).remove();
+		}
+		<% if (current_employee.id == @employee.id) %>	
+			if (d1.getTime() > td.getTime()){
+	sel1.html("<span id='day' data-remote='true' data-date='"+date1+"'>"+day1+"</span>");
+	}
+	<% end %>
+		
+		
+});
+
+<% if current_employee.id == @employee.id %>	
+	$("span#lb").text("<%= @employee.leave_balance %>");
+<% end %>
+
+$("a.overlay").fadeOut(1000);
+$("div.popup").slideUp(1000); 
+alert("Application has been deleted!");
+
+<% else %>
+      <% flash.each do |key,msg|%>
+		var err_msg = "<%= msg %>";
+	<% end %>
+	alert("An error has occured!Due to \n " + err_msg);
+<% end %>

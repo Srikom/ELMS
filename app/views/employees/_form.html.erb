@@ -15,7 +15,7 @@
 <div id="reportFilter2">
 	<fieldset>
 		<legend><b>Form</b></legend>
-	<%= form_for @employees do |f| %>
+	<%= form_for @employees,:html => { :id => "reg_employee" } do |f| %>
 	 
 	<div><b><%= f.label :name %></b><br />
 	<%= f.text_field :name %></div><br>
@@ -42,7 +42,7 @@
 	<div><b><%= f.label :email %></b><br />
 	<%= f.email_field :email, :autofocus => true %></div><br>
 
-	<div><%= f.submit "Update" %></div>
+	<div><%= f.submit "Submit" %></div>
 
 	<% end %>
 	</fieldset>

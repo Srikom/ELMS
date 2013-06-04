@@ -5,14 +5,12 @@
   <%= select_tag :status_name, options_for_select([["Approved",5],["Rejected",3]]),
 			{prompt: "Please Select"}%>
   	
-  <%= submit_tag "Search" %><br/>
+  <%= submit_tag "Filter" %><br/>
   <% end %>
- 
+  
 
 
 <div id='x'>
 	<%= render 'leaveApplications'%>
 </div>
-
-
 

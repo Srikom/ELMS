@@ -1,0 +1,37 @@
+<% if @created == true %>
+
+	 <%  if current_employee.role_id == 2 || current_employee.role_id == 5 %>
+     <% @leaveApplications = LeaveApplication.findAvAppManagement(current_employee,2,current_employee.department_id) %>
+   <%  elsif current_employee.role_id == 3 %>
+     <%  @leaveApplications = LeaveApplication.findAvAppManagement(current_employee,4,current_employee.department_id) %>
+    <%  elsif current_employee.role_id == 4 || current_employee.role_id == 1 %>
+     <%  @leaveApplications = LeaveApplication.findAvApp(current_employee) %>
+   <% end %>
+    <%  @date = @sd %>
+    $('div.popup').append("<div class='loader'></div>");
+    $.ajax({
+     type: "POST",
+   timeout: 10000,
+     url: "/leave_applications/showDetails",
+     data: {lid:<%= @ld.id %>,eid:<%= @ld.employee_id %>,sid:<%= @ld.status_id %>,did:<%= @employee.department_id %>,sd:"<%= @ld.start_date %>",ed:"<%= @ld.end_date %>",dt:"<%= @date %>"},
+     success: function(data) {
+          $('#empLeave2').html('<%= j render("calendar") %>');
+          $('.loader').remove();
+            $("a.overlay").hide(1000);
+  $("div.popup").hide(1000);
+     },
+      error:function(){
+          alert("Error detected!");
+        }
+   });
+
+  	
+    alert("Application has been successfully created!");
+
+  	
+<% else %>
+	<% flash.each do |key,msg|%>
+		var err_msg = "<%= msg %>";
+	<% end %>
+	alert("An error has occured!Due to \n " + err_msg);
+<% end %>

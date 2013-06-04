@@ -6,13 +6,13 @@
 </div>
 <div id='login'>
 	<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-	  <div id='acc'><%= f.label :email %><br />
-	  <%= f.email_field :email, :autofocus => true ,:placeholder=>"e.g.
-user@gmail.com"  %></div>
+	  <span></span>
+	  <div id='acc'><%= f.label :email %>
+	  <%= f.email_field :email, :autofocus => true %></div>
 
-	  <div id='acc'><%= f.label :password %><br />
-	  <%= f.password_field :password  %></div>
+	  <div id='acc'><%= f.label :password %>
+	  <%= f.password_field :password %></div>
 
-	  <div id='acc'><input type='reset'/><%= f.submit "Sign in" %></div>
+	  <center><div id='acc'><input type='reset'/><%= f.submit "Sign in" %></div></center>
 	<% end %>
 </div>

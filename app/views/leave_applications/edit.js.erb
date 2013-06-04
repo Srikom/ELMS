@@ -1,0 +1,63 @@
+
+$("div.popup").html("<%= j render('form') %>");
+
+
+ 		$.validator.addMethod(
+    "formatDate",
+    function(value, element) {
+        // put your own logic here, this is just a (crappy) example
+        return value.match(/^\d\d\d\d?\-\d\d?\-\d\d$/);
+    },
+    "Please enter a date in the format yyyy-mm-dd."
+);
+
+
+	$("form.edit_leave_application").validate({
+		rules: {
+
+				"leave_application[start_date]" : {
+					required: true,
+					date: true,
+					formatDate: true
+				},
+
+				"leave_application[end_date]" : {
+					required: true,
+					date: true,
+					formatDate: true
+				},
+
+				"leave_application[leave_id]" : {
+					required: true
+				},
+
+				"leave_application[reason]" : {
+					required: true,
+					minlength: 10
+				}
+
+			},
+		messages: {
+
+				"leave_application[start_date]" : {
+					required: "Please enter the starting date of your leave",
+					date: "Please enter a valid date"
+				},
+
+				"leave_application[end_date]" : {
+					required: "Please enter the ending date of your leave",
+					date: "Please enter a valid date"
+				},
+
+				"leave_application[leave_id]" : {
+					required: "Please enter your leave type"
+				},
+
+				"leave_application[reason]" : {
+					required: "Please enter your reason of taking leave",
+				}
+
+		}
+	});
+
+

@@ -13,6 +13,7 @@ ELMS::Application.routes.draw do
     put :updateReview, on: :member
     put :submitApp, on: :member
     get :pdfGen, on: :collection
+    post :showDetails, on: :collection
   end
 
    resources :deletions

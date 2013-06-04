@@ -18,44 +18,54 @@
 			{prompt: "Select Department"}%>
 		</fieldset>
 		<fieldset>
-			<legend><b>Date</b></legend>
-			<b>Month : </b><%= select_month(nil, :field_name => 'value', :prefix => 'month',:prompt => 'Choose month') %>
-			<b>Year :</b><%= select_year(nil, :field_name => 'value', :prefix => 'year',:prompt => 'Choose year') %>
-		</fieldset> 
-		<fieldset>
 			<legend><b>Date Range</b></legend>
 			<b>From : </b><%= text_field_tag :rangeS %>
 			<b>To :</b><%= text_field_tag :rangeE %>
 		</fieldset> 
-		<%= submit_tag "Search"%>
+		<%= submit_tag "Filter"%>
 		<% end %>
 	</fieldset>
 </div>
 </center>
 
-<% unless @reportsA.nil? && @reportsR.nil? %>
-	<% if @reportsA == 0 && @reportsR == 0 %>
-
-	<% else %>
+<% unless @reports.nil? || @reports.empty?%>
 		<center>
 		<div id="reportFilter">
 			<fieldset class="fieldset-auto-width">
 				<legend><b>Search Result</b></legend>
-			<table size='100%' id='managerTable'>
-				<tr>
-					<th>Approved</th>
-					<th>Rejected</th>
+					<table size='100%' id='managerTable'>
+					<tr>
+						<th>Year</th>
+						<th>Month</th>
+						<th>Employee Name</th>
+						<th>Department</th>
+						<th>Approved</th>
+						<th>Rejected</th>
+					</tr>
+			<% @reports.each do |r|%>
+					<% @approve << r.APPROVED %>
+					<% @reject << r.REJECTED %>
+					<% month = Date.parse(r.MONTH) %>
+					<tr>
+						<td><center><%= r.YEAR %></center></td>
+						<td><center><%= month.strftime('%B') %></center></td>
+						<td><center><%= r.NAME %></center></td>
+						<td><center><%= r.DEPARTMENT %></center></td>
+						<td><center><%= r.APPROVED %></center></td>
+						<td><center><%= r.REJECTED %></center></td>
+					</tr>
+			<% end %>
+				<tr class="lastRow">
+					<td colspan="4"><center><b>Total</b></center></td>
+					<td><center><b><%= @approve.sum %></b></center></td>
+					<td><center><b><%= @reject.sum %></b></center></td>
 				</tr>
-				<tr>
-					<td><%= @reportsA %></td>
-					<td><%= @reportsR %></td>
-				</tr>
-			</table>
+				</table>
 			</fieldset>
-		</div>	
-		<%= link_to "Download PDF", pdfGen_leave_applications_path(format:"pdf")+'?approve='+@reportsA.to_s+'&reject='+@reportsR.to_s%>
-		</center>
-		
-	<% end %>
-
+		</div>
+		<% @sum = @approve.sum + @reject.sum %>	
+		<%= link_to "Download PDF", pdfGen_leave_applications_path(format:"pdf")+"?nID="+@nID+"&dID="+@dID+"&s="+@s+"&e="+@e+"&a="+@approve.sum.to_s+"&r="+@reject.sum.to_s %>
 <% end %>
+
+
+
