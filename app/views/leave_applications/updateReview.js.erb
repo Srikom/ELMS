@@ -8,30 +8,25 @@
 	<% elsif @review.status_id == 5 %>
 		<% stat = "Approved" %>
 		<% cl = "a" %>
-		$("span#lb").text("<%= @emp.leave_balance %>");
+		<% if current_employee.id == @emp.id %>	
+			$("span#lb").text("<%= @emp.leave_balance %>");
+		<% end %>
 	<% end %>
 	$("span#status").html("<%= stat %>").hide().fadeIn(1000);
 
-	<% if (current_employee.id == @review.employee_id) || @review.status_id == 5  %>
-			$("option#d_<%= @review.id %>").removeClass().addClass("<%= cl %>").hide().fadeIn(1000);
-	<% else  %>
-			$("option#d_<%= @review.id %>").remove();
-	<% end %>
-
-	$.ajax({
-     type: "POST",
-	 timeout: 10000,
-     url: "/leave_applications/showDetails",
-     data: {lid:<%= @review.id %>,eid:<%= @review.employee_id %>,sid:<%= @review.status_id %>,did:<%= @did %>,sd:"<%= @sd %>",ed:"<%= @ed %>",dt:"<%= @dt %>"},
-     success: function(data) {
-     	  $('#selection option#d_<%= @review.id %>').data('sid', '<%= @review.status_id %>');
-          $("div.popup").html(data).hide().show(); 
-     },
-      error:function(){
-      		alert("Error detected!");
-      	}
-   });
-	alert("Application reviewed successfully! <%= @lBal %>");
+	<%  if current_employee.role_id == 2 || current_employee.role_id == 5 %>
+     <% @leaveApplications = LeaveApplication.findAvAppManagement(current_employee,2,current_employee.department_id) %>
+   <%  elsif current_employee.role_id == 3 %>
+     <%  @leaveApplications = LeaveApplication.findAvAppManagement(current_employee,4,current_employee.department_id) %>
+    <%  elsif current_employee.role_id == 4 || current_employee.role_id == 1 %>
+     <%  @leaveApplications = LeaveApplication.findAvApp(current_employee) %>
+   <% end %>
+      
+     	  $('#empLeave2').html('<%= j render("calendar") %>');
+     	  $('.loader').remove();
+			alert("Application reviewed successfully!");
+			$("a.overlay").fadeOut(400);
+          $("div.popup").slideUp(400);
 <% else %>
 	<% flash.each do |key,msg|%>
 		var err_msg = "<%= msg %>";

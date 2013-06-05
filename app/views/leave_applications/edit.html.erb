@@ -1,12 +1,5 @@
-<script type="text/javascript">
-        $("#leave_application_start_date").datepicker({
 
-                dateFormat : 'yy-mm-dd',
-                readOnly : 'true'
 
-        });
-        $("#leave_application_start_date").datepicker("setDate","<%= (@sd.blank? ? @date : @sd) %>");
-</script>
 <h1>Edit Leave Application#<%= @leaveApplication.id %></h1>
 <%= form_for (@leaveApplication) do |f| %>
 <center>
@@ -24,8 +17,8 @@
 	</div>
 <% end %>
 <div class="form_text_box">
-        <label><b>Start Date:</b></label><%= f.text_field :start_date,disabled: true,readOnly: true %><br/>
-        <label><b>End Date:</b></label><%= f.text_field :end_date, :value => (@ed.blank? ? '' : @ed) %>
+        <label><b>Start Date:</b></label><%= f.text_field :start_date, :value => @sd %><br/>
+        <label><b>End Date:</b></label><%= f.text_field :end_date, :value => @sd %>
 </div>
 	
  <h1>Type of leave</h1>
@@ -36,7 +29,6 @@
  <div class="form_text_box">
       <%= f.text_area :reason %>
  </div>
- <%= f.hidden_field :start_date , value: (@sd.blank? ? @date : @sd) %>
  <%= f.submit 'Save As Draft', name: "save", class: "save"%>
  <%= f.submit 'Submit Application', name: "submit", class: "submit"%>
 </fieldset>

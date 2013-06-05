@@ -26,10 +26,6 @@ $(function(){
  	new_app_val();
 	edit_leave_app();
 
-
-	 
-
- 	
 	$("div#empLeave").delegate("span#day","click",function(e){
 		
 		var date = $(this).data("date");

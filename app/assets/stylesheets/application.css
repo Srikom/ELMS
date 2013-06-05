@@ -293,7 +293,7 @@ th
 	display: none;
 }
 
-.overlay,.overlay_new {
+.overlay{
     background-color: rgba(0, 0, 0, 0.6);
     bottom: 0;
     cursor: default;
@@ -312,12 +312,12 @@ th
     transition: opacity .5s;
 }
 
-.overlay:target,.overlay_new:target {
+.overlay:target{
     visibility: visible;
     opacity: 1;
 }
 
-.popup,.popup_new {
+.popup{
     background-color: #fff;
     border: 3px solid #fff;
     display: inline-block;
@@ -357,13 +357,13 @@ th
     transition: opacity .5s, top .5s;
 }
 
-.overlay:target+.popup,.overlay_new:target+.popup_new {
+.overlay:target+.popup{
     top: 50%;
     opacity: 1;
     visibility: visible;
 }
 
-.close,.close_new {
+.close {
     background-color: rgba(0, 0, 0, 0.8);
     height: 30px;
     line-height: 30px;
@@ -381,22 +381,22 @@ th
     border-radius: 15px;
 }
 
-.close:before, .close_new:before {
+.close:before {
     color: rgba(255, 255, 255, 0.9);
     content: "X";
     font-size: 24px;
     text-shadow: 0 -1px rgba(0, 0, 0, 0.9);
 }
 
-.close:hover, .close_new:hover {
+.close:hover{
     background-color: rgba(64, 128, 128, 0.8);
 }
 
-.popup p, .popup div,.popup_new p, .popup_new div  {
+.popup p, .popup div{
     margin-bottom: 10px;
 }
 
-.popup label,.popup_new label {
+.popup label{
     display: inline-block;
     text-align: left;
     width: 120px;
@@ -571,6 +571,7 @@ span#day{
     left:220px;
     top:250px;
 }
+
 
 .loader{
     position: absolute;

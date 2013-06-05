@@ -6,30 +6,16 @@
     <%  elsif current_employee.role_id == 4 || current_employee.role_id == 1 %>
      <%  @leaveApplications = LeaveApplication.findAvApp(current_employee) %>
    <% end %>
-    <%  @date = @sd %>
-    
-	$.ajax({
-     type: "POST",
-	 timeout: 10000,
-     url: "/leave_applications/showDetails",
-     data: {lid:<%= @ld.id %>,eid:<%= @ld.employee_id %>,sid:<%= @ld.status_id %>,did:<%= @employee.department_id %>,sd:"<%= @sd %>",ed:"<%= @ed %>",dt:"<%= @date %>"},
-     success: function(data) {
-     	    $('#empLeave2').html('<%= j render("calendar") %>');
-          $("div.popup").html(data); 
-          $('.loader').remove();
-          $("a.overlay").show(1000);
-  $("div.popup").fadeIn(1000);
-     },
-      error:function(){
-      		alert("Error detected!");
-      	}
-   });
-	
-  alert("Successfully edited Application!");
+      
+	       $('#empLeave2').html('<%= j render("calendar") %>');
+         $('div.popup div.loader').remove();
+          alert("Application has been edited!");
+          $("a.overlay").fadeOut(400);
+          $("div.popup").slideUp(400);
   
 <% else %>
 <% flash.each do |key,msg|%>
 		var err_msg = "<%= msg %>";
 	<% end %>
-	alert("An error has occured!Due to \n " + err_msg);
+	alert("An error has occured!Due to \n " + err_msg + "<%= @overlap %>");
 <% end %>

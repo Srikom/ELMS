@@ -16,18 +16,17 @@
 			if (d1.getTime() > td.getTime()){
 	sel1.html("<span id='day' data-remote='true' data-date='"+date1+"'>"+day1+"</span>");
 	}
-	<% end %>
-		
-		
+	<% end %>	
 });
 
 <% if current_employee.id == @employee.id %>	
 	$("span#lb").text("<%= @employee.leave_balance %>");
 <% end %>
 
-$("a.overlay").fadeOut(1000);
-$("div.popup").slideUp(1000); 
 alert("Application has been deleted!");
+$("a.overlay").fadeOut(400);
+$("div.popup").slideUp(400); 
+
 
 <% else %>
       <% flash.each do |key,msg|%>

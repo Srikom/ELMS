@@ -1,11 +1,44 @@
 <script type="text/javascript">
+        function gd() {
+          
+        var start = $('#leave_application_start_date').datepicker('getDate');
+        var end   = $('#leave_application_end_date').datepicker('getDate');
+        var dayDiff = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+
+        if(start != null && end != null){
+        if (dayDiff > 30){
+                confirm("Selected time period is of more than 1 month duration.Please select again!");
+                $("input[type=submit]").attr("disabled", "disabled");
+        }else if(dayDiff < 0){
+                        confirm("End date cannot be before the start date!");
+                        $("input[type=submit]").attr("disabled", "disabled");
+        }else{
+        $("input[type=submit]").removeAttr("disabled"); 
+    }
+}
+    }
+
+
         $("#leave_application_start_date").datepicker({
-
+                beforeShowDay: saturdayAndSunday,
                 dateFormat : 'yy-mm-dd',
-                readOnly : 'true'
-
+                readOnly : 'true',
+                onSelect : gd
         });
+        $("#leave_application_end_date").datepicker({
+                beforeShowDay: saturdayAndSunday,
+                dateFormat : 'yy-mm-dd',
+                readOnly : 'true',
+                onSelect : gd
+        });
+
+        function saturdayAndSunday(date){
+                var day=date.getDay();
+                return [(day != 0 && day != 6), ''];
+         }
+
         $("#leave_application_start_date").datepicker("setDate","<%= (@sd.blank? ? @date : @sd) %>");
+        $("#leave_application_end_date").datepicker("setDate","<%= (@ed.blank? ? '' : @ed) %>");
 </script>
 
 <%= form_for @leaveApplication,remote: true do |f| %>
@@ -14,8 +47,8 @@
                 <fieldset>
                     <legend><b>New Application</b></legend>
                 <div class="form_text_box">
-                        <label><b>Start Date:</b></label><%= f.text_field :start_date, disabled: true,readOnly: true%><br/>
-                        <label><b>End Date:</b></label><%= f.text_field :end_date, :value => (@ed.blank? ? '' : @ed) %>
+                        <label><b>Start Date:</b></label><%= f.text_field :start_date %><br/>
+                        <label><b>End Date:</b></label><%= f.text_field :end_date %>
                 </div>
                     
                  <h1>Type of leave</h1>
@@ -26,7 +59,6 @@
                  <div class="form_text_box">
                       <%= f.text_area :reason, :size => "40x10" %>
                  </div>
-                 <%= f.hidden_field :start_date , value: (@sd.blank? ? @date : @sd) %>
                  <%= f.submit 'Save As Draft', name: "save", class: "save"%>
                  <%= f.submit 'Submit Application', name: "submit", class: "submit"%>
                 </fieldset>
@@ -34,3 +66,5 @@
                 </center>
                 <a class="close" href="#close"></a>
         <% end %>
+
+<%= javascript_include_tag "ajax-submit" %>

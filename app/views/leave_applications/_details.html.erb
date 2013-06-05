@@ -1,5 +1,5 @@
 
-            <% leaveApplication.each do |b| %>
+            <% @leaveApplication.each do |b| %>
                 <h2>Application #<%= b.id %></h2>
         <center>
                 <div id='staffApplication'>
@@ -67,6 +67,7 @@
                 </div>
         </center>
            
-
         <a class="close" href="#close"></a>
     </div>
+
+<%= javascript_include_tag "ajax-submit" %>

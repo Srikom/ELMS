@@ -76,10 +76,10 @@ class LeaveApplicationsController < ApplicationController
      sd = Date.parse(params[:sd])
      ed = Date.parse(params[:ed])
      dt = Date.parse(params[:dt])
-     leaveApplication = LeaveApplication.appDetails(lid)
+     @leaveApplication = LeaveApplication.appDetails(lid)
      review = LeaveApplication.find(lid)
       @del = Deletion.new
-     render :partial => 'details', locals: {lid: lid, eid: eid, sid: sid, did: did, sd: sd, ed: ed,date: dt,leaveApplication: leaveApplication, review: review}
+     render :partial => 'details', locals: {lid: lid, eid: eid, sid: sid, did: did, sd: sd, ed: ed,date: dt, review: review}
   end
 
   def archive
@@ -118,12 +118,14 @@ class LeaveApplicationsController < ApplicationController
     if params[:leave_application][:start_date] != "" && params[:leave_application][:end_date] != ""
           @sd = Date.parse(params[:leave_application][:start_date])
           @ed = Date.parse(params[:leave_application][:end_date])
-          dt = Date.today
-          diff = ((@ed - @sd) + 1)
-          bal = @employee.leave_bal - diff.to_i
-          checkAvailable = LeaveApplication.checkDateApp(current_employee,@sd,@ed)
 
-          if checkAvailable.empty?
+          @actual_days = LeaveApplication.exclude_weekends(@sd,@ed)
+          diff = @actual_days
+          bal = @employee.leave_bal - diff.to_i
+
+          overlap = LeaveApplication.overlaps(current_employee,@sd,@ed)
+
+          if (overlap == 0)
             if @sd > @ed || ((@sd <= dt) && (@sd >= @ed))
                flash[:alert] = "The end date cannot be the past date!"
             else
@@ -137,7 +139,6 @@ class LeaveApplicationsController < ApplicationController
                   end
 
                   if @leaveApplication.save && @employee.update_attributes(leave_bal: bal)
-                      @ld = @leaveApplication
                       @created = true 
                       flash[:notice] = "Application has been successfully created!"
                   end
@@ -169,41 +170,40 @@ class LeaveApplicationsController < ApplicationController
 
   def update
             @updated = false
-            checkAvailable = LeaveApplication.checkDateApp(current_employee,@sd,@ed)
             @employee = Employee.find(current_employee)
-            @ld = @employee.leave_applications.find(params[:id])
+            @ld = LeaveApplication.find(params[:id])
             @sd = @ld.start_date
             @ed = @ld.end_date
-            @sd2 = params[:leave_application][:start_date]
-            @ed2 = params[:leave_application][:end_date]
-          if checkAvailable.empty? || ((@sd == @sd2) && (@ed == @ed2))
-            
-            @leaveApplication = @employee.leave_applications.find(params[:id]).update_attributes(params[:leave_application])
-           
-              if params[:submit] && (current_employee.role_id == 1 || current_employee.role_id == 2 || current_employee.role_id == 4 || current_employee.role_id == 5)
-                   @ld.status_id = 2 
-              elsif params[:submit] && current_employee.role_id == 3
-                    @ld.status_id = 4
-              end
+            @sd2 = Date.parse(params[:leave_application][:start_date])
+            @ed2 = Date.parse(params[:leave_application][:end_date])
+
+            @overlap = LeaveApplication.overlaps(current_employee,@sd2,@ed2)
+
+            if (@overlap == 0) || ((@sd == @sd2) || (@ed == @ed2))
+                @ad = LeaveApplication.exclude_weekends(@sd,@ed)
+                @fd = @employee.leave_bal + @ad
+                @actual_days = LeaveApplication.exclude_weekends(@sd2,@ed2)
+                @bal = @fd - @actual_days.to_i
               
-               if @leaveApplication && @ld.save
-                 flash[:notice] = "Application has been successfully updated!"
-
-                  @ld = LeaveApplication.find(params[:id])
-                   @sd = Date.parse(@ld.start_date.strftime("%Y-%m-%d"))
-                  @ed = Date.parse(@ld.end_date.strftime("%Y-%m-%d"))
-                  @date = params[:leave_application][:start_date]
-                 @updated = true
-              else
-                flash[:alert] = "Application failed to be updated!"
-                flash.discard
-                render 'edit'
-              end
-            else
-           flash[:alert] = "Application on this date exists!"
-          end
-
-            
+              @leaveApplication = @employee.leave_applications.find(params[:id]).update_attributes(params[:leave_application])
+             
+                if params[:submit] && (current_employee.role_id == 1 || current_employee.role_id == 2 || current_employee.role_id == 4 || current_employee.role_id == 5)
+                     @ld.status_id = 2 
+                elsif params[:submit] && current_employee.role_id == 3
+                      @ld.status_id = 4
+                end
+                
+                 if @leaveApplication && @ld.save && @employee.update_attributes(leave_bal: @bal)
+                   flash[:notice] = "Application has been successfully updated!"
+                    @date = Date.parse(params[:leave_application][:start_date])
+                   @updated = true
+                else
+                  flash[:alert] = "Application failed to be updated!"
+                  render 'edit'
+                end
+             else
+           flash[:alert] = "Application on this date exists!" 
+        end
 
       respond_to do |format|
       format.html {redirect_to leave_application_path(params[:id])}
@@ -215,12 +215,9 @@ class LeaveApplicationsController < ApplicationController
     @leaveApplication = LeaveApplication.find(params[:id])
     @employee = Employee.find(@leaveApplication.employee_id)
     @res = false
-    @bal = LeaveApplication.dateDiff(params[:id])
-    @bal.each do |d|
-      @diff = d.diff
-    end
-    newBal = @employee.leave_bal + @diff
-    newBal2 = @employee.leave_balance + @diff
+    diff = LeaveApplication.exclude_weekends(@leaveApplication.start_date,@leaveApplication.end_date)
+    newBal = @employee.leave_bal + diff
+    newBal2 = @employee.leave_balance + diff
 
     if @leaveApplication.status_id == 5
       if @leaveApplication.destroy && @employee.update_attributes(leave_bal: newBal, leave_balance: newBal2)
@@ -233,6 +230,7 @@ class LeaveApplicationsController < ApplicationController
     end
 
     if @res == true
+      @date = @leaveApplication.start_date.to_date
       flash[:notice] = "Application has been successfully deleted!"
     else
       flash[:alert] = "Application failed to be deleted!"
@@ -305,30 +303,23 @@ class LeaveApplicationsController < ApplicationController
     @emp = Employee.find(@review.employee_id)
 
     @update = false
-    @did = params[:leave_application][:did]
-    @dt = params[:leave_application][:date]
-    @sd = @review.start_date
-    @ed = @review.end_date
 
-      @bal = LeaveApplication.dateDiff(params[:id])
-      @bal.each do |d|
-       @diff = d.diff
-      end
-      @lBal = @emp.leave_bal + @diff.to_i
+    ad = LeaveApplication.exclude_weekends(@sd,@ed)
       
-    lb = @emp.leave_balance.to_i
-    diff = params[:leave_application][:bal].to_i
-    date_bal = (lb - diff)
     if @review.update_attributes(status_id: params[:leave_application][:status])
           if current_employee.role_id == 3
             if @review.status_id == 5
+              lb = @emp.leave_balance.to_i
+              date_bal = (lb - ad)
               @emp.update_attributes(leave_balance: date_bal)
             end
           end
           if @review.status_id == 3
-              @emp.update_attributes(leave_bal: @lBal)
+              lBal = @emp.leave_bal + ad
+              @emp.update_attributes(leave_bal: lBal)
           end
         @update = true
+        @date = @review.start_date.to_date
         flash[:notice] = "Successfully Updated Status"
     else
       flash[:alert] = "Failed to Update Status"

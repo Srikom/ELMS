@@ -10,7 +10,7 @@
                 <span id="e_<%= date %>"><%= date.day %></span>
             <% end %>
             <br/>
-            <% if @availability.any? %>
+            <% if @availability.any? && ((date.strftime('%a') != 'Sat' && date.strftime('%a') != 'Sun')) %>
             <center>
                 <select size="2" class="date_<%= date %>" ONCHANGE="location = this.options[this.selectedIndex].value;" id="selection" style="width: 100px;">
             		<% @leaveApplications.each do |l|%>

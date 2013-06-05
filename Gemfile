@@ -25,6 +25,7 @@ gem 'jquery-rails'
 gem 'devise'
 gem 'prawn', git: 'https://github.com/prawnpdf/prawn.git'
 gem 'will_paginate'
+gem "squeel"
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

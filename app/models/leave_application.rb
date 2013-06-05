@@ -8,14 +8,10 @@ class LeaveApplication < ActiveRecord::Base
   belongs_to :employee
 
 
-  def self.checkDateApp(eid,sd,ed)
-    find_by_sql ["SELECT id FROM leave_applications WHERE employee_id = ? AND ((start_date between ? AND ?) AND (end_date between ? AND ?))",eid,sd,ed,sd,ed]
+   def self.overlaps(eid,sd,ed)
+    where("employee_id = ? AND ((julianday(start_date) - julianday(?)) * (julianday(?) - julianday(end_date)) ) >= 0",eid,ed,sd).count
   end
-
-  def self.dateDiff(lid)
-    select("(julianday(Date(end_date)) - julianday(start_date))+1 AS diff").where(id:lid)
-  end
-
+ 
   def self.findAvAppManagement(eid,sid,did)
     find_by_sql ["SELECT department_id,name,leave_applications.employee_id AS eid,leave_applications.id AS lid,start_date,end_date,status_id FROM leave_applications,employees WHERE leave_applications.employee_id = employees.id AND status_id = 5 
       UNION 
@@ -97,6 +93,15 @@ SUM(CASE leave_applications.status_id WHEN 5 THEN 1 ELSE 0 END) AS APPROVED").jo
 
   def self.filterArchive(status,employee)
     select('leave_applications.id,employees.name,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where("status_id = ? AND employee_id = ? " ,status,employee)
+  end
+  
+  def self.exclude_weekends(sd,ed)
+    weekdays_in_date_range( sd.to_date..(ed.to_date) )
+  end
+  
+  def self.weekdays_in_date_range(range)
+    # You could modify the select block to also check for holidays
+    range.select { |d| (1..5).include?(d.wday) }.size
   end
 
 end

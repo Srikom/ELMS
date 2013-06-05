@@ -8,26 +8,12 @@
      <%  @leaveApplications = LeaveApplication.findAvApp(current_employee) %>
    <% end %>
     <%  @date = @sd %>
-    $('div.popup').append("<div class='loader'></div>");
-    $.ajax({
-     type: "POST",
-   timeout: 10000,
-     url: "/leave_applications/showDetails",
-     data: {lid:<%= @ld.id %>,eid:<%= @ld.employee_id %>,sid:<%= @ld.status_id %>,did:<%= @employee.department_id %>,sd:"<%= @ld.start_date %>",ed:"<%= @ld.end_date %>",dt:"<%= @date %>"},
-     success: function(data) {
+    
           $('#empLeave2').html('<%= j render("calendar") %>');
-          $('.loader').remove();
-            $("a.overlay").hide(1000);
-  $("div.popup").hide(1000);
-     },
-      error:function(){
-          alert("Error detected!");
-        }
-   });
-
-  	
-    alert("Application has been successfully created!");
-
+         $('div.popup div.loader').remove();
+          alert("Application has been created!");
+          $("a.overlay").fadeOut(400);
+          $("div.popup").slideUp(400);
   	
 <% else %>
 	<% flash.each do |key,msg|%>
