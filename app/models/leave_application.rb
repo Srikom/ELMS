@@ -96,7 +96,7 @@ SUM(CASE leave_applications.status_id WHEN 5 THEN 1 ELSE 0 END) AS APPROVED").jo
   end
   
   def self.exclude_weekends(sd,ed)
-    weekdays_in_date_range( sd.to_date..(ed.to_date) )
+    weekdays_in_date_range( sd.to_date..(ed.to_date) )  
   end
   
   def self.weekdays_in_date_range(range)
