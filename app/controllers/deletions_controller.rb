@@ -2,7 +2,7 @@ class DeletionsController < ApplicationController
 
     def index
         if current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5
-            @del = Deletion.paginate(:page => params[:page], :per_page => 5, :order => "created_at DESC")
+            @del = Deletion.paginate(:page => params[:page], :per_page => 10, :order => "created_at DESC")
         else
           flash[:alert] = "You are not allowed to access this page!"
           redirect_to leave_applications_path
