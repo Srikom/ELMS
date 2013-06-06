@@ -6,7 +6,9 @@
     <%  elsif current_employee.role_id == 4 || current_employee.role_id == 1 %>
      <%  @leaveApplications = LeaveApplication.findAvApp(current_employee) %>
    <% end %>
-    
+    <% if current_employee.id == @emp.id %> 
+      $("span#lb").text("<%= @employee.leave_balance %>");
+    <% end %>
           $('#empLeave2').html('<%= j render("calendar") %>');
          $('div.popup div.loader').remove();
           alert("Application has been deleted!");

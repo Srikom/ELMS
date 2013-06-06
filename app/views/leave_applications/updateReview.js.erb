@@ -12,7 +12,7 @@
 			$("span#lb").text("<%= @emp.leave_balance %>");
 		<% end %>
 	<% end %>
-	$("span#status").html("<%= stat %>").hide().fadeIn(1000);
+	
 
 	<%  if current_employee.role_id == 2 || current_employee.role_id == 5 %>
      <% @leaveApplications = LeaveApplication.findAvAppManagement(current_employee,2,current_employee.department_id) %>

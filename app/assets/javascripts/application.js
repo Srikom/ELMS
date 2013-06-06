@@ -100,8 +100,12 @@ $(function(){
 
 	$('#notice').fadeOut(4000);
 	$('#alert').fadeOut(4000);
-	$('#rangeS').datepicker();
-	$('#rangeE').datepicker();
+	$('#rangeS,#rangeE').datepicker({
+		beforeShowDay: saturdayAndSunday,
+        readOnly : 'true',
+        showAnim: "fadeIn"
+	});
+	
 
 	$("#showL").click(function(){
 		$("#right").fadeIn(1000);
