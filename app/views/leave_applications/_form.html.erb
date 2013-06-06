@@ -1,4 +1,7 @@
 <script type="text/javascript">
+        
+        var dateToday = new Date();
+
         function gd() {
           
         var start = $('#leave_application_start_date').datepicker('getDate');
@@ -19,24 +22,16 @@
     }
 
 
-        $("#leave_application_start_date").datepicker({
+        $("#leave_application_start_date,#leave_application_end_date").datepicker({
                 beforeShowDay: saturdayAndSunday,
                 dateFormat : 'yy-mm-dd',
                 readOnly : 'true',
-                minDate: 0,
+                minDate: dateToday,
                 numberOfMonths: 2,
                 showAnim: "fadeIn",
-                onSelect : gd
+               onSelect: gd
         });
-        $("#leave_application_end_date").datepicker({
-                beforeShowDay: saturdayAndSunday,
-                dateFormat : 'yy-mm-dd',
-                readOnly : 'true',
-                minDate: 0,
-                numberOfMonths: 2,
-                showAnim: "fadeIn",
-                onSelect : gd
-        });
+        
 
         function saturdayAndSunday(date){
                 var day=date.getDay();
@@ -44,7 +39,7 @@
          }
 
         $("#leave_application_start_date").datepicker("setDate","<%= (@sd.blank? ? @date : @sd) %>");
-        $("#leave_application_end_date").datepicker("setDate","<%= (@ed.blank? ? '' : @ed) %>");
+        $("#leave_application_end_date").datepicker("setDate","<%= (@ed.blank? ? @date : @ed) %>");
 </script>
 
 <%= form_for @leaveApplication,remote: true do |f| %>

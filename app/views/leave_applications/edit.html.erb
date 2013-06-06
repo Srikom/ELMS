@@ -1,4 +1,7 @@
-
+<script type="text/javascript">
+	$("#leave_application_start_date").datepicker("setDate","<%= @sd %>");
+	$("#leave_application_end_date").datepicker("setDate","<%= @ed %>");
+</script>
 <h1>Edit Leave Application#<%= @leaveApplication.id %></h1>
 <%= form_for (@leaveApplication) do |f| %>
 <center>
@@ -34,7 +37,7 @@
 </div>
 </center>
 <% end %>
-<%= link_to 'Back', :back %>
+
 
 
 

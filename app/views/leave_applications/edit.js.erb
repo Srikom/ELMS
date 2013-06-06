@@ -57,6 +57,9 @@ $("div.popup").html("<%= j render('form') %>");
 					required: "Please enter your reason of taking leave",
 				}
 
+		},
+		invalidHandler: function(event, validator) {
+			$('.loader').remove();
 		}
 	});
 

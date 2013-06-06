@@ -1,3 +1,2 @@
 $('#empLeave').html('<%= j render("calendar") %>');
 $('#month').html('<%= link_to "<", date: @date.prev_month, remote: true %><span style="padding:5px;"><%= @date.strftime("%B %Y") %></span><%= link_to ">", date: @date.next_month, remote: true %>');
-$('div.popup div.loader').remove();

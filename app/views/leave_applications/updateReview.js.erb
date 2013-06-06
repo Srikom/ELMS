@@ -31,5 +31,6 @@
 	<% flash.each do |key,msg|%>
 		var err_msg = "<%= msg %>";
 	<% end %>
+	$('div.popup div.loader').remove();
 	alert("Leave Application failed to be Reviewed!Due to \n"+err_msg);
 <% end %>

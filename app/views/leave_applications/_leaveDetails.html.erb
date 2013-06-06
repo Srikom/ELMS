@@ -33,16 +33,14 @@
 		
 	</table>
 	
-
-
                             <% if current_employee.id == @ld.employee_id && @ld.status_id == 1 %>
-                                <% if (@ld.start_date > Date.today)%>
+                                <% if (@ld.start_date >= Date.today)%>
                                     <%= button_to 'Edit',edit_leave_application_path(l.id), method: :get , id: "edit" %>
                                     <%= button_to 'Submit' ,submitApp_leave_application_path(l.id,:submission => { :did => @ld.employee_id, :date => @ld.start_date }), method: :put %>
                                 <% end %>
                                 <%= button_to 'Delete',l,:method => :delete,confirm: 'Are you sure?' %>  
                             <% elsif  (current_employee.role_id == 2 || current_employee.role_id == 5) && current_employee.department_id == @emp.department_id && @ld.status_id == 2 %>
-                            <% if (@ld.start_date > Date.today) %>
+                            <% if (@ld.start_date >= Date.today) %>
                                     <%= form_for(@ld, :url => updateReview_leave_application_path(l.id)) do |f| %>
                                         <%= f.select :status, [['Approve',4],['Reject',3]] %>
                                         <%= f.hidden_field :did , value: @emp.department_id %>
@@ -64,7 +62,7 @@
                                 <% end %> 
                             <% end %>
                             <p><%= button_to 'Delete',l,:method => :delete,confirm: 'Are you sure?'  %></p>
-                            <% elsif  @ld.status_id == 5 %>
+                            <% elsif  @ld.status_id == 5 || @ld.status_id == 3%>
                                 <% if (current_employee.role_id == 1 || current_employee.role_id == 4) && @ld.start_date >= Date.today && current_employee.id == @ld.employee_id %> 
                                     <p><%= button_to 'Delete',l,:method => :delete,confirm: 'Are you sure?' %></p>
                                 <% elsif (current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5) && (@ld.start_date <= Date.today || @ld.start_date >= Date.today)%>
@@ -87,17 +85,4 @@
                   <% end %>
                         </div>
                 
-
-
-
-
-
-
-
-
-
-
-
-
 </center>
-<%= link_to 'Back', :back %>

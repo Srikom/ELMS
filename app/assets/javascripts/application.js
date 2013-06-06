@@ -25,6 +25,7 @@ $(function(){
  	login_employee();
  	new_app_val();
 	edit_leave_app();
+	new_del();
 
 	$("div#empLeave").delegate("span#day","click",function(e){
 		
@@ -170,44 +171,17 @@ function getDiff() {
  	   	return [(day != 0 && day != 6), ''];
  }
 
+var today = new Date();
 
-		$('#leave_application_start_date').datepicker({
-		beforeShowDay: saturdayAndSunday,
-		dateFormat: 'yy-mm-dd',
-		showButtonPanel: true,
-		changeMonth: true,
-		changeYear: true,
-		 showAnim: "fadeIn",
-		numberOfMonths: 2,
-		duration:"fast",
-		stepMonths:0,
-		minDate: 0,
-		 onSelect: function (dateText, inst) {
-		 		$('#leave_application_end_date').val(dateText);
-	            getDiff();
-				}
-	}).focus();
-
-
-
-	$('#leave_application_end_date').datepicker({
-		beforeShowDay: saturdayAndSunday,
-		dateFormat: 'yy-mm-dd',
-		 showButtonPanel: true,
-		changeMonth: true,
-		changeYear: true,
-		duration:"fast",
-		stepMonths:0,
-		minDate: 0,
-		numberOfMonths: 2,
-		showAnim: "fadeIn",
-		
-	    onSelect: getDiff
-		
-				}).focus();	
-	var today = new Date();
-	 $("#leave_application_start_date").datepicker("setDate",today);
-     $("#leave_application_end_date").datepicker("setDate",today);
+ $("#leave_application_start_date,#leave_application_end_date").datepicker({
+ 	beforeShowDay: saturdayAndSunday,
+        dateFormat : 'yy-mm-dd',
+        readOnly : 'true',
+        numberOfMonths: 2,
+        showAnim: "fadeIn",
+		minDate: today,
+		 onSelect: getDiff
+ });
 
 });
 
@@ -225,6 +199,20 @@ function ajax_c(date){
       				
 				}
 		});
+}
+
+
+function new_del(){
+
+	$("form#new_deletion").validate({
+		rules: {
+				"deletion[reason]" : {
+					required: true,
+					minlength: 10
+				}
+			}
+	});
+
 }
 
 
@@ -302,6 +290,9 @@ function edit_leave_app(){
 					required: "Please enter your reason of taking leave",
 				}
 
+		},
+		invalidHandler: function(event, validator) {
+			$('.loader').remove();
 		}
 	});
 
@@ -440,6 +431,9 @@ function new_app_val(){
 					required: "Please enter your reason of taking leave",
 				}
 
+		},
+		invalidHandler: function(event, validator) {
+			$('.loader').remove();
 		}
 	});
 

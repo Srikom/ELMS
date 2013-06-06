@@ -1,3 +1,17 @@
+<script type="text/javascript">
+
+
+    $("form#new_deletion").validate({
+        rules: {
+                "deletion[reason]" : {
+                    required: true,
+                    minlength: 10
+                }
+            }
+    });
+
+</script>
+
 
             <% @leaveApplication.each do |b| %>
                 <h2>Application #<%= b.id %></h2>
@@ -16,13 +30,13 @@
 
                         <div id="command">
                             <% if current_employee.id == eid && sid == 1 %>
-                                <% if (date > Date.today)%>
+                                <% if (date >= Date.today)%>
                                     <%= button_to 'Edit',edit_leave_application_path(b.id,:submission => { :date => date }), method: :get , remote: true, id: "edit" %>
                                     <%= button_to 'Submit' ,submitApp_leave_application_path(b.id,:submission => { :did => did, :date => date }), method: :put , remote: true %>
                                 <% end %>
                                 <%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?', remote: true %>  
                             <% elsif  (current_employee.role_id == 2 || current_employee.role_id == 5) && current_employee.department_id == did && sid == 2 %>
-                            <% if (date > Date.today) %>
+                            <% if (date >= Date.today) %>
                                     <%= form_for(review, :url => updateReview_leave_application_path(b.id),remote: true) do |f| %>
                                         <%= f.select :status, [['Approve',4],['Reject',3]] %>
                                         <%= f.hidden_field :did , value: did %>
@@ -44,7 +58,7 @@
                                 <% end %> 
                             <% end %>
                             <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?', remote: true  %></p>
-                            <% elsif  sid == 5 %>
+                            <% elsif  sid == 5 || sid == 3%>
                                 <% if (current_employee.role_id == 1 || current_employee.role_id == 4) && date >= Date.today && current_employee.id == eid %> 
                                     <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?', remote: true  %></p>
                                 <% elsif (current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5) && (date <= Date.today || date >= Date.today)%>
