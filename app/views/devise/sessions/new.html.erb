@@ -11,7 +11,7 @@
 	  <%= f.email_field :email, :autofocus => true ,:placeholder=>"e.g. user@gmail.com"  %></div>
 
 	  <div id='acc'><%= f.label :password %>
-	  <%= f.password_field :password %></div>
+	  <%= f.password_field :password,:placeholder=>"At least 6 characters"  %></div>
 
 	  <center><div id='acc'><input type='reset'/><%= f.submit "Sign in" %></div></center>
 	<% end %>
