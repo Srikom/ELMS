@@ -119,6 +119,7 @@ class LeaveApplicationsController < ApplicationController
           @sd = Date.parse(params[:leave_application][:start_date])
           @ed = Date.parse(params[:leave_application][:end_date])
           dt = Date.today
+
           @actual_days = LeaveApplication.exclude_weekends(@sd,@ed)
           diff = @actual_days
           bal = @employee.leave_bal - diff.to_i
@@ -301,8 +302,10 @@ class LeaveApplicationsController < ApplicationController
   def updateReview
     @review = LeaveApplication.find(params[:id])
     @emp = Employee.find(@review.employee_id)
+
     @sd = @review.start_date
     @ed = @review.end_date
+    
     @update = false
 
     ad = LeaveApplication.exclude_weekends(@sd,@ed)

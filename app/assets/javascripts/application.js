@@ -170,15 +170,15 @@ function getDiff() {
  	   	return [(day != 0 && day != 6), ''];
  }
 
-$('body').on('click', '#leave_application_start_date', function(event) {
-		$(this).datepicker({
+
+		$('#leave_application_start_date').datepicker({
 		beforeShowDay: saturdayAndSunday,
 		dateFormat: 'yy-mm-dd',
 		showButtonPanel: true,
 		changeMonth: true,
 		changeYear: true,
 		 showAnim: "fadeIn",
-		  
+		numberOfMonths: 2,
 		duration:"fast",
 		stepMonths:0,
 		minDate: 0,
@@ -187,11 +187,10 @@ $('body').on('click', '#leave_application_start_date', function(event) {
 	            getDiff();
 				}
 	}).focus();
-});
 
 
-$('body').on('click', '#leave_application_end_date', function(event) {
-	$(this).datepicker({
+
+	$('#leave_application_end_date').datepicker({
 		beforeShowDay: saturdayAndSunday,
 		dateFormat: 'yy-mm-dd',
 		 showButtonPanel: true,
@@ -200,14 +199,15 @@ $('body').on('click', '#leave_application_end_date', function(event) {
 		duration:"fast",
 		stepMonths:0,
 		minDate: 0,
+		numberOfMonths: 2,
 		showAnim: "fadeIn",
 		
 	    onSelect: getDiff
 		
-				}).focus();
-});
-
- 	
+				}).focus();	
+	var today = new Date();
+	 $("#leave_application_start_date").datepicker("setDate",today);
+     $("#leave_application_end_date").datepicker("setDate",today);
 
 });
 
@@ -259,29 +259,17 @@ function login_employee(){
 
 function edit_leave_app(){
 
-	$.validator.addMethod(
-    "formatDate",
-    function(value, element) {
-        // put your own logic here, this is just a (crappy) example
-        return value.match(/^\d\d\d\d?\-\d\d?\-\d\d$/);
-    },
-    "Please enter a date in the format yyyy-mm-dd."
-);
-
-
 	$("form.edit_leave_application").validate({
 		rules: {
 
 				"leave_application[start_date]" : {
 					required: true,
-					date: true,
-					formatDate: true
+					date: true
 				},
 
 				"leave_application[end_date]" : {
 					required: true,
-					date: true,
-					formatDate: true
+					date: true
 				},
 
 				"leave_application[leave_id]" : {

@@ -19,5 +19,6 @@
 	<% flash.each do |key,msg|%>
 		var err_msg = "<%= msg %>";
 	<% end %>
+  $('div.popup div.loader').remove();
 	alert("An error has occured!Due to \n " + err_msg);
 <% end %>

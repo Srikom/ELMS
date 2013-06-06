@@ -4,7 +4,7 @@
         <% @availability = LeaveApplication.findAv(current_employee,current_employee.role_id,current_employee.department_id,date)%>
         <% @app = LeaveApplication.checkDateAv(current_employee,date)%>
            
-            <% if !@app.any? && (date.strftime('%a') != 'Sat' && date.strftime('%a') != 'Sun') && Date.today < date %>    
+            <% if !@app.any? && (date.strftime('%a') != 'Sat' && date.strftime('%a') != 'Sun') && Date.today <= date %>    
                  <span id="day" data-remote="true" data-date="<%= date %>"><%= date.day %></span>
             <% else %>
                 <span id="e_<%= date %>"><%= date.day %></span>

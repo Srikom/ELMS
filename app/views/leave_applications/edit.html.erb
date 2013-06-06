@@ -1,5 +1,4 @@
 
-
 <h1>Edit Leave Application#<%= @leaveApplication.id %></h1>
 <%= form_for (@leaveApplication) do |f| %>
 <center>
@@ -17,8 +16,8 @@
 	</div>
 <% end %>
 <div class="form_text_box">
-        <label><b>Start Date:</b></label><%= f.text_field :start_date, :value => @sd %><br/>
-        <label><b>End Date:</b></label><%= f.text_field :end_date, :value => @sd %>
+        <label><b>Start Date:</b></label><%= f.text_field :start_date, readOnly: true %><br/>
+        <label><b>End Date:</b></label><%= f.text_field :end_date, readOnly: true %>
 </div>
 	
  <h1>Type of leave</h1>

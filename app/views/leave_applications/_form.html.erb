@@ -23,14 +23,18 @@
                 beforeShowDay: saturdayAndSunday,
                 dateFormat : 'yy-mm-dd',
                 readOnly : 'true',
-                minDate:0,
+                minDate: 0,
+                numberOfMonths: 2,
+                showAnim: "fadeIn",
                 onSelect : gd
         });
         $("#leave_application_end_date").datepicker({
                 beforeShowDay: saturdayAndSunday,
                 dateFormat : 'yy-mm-dd',
                 readOnly : 'true',
-                minDate:0,
+                minDate: 0,
+                numberOfMonths: 2,
+                showAnim: "fadeIn",
                 onSelect : gd
         });
 
@@ -49,8 +53,8 @@
                 <fieldset>
                     <legend><b>New Application</b></legend>
                 <div class="form_text_box">
-                        <label><b>Start Date:</b></label><%= f.text_field :start_date %><br/>
-                        <label><b>End Date:</b></label><%= f.text_field :end_date %>
+                        <label><b>Start Date:</b></label><%= f.text_field :start_date, readOnly: true %><br/>
+                        <label><b>End Date:</b></label><%= f.text_field :end_date, readOnly: true %>
                 </div>
                     
                  <h1>Type of leave</h1>
