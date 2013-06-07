@@ -32,7 +32,7 @@
 		</tr>
 		
 	</table>
-	
+	 <center><%=button_to 'Back',:back,method: :get%></center>
                             <% if current_employee.id == @ld.employee_id && @ld.status_id == 1 %>
                                 <% if (@ld.start_date >= Date.today)%>
                                     <%= button_to 'Edit',edit_leave_application_path(l.id), method: :get , id: "edit" %>
