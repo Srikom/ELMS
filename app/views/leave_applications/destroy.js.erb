@@ -6,7 +6,7 @@
     <%  elsif current_employee.role_id == 4 || current_employee.role_id == 1 %>
      <%  @leaveApplications = LeaveApplication.findAvApp(current_employee) %>
    <% end %>
-    <% if current_employee.id == @emp.id %> 
+    <% if current_employee.id == @employee.id %> 
       $("span#lb").text("<%= @employee.leave_balance %>");
     <% end %>
           $('#empLeave2').html('<%= j render("calendar") %>');
