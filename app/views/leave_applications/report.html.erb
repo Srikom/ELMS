@@ -41,10 +41,12 @@
 						<th>Department</th>
 						<th>Approved</th>
 						<th>Rejected</th>
+						<th>Pending</th>
 					</tr>
 			<% @reports.each do |r|%>
 					<% @approve << r.APPROVED %>
 					<% @reject << r.REJECTED %>
+						<% @pending << r.PENDING %>
 					<% month = Date.parse(r.MONTH) %>
 					<tr>
 						<td><center><%= r.YEAR %></center></td>
@@ -53,12 +55,16 @@
 						<td><center><%= r.DEPARTMENT %></center></td>
 						<td><center><%= r.APPROVED %></center></td>
 						<td><center><%= r.REJECTED %></center></td>
+						<td><center><%= r.PENDING %></center></td>
+						
 					</tr>
 			<% end %>
 				<tr class="lastRow">
 					<td colspan="4"><center><b>Total</b></center></td>
 					<td><center><b><%= @approve.sum %></b></center></td>
 					<td><center><b><%= @reject.sum %></b></center></td>
+					<td><center><b><%= @pending.sum %></b></center></td>
+					
 				</tr>
 				</table>
 			</fieldset>

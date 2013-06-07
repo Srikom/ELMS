@@ -262,6 +262,7 @@ class LeaveApplicationsController < ApplicationController
             @dID = dID
             @s = s
             @e = e
+            @pending = Array.new
             @approve = Array.new
             @reject = Array.new
               if @reports.empty?

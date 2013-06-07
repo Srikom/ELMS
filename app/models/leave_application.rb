@@ -75,8 +75,8 @@ class LeaveApplication < ActiveRecord::Base
   end
 
   def self.reportCount(emp_id,dept_id,s,e)
-    reports = LeaveApplication.select("start_date AS MONTH,strftime('%Y',start_date) AS YEAR,employees.name AS NAME, departments.department_name AS DEPARTMENT ,SUM(CASE leave_applications.status_id WHEN 3 THEN 1 ELSE 0 END) AS REJECTED,  
-SUM(CASE leave_applications.status_id WHEN 5 THEN 1 ELSE 0 END) AS APPROVED").joins(:employee => :department).where("status_id = 3 OR status_id = 5")
+    reports = LeaveApplication.select("start_date AS MONTH,strftime('%Y',start_date) AS YEAR,employees.name AS NAME, departments.department_name AS DEPARTMENT ,SUM(CASE leave_applications.status_id WHEN 3 THEN 1 ELSE 0 END) AS REJECTED,  SUM(CASE leave_applications.status_id WHEN 2 THEN 1 ELSE 0 END) AS PENDING,  
+SUM(CASE leave_applications.status_id WHEN 5 THEN 1 ELSE 0 END) AS APPROVED").joins(:employee => :department).where("status_id = 3 OR status_id = 5 OR status_id = 2")
     reports = filter_report(reports,emp_id,dept_id,s,e) 
     reports.group("strftime('%m',start_date),employees.name")
   end

@@ -3,9 +3,10 @@ class ReportPdf < Prawn::Document
 	def initialize(reports,a,r)
 		super(top_margin:70)
 		@reports = reports
-		@sum = a.to_i + r.to_i
+		@sum = a.to_i + r.to_i +p.to_i
 		@approve = a
 		@reject = r
+		@pending =p
 		report_name
 		table_data
 		footer_sig
@@ -33,11 +34,12 @@ class ReportPdf < Prawn::Document
 	end
 
 	def datas
-		app = [["Year","Month","Employee Name","Department","Approved","Rejected"]] 
+		app = [["Year","Month","Employee Name","Department","Approved","Rejected","Pending"]] 
 		app += @reports.map do |r|
-		[r.YEAR,Date.parse(r.MONTH).strftime("%B"),r.NAME,r.DEPARTMENT,r.APPROVED,r.REJECTED]
+		[r.YEAR,Date.parse(r.MONTH).strftime("%B"),r.NAME,r.DEPARTMENT,r.APPROVED,r.REJECTED,r.PENDING]
 		end
-		app += [[{:content => "Total",:colspan => 4},"#{@approve}","#{@reject}"]]
+		app += [[{:content => "Total",:colspan => 4},"#{@approve}","#{@reject}","#{@pending}"]]
+			app += [[{:content => "Overall Total",:colspan => 4}]]
 	end
 
 	def footer_sig
