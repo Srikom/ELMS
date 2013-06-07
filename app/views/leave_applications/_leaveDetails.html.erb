@@ -32,7 +32,7 @@
 		</tr>
 		
 	</table>
-    <center><%=button_to 'Back',:back,method: :get%></center>
+	
                             <% if current_employee.id == @ld.employee_id && @ld.status_id == 1 %>
                                 <% if (@ld.start_date >= Date.today)%>
                                     <%= button_to 'Edit',edit_leave_application_path(l.id), method: :get , id: "edit" %>
@@ -62,8 +62,8 @@
                                 <% end %> 
                             <% end %>
                             <p><%= button_to 'Delete',l,:method => :delete,confirm: 'Are you sure?'  %></p>
-                            <% elsif  @ld.status_id == 5 || @ld.status_id == 3%>
-                                <% if (current_employee.role_id == 1 || current_employee.role_id == 4) && @ld.start_date >= Date.today && current_employee.id == @ld.employee_id %> 
+                            <% elsif  @ld.status_id == 5 || @ld.status_id == 3 %>
+                                <% if (current_employee.role_id == 1 || current_employee.role_id == 4) && @ld.start_date >= Date.today && current_employee.id == @ld.employee_id && sid != 3 %> 
                                     <p><%= button_to 'Delete',l,:method => :delete,confirm: 'Are you sure?' %></p>
                                 <% elsif (current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5) && (@ld.start_date <= Date.today || @ld.start_date >= Date.today)%>
                                 <div>
@@ -75,7 +75,7 @@
                                         <%= f.hidden_field :sDate , value: @ld.start_date %>
                                         <%= f.hidden_field :eDate , value: @ld.end_date %>
                                         <%= f.hidden_field :bal, :value => l.date_diff.to_i %>
-                                        <%= f.submit "Confirm Rejection",confirm: 'Are you sure?'%>
+                                        <%= f.submit "Confirm Deletion",confirm: 'Are you sure?'%>
                                     <% end %>
                                 </div>
                                 <% end %>

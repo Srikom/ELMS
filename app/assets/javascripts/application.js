@@ -20,7 +20,8 @@
 
 
 $(function(){
-
+	var elem = $(".notmonth");
+    elem.animate({"opacity": 0},100);
 	reg_employee();
  	login_employee();
  	new_app_val();

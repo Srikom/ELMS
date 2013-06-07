@@ -17,7 +17,7 @@ class LeaveApplication < ActiveRecord::Base
       UNION 
       SELECT department_id,name,leave_applications.employee_id AS eid,leave_applications.id AS lid,start_date,end_date,status_id FROM leave_applications,employees WHERE leave_applications.employee_id = employees.id AND employee_id = ? AND (status_id = 1 OR status_id = 2 OR status_id = 3 OR status_id = 4) 
       UNION 
-      SELECT department_id,name,leave_applications.employee_id AS eid,leave_applications.id AS lid,start_date,end_date,status_id FROM leave_applications,employees WHERE leave_applications.employee_id = employees.id AND  status_id = ? AND department_id = ? ",eid,sid,did]
+      SELECT department_id,name,leave_applications.employee_id AS eid,leave_applications.id AS lid,start_date,end_date,status_id FROM leave_applications,employees WHERE leave_applications.employee_id = employees.id AND  (status_id = ? OR status_id = 3) AND department_id = ? ",eid,sid,did]
   end
 
   def self.findAvApp(id)
@@ -41,7 +41,7 @@ class LeaveApplication < ActiveRecord::Base
       UNION 
       SELECT leave_applications.id FROM leave_applications,employees WHERE leave_applications.employee_id = employees.id AND employee_id = ? AND (status_id = 1 OR status_id = 2 OR status_id = 3 OR status_id = 4) AND (strftime('%Y-%m-%d',start_date) <= ? AND ? <= strftime('%Y-%m-%d',end_date))
       UNION 
-      SELECT leave_applications.id FROM leave_applications,employees WHERE leave_applications.employee_id = employees.id AND  status_id = ? AND department_id = ? AND (strftime('%Y-%m-%d',start_date) <= ? AND ? <= strftime('%Y-%m-%d',end_date))",date,date,eid,date,date,sid,did,date,date]
+      SELECT leave_applications.id FROM leave_applications,employees WHERE leave_applications.employee_id = employees.id AND  (status_id = ? OR status_id = 3) AND department_id = ? AND (strftime('%Y-%m-%d',start_date) <= ? AND ? <= strftime('%Y-%m-%d',end_date))",date,date,eid,date,date,sid,did,date,date]
   end
 
   def self.gatherByStaff(eid,date)

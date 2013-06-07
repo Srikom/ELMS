@@ -58,8 +58,8 @@
                                 <% end %> 
                             <% end %>
                             <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?', remote: true  %></p>
-                            <% elsif  sid == 5 || sid == 3%>
-                                <% if (current_employee.role_id == 1 || current_employee.role_id == 4) && date >= Date.today && current_employee.id == eid %> 
+                            <% elsif  sid == 5 || sid == 3 %>
+                                <% if (current_employee.role_id == 1 || current_employee.role_id == 4) && date >= Date.today && current_employee.id == eid && sid != 3  %> 
                                     <p><%= button_to 'Delete',b,:method => :delete,confirm: 'Are you sure?', remote: true  %></p>
                                 <% elsif (current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5) && (date <= Date.today || date >= Date.today)%>
                                 <div>
