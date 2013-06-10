@@ -25,7 +25,14 @@
 									<li><%= link_to 'Application Status', show_status_leave_applications_path %></li>
 									<li><%= link_to 'Application Archive', archive_leave_applications_path %></li>
 										<% if current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5 %>
-											<li><%= link_to 'Report',report_leave_applications_path %></li>
+											<li>
+												<a href='#'>Report</a>
+												<ul class="nav2">
+													<li><%= link_to 'Total Leave Application',report_leave_applications_path %></li>
+													<li><%= link_to 'Leave Application by Departments',reportDept_leave_applications_path %></li>
+													<li><%= link_to 'Leave Application by Employees',reportEmp_leave_applications_path  %></li>
+												</ul>
+											</li>
 											<li><%= link_to 'Application Management',management_leave_applications_path %></li>
 											<li><%= link_to 'Removed Application Notifications',deletions_path %></li>
 										<% end %>

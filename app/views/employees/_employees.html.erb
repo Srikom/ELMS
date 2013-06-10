@@ -1,0 +1,20 @@
+<table>
+<tr>
+<th>No</th>
+<th>Name</th>
+<th>Department</th>
+<th>Role</th>
+<th>Actions</th>
+</tr>
+
+<% @employees.each_with_index do |f,i| %>
+<tr>
+	<td><%= i+1  %></td>
+	<td><%= f.name %></td>
+	<td><%= Department.where(id:f.department_id).pluck("department_name").join("") %></td>
+	<td><%= Role.where(id:f.role_id).pluck("role_name").join("") %></td>
+	<td><%= link_to 'Details',employee_path(f.id)%></td>
+</tr>
+<% end %>
+</table>
+<%= will_paginate @pages %> 

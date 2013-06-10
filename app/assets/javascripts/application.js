@@ -20,6 +20,26 @@
 
 
 $(function(){
+
+	$('body').delegate("div.pagination a","click",function(){
+		$.getScript(this.href);
+		return false;
+	});
+
+
+	$("ul#nav ul li").hover(function(){
+
+		$(this).css("background-color","#ccc");
+
+	}).mouseleave(function(){
+		$(this).css({
+			"background-color":"#000",
+			"opacity" : "0.9",
+    "-moz-opacity" : "0.8",
+    "filter": "alpha(opacity=8)"
+		});
+	});
+
 	var elem = $(".notmonth");
     elem.animate({"opacity": 0},100);
 	reg_employee();

@@ -250,6 +250,7 @@ class LeaveApplicationsController < ApplicationController
         @departments = Department.all
         nID = params[:emp_name]
         dID = params[:dept_name]
+        @response = false 
 
         if params[:rangeS] || params[:rangeE] 
           s = params[:rangeS]
@@ -262,14 +263,21 @@ class LeaveApplicationsController < ApplicationController
             @dID = dID
             @s = s
             @e = e
+            @approveM = Array.new
             @pending = Array.new
             @approve = Array.new
             @reject = Array.new
+            @response = true
               if @reports.empty?
                 flash[:alert] = "No data found!"
-                flash.discard
+                @response = false 
               end
           end
+
+        respond_to do |format|
+            format.html
+            format.js{flash.discard}
+        end
     else
       flash[:alert] = "You are not allowed to access this page!"
       redirect_to leave_applications_path
@@ -368,5 +376,101 @@ class LeaveApplicationsController < ApplicationController
       format.js {flash.discard}
     end
   end
+
+  def pdfGenDept
+    @r = LeaveApplication.reportCountDept(params[:dID],params[:s],params[:e])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = Rdept.new(@r,params[:p],params[:am],params[:a],params[:r])
+        send_data pdf.render, type: "application/pdf", disposition: "inline"
+      end
+    end
+  end
+
+
+  def reportDept
+    if current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5
+        @departments = Department.all
+        dID = params[:dept_name]
+        @response = false
+        if params[:rangeS] || params[:rangeE] 
+          s = params[:rangeS]
+          e = params[:rangeE]
+        end
+          
+          unless  dID.nil? && s.nil? && e.nil?
+            @reports = LeaveApplication.reportCountDept(dID,s,e)
+            @dID = dID
+            @s = s
+            @e = e
+            @approveM = Array.new
+            @pending = Array.new
+            @approve = Array.new
+            @reject = Array.new
+            @response = true
+              if @reports.empty?
+                flash[:alert] = "No data found!"
+                @response = false 
+              end
+          end
+        respond_to do |format|
+            format.html
+            format.js{flash.discard}
+        end
+    else
+      flash[:alert] = "You are not allowed to access this page!"
+      redirect_to leave_applications_path
+    end
+  end
+
+  def pdfGenEmp
+    @r = LeaveApplication.reportCountEmp(params[:nID],params[:s],params[:e])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = Remp.new(@r,params[:sum_days])
+        send_data pdf.render, type: "application/pdf", disposition: "inline"
+      end
+    end
+  end
+
+
+  def reportEmp
+    if current_employee.role_id == 2 || current_employee.role_id == 3 || current_employee.role_id == 5
+        @employees = Employee.all
+        @departments = Department.all
+        nID = params[:emp_name]
+        @response = false
+
+        if params[:rangeS] || params[:rangeE] 
+          s = params[:rangeS]
+          e = params[:rangeE]
+        end
+          
+          unless  nID.nil? && s.nil? && e.nil?
+            @reports = LeaveApplication.reportCountEmp(nID,s,e)
+            @nID = nID
+            @s = s
+            @e = e
+            @sum_days = Array.new
+            @response = true
+              if @reports.empty?
+                flash[:alert] = "No data found!"
+                @response = false 
+              end
+          end
+          respond_to do |format|
+            format.html
+            format.js{flash.discard}
+            end
+
+    else
+      flash[:alert] = "You are not allowed to access this page!"
+      redirect_to leave_applications_path
+    end
+  end
+
+
 
 end

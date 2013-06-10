@@ -414,7 +414,7 @@ ul .nav
     margin: 0;
 }
 
-ul .nav li
+ul .nav li, ul.nav2 li
 {
     float:left;
     background:#000;
@@ -422,7 +422,7 @@ ul .nav li
     padding:5px 10px;
     color: #fff;
     text-decoration: none;
-    opacity: 0.8;
+    opacity: 0.9;
     -moz-opacity: 0.8;
     filter:alpha(opacity=8);
 }
@@ -433,15 +433,29 @@ ul#nav li a:hover{
 
 ul#nav li ul li{
     float:none;
+    position: relative;
 }
 
-ul#nav li ul {
+ul#nav li ul{
     display:none;
     position:absolute;
 }
 
-ul#nav li:hover ul{
+ul#nav li ul li ul.nav2 {
+    display:none;
+    position:absolute;
+    width:215px;
+    
+}
+
+
+ul#nav li:hover ul.nav,ul#nav li ul.nav li:hover ul.nav2{
     display:block;
+    
+}
+
+ul.nav2 {
+    left: 81%; top:0;
 }
 
 
@@ -572,6 +586,11 @@ span#day{
     top:250px;
 }
 
+#y{
+   
+    width:800px;
+}
+
 
 .loader{
     position: absolute;
@@ -581,6 +600,7 @@ span#day{
     height: 100%;
     background: rgba(255,255,255,.8) url('/assets/al.gif') no-repeat 50%;
 }
+
 
 .lastRow{
     background: yellow;

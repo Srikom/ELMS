@@ -1,0 +1,11 @@
+$('div#reportContent div.loader').remove();
+<% if @response == true %>
+$('#reportContent').html("<%= j render('reportContentsDept') %>");
+
+<% else %>
+<% flash.each do |key,msg|%>
+		var err_msg = "<%= msg %>";
+	<% end %>
+	$('#reportContent').html("");
+	alert(err_msg);
+<% end %>

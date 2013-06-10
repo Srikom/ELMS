@@ -1,4 +1,4 @@
-<h1>Total Leave Application</h1>
+<h1>Total Leave Application taken by Employees</h1>
 
 <p>This section displays all the report regarding the leave application.</p>
 
@@ -6,16 +6,11 @@
 <div id="reportFilter">
 	<fieldset class="fieldset-auto-width">
 		<legend><b>Report filter</b></legend>
-	<%= form_tag report_leave_applications_path, method: :get, remote: true do  %>
+	<%= form_tag reportEmp_leave_applications_path, method: :get , remote: true do %>
 		<fieldset>
 			<legend><b>Employees</b></legend>
 			<%= select_tag :emp_name, options_for_select(@employees.collect{ |u| [u.name, u.id] }),
 			{prompt: "Select Employee Name"}%>
-		</fieldset>
-		<fieldset>
-			<legend><b>Departments</b></legend>
-			<%= select_tag :dept_name, options_for_select(@departments.collect{ |u| [u.department_name, u.id] }),
-			{prompt: "Select Department"}%>
 		</fieldset>
 		<fieldset>
 			<legend><b>Date Range</b></legend>
@@ -28,13 +23,7 @@
 </div>
 </center>
 
-
 <div id="reportContent"></div>
 
-
-
 <%= javascript_include_tag "ajax-filter" %>
-
-
-
 

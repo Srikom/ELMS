@@ -9,10 +9,14 @@ ELMS::Application.routes.draw do
     get :show_status, on: :collection
     get :archive, on: :collection
     get :report, on: :collection
+    get :reportDept, on: :collection
+    get :reportEmp, on: :collection
     get :management, on: :collection
     put :updateReview, on: :member
     put :submitApp, on: :member
     get :pdfGen, on: :collection
+    get :pdfGenDept, on: :collection
+    get :pdfGenEmp, on: :collection
     post :showDetails, on: :collection
   end
 

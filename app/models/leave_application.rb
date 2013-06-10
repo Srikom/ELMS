@@ -74,14 +74,33 @@ class LeaveApplication < ActiveRecord::Base
     select('leave_applications.id,employees.name,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where("employee_id = ? AND leave_applications.created_at > ?",employee,1.month.ago).order("leave_applications.updated_at DESC")
   end
 
-  def self.reportCount(emp_id,dept_id,s,e)
-    reports = LeaveApplication.select("start_date AS MONTH,strftime('%Y',start_date) AS YEAR,employees.name AS NAME, departments.department_name AS DEPARTMENT ,SUM(CASE leave_applications.status_id WHEN 3 THEN 1 ELSE 0 END) AS REJECTED,  SUM(CASE leave_applications.status_id WHEN 2 THEN 1 ELSE 0 END) AS PENDING,  
-SUM(CASE leave_applications.status_id WHEN 5 THEN 1 ELSE 0 END) AS APPROVED").joins(:employee => :department).where("status_id = 3 OR status_id = 5 OR status_id = 2")
-    reports = filter_report(reports,emp_id,dept_id,s,e) 
-    reports.group("strftime('%m',start_date),employees.name")
+  def self.reportCountDept(dept_id,s,e)
+    reports = LeaveApplication.select("start_date AS MONTH,strftime('%Y',start_date) AS YEAR, departments.department_name AS DEPARTMENT ,SUM(CASE leave_applications.status_id WHEN 2 THEN 1 ELSE 0 END) AS PENDING,SUM(CASE leave_applications.status_id WHEN 4 THEN 1 ELSE 0 END) AS APPROVEDM,SUM(CASE leave_applications.status_id WHEN 3 THEN 1 ELSE 0 END) AS REJECTED,  
+SUM(CASE leave_applications.status_id WHEN 5 THEN 1 ELSE 0 END) AS APPROVED").joins(:employee => :department).where("status_id = 3 OR status_id = 5 OR status_id = 2 OR status_id = 4")
+    reports = filter_reportDept(reports,dept_id,s,e) 
+    reports.group("strftime('%m',start_date)")
+  end
+
+  def self.filter_reportDept(reports,dept_id,s,e)
+    reports = reports.where(:departments => {id: dept_id}) unless dept_id == ''
+    reports = reports.where("strftime('%m/%d/%Y',start_date) >= ? AND strftime('%m/%d/%Y',start_date) <= ?",
+      s,e) unless s == '' && e == ''
+    reports
+  end
+
+  def self.filter_reportEmp(reports,emp_id,s,e)
+    reports = reports.where(employee_id:emp_id) unless emp_id == ''
+    reports = reports.where("strftime('%m/%d/%Y',start_date) >= ? AND strftime('%m/%d/%Y',start_date) <= ?",
+      s,e) unless s == '' && e == ''
+    reports
   end
 
 
+  def self.reportCountEmp(emp_id,s,e)
+    reports = LeaveApplication.select("start_date AS SD,end_date AS ED,employees.name AS NAME, departments.department_name AS DEPARTMENT").joins(:employee => :department).where("status_id = 5")
+    reports = filter_reportEmp(reports,emp_id,s,e) 
+    reports.group("start_date,employees.name")
+  end
 
   def self.filter_report(reports,emp_id,dept_id,s,e)
     reports = reports.where(employee_id:emp_id) unless emp_id == ''
@@ -90,6 +109,17 @@ SUM(CASE leave_applications.status_id WHEN 5 THEN 1 ELSE 0 END) AS APPROVED").jo
       s,e) unless s == '' && e == ''
     reports
   end
+
+
+  def self.reportCount(emp_id,dept_id,s,e)
+    reports = LeaveApplication.select("start_date AS MONTH,strftime('%Y',start_date) AS YEAR,employees.name AS NAME, departments.department_name AS DEPARTMENT ,SUM(CASE leave_applications.status_id WHEN 2 THEN 1 ELSE 0 END) AS PENDING,SUM(CASE leave_applications.status_id WHEN 4 THEN 1 ELSE 0 END) AS APPROVEDM,SUM(CASE leave_applications.status_id WHEN 3 THEN 1 ELSE 0 END) AS REJECTED,  
+SUM(CASE leave_applications.status_id WHEN 5 THEN 1 ELSE 0 END) AS APPROVED").joins(:employee => :department).where("status_id = 3 OR status_id = 5 OR status_id = 2 OR status_id = 4")
+    reports = filter_report(reports,emp_id,dept_id,s,e) 
+    reports.group("strftime('%m',start_date),employees.name")
+  end
+
+  
+  
 
   def self.filterArchive(status,employee)
     select('leave_applications.id,employees.name,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where("status_id = ? AND employee_id = ? " ,status,employee)

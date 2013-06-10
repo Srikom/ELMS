@@ -1,22 +1,20 @@
-class ReportPdf < Prawn::Document
+class Remp < Prawn::Document
 
-	def initialize(reports,a,r)
+	def initialize(reports,sum_days)
 		super(top_margin:70)
 		@reports = reports
-		@sum = a.to_i + r.to_i
-		@approve = a
-		@reject = r
+		@sum_days = sum_days
 		report_name
 		table_data
 		footer_sig
 	end
 
 	def report_name
-		text "Total Leave Application", size:30 , style: :bold,:align => :center
+		text "Total Amount of Leave Application Taken By Employee", size:30 , style: :bold,:align => :center
 		move_down 5
 		text "as on #{Date.today.strftime('%d %B %Y')}",style: :bold,:align => :center
 		move_down 20
-		text "Total number of application's : #{@sum}"
+		text "Total number of application's : #{@sum_days}"
 		move_down 10
 	end
 
@@ -33,11 +31,11 @@ class ReportPdf < Prawn::Document
 	end
 
 	def datas
-		app = [["Year","Month","Employee Name","Department","Approved","Rejected"]] 
+		app = [["Start Date","End Date","Employee Name","Department","Number of Days"]] 
 		app += @reports.map do |r|
-		[r.YEAR,Date.parse(r.MONTH).strftime("%B"),r.NAME,r.DEPARTMENT,r.APPROVED,r.REJECTED]
+		[(r.SD).to_date,(r.ED).to_date,r.NAME,r.DEPARTMENT,LeaveApplication.exclude_weekends((r.SD).to_date,(r.ED).to_date)]
 		end
-		app += [[{:content => "Total",:colspan => 4},"#{@approve}","#{@reject}"]]
+		app += [[{:content => "Total Days",:colspan => 4},"#{@sum_days}"]]
 	end
 
 	def footer_sig

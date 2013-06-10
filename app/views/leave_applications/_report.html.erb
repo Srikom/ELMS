@@ -1,0 +1,52 @@
+<% unless @reports.nil? || @reports.empty?%>
+		<center>
+		<div id="reportFilter">
+			<fieldset class="fieldset-auto-width">
+				<legend><b>Search Result</b></legend>
+					<table size='100%' id='managerTable'>
+					<tr>
+						<th>Year</th>
+						<th>Month</th>
+						<th>Name</th>
+						<th>Department</th>
+						<th>Pending</th>
+						<th>Approved By Manager</th>
+						<th>Approved</th>
+						<th>Rejected</th>
+					</tr>
+			<% @reports.each do |r|%>
+					<% @approve << r.APPROVED %>
+					<% @reject << r.REJECTED %>
+					<% @approveM << r.APPROVEDM %>
+					<% @pending << r.PENDING %>
+					<% month = Date.parse(r.MONTH) %>
+					<tr>
+						<td><center><%= r.YEAR %></center></td>
+						<td><center><%= month.strftime('%B') %></center></td>
+						<td><center><%= r.NAME %></center></td>
+						<td><center><%= r.DEPARTMENT %></center></td>
+						<td><center><%= r.PENDING %></center></td>
+						<td><center><%= r.APPROVEDM %></center></td>
+						<td><center><%= r.APPROVED %></center></td>
+						<td><center><%= r.REJECTED %></center></td>
+					</tr>
+			<% end %>
+				<tr class="lastRow">
+					<td colspan="4"><center><b>Total Amount Of Each Leave Application Status</b></center></td>
+					<td><center><b><%= @pending.sum %></b></center></td>
+					<td><center><b><%= @approveM.sum %></b></center></td>
+					<td><center><b><%= @approve.sum %></b></center></td>
+					<td><center><b><%= @reject.sum %></b></center></td>
+				</tr>
+				<% sumAll = @pending.sum + @approveM.sum + @approve.sum + @reject.sum %>
+				<tr class="lastRow">
+					<td colspan="4"><center><b>Overall Amount Of Leave Application By Department</b></center></td>
+					<td colspan="4"><center><b><%= sumAll %></b></center></td>
+				</tr>
+				</table>
+				<br/>
+				<%= link_to "Download PDF", pdfGenDept_leave_applications_path(format:"pdf")+"?nID="+@nID+"&dID="+@dID+"&s="+@s+"&e="+@e+"&p="+@pending.sum.to_s+"&am="+@approveM.sum.to_s+"&a="+@approve.sum.to_s+"&r="+@reject.sum.to_s %>
+			</fieldset>
+		</div>
+		
+<% end %>

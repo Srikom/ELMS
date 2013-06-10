@@ -1,0 +1,36 @@
+<% unless @reports.nil? || @reports.empty?%>
+		<center>
+		<div id="reportFilter">
+			<fieldset class="fieldset-auto-width">
+				<legend><b>Search Result</b></legend>
+					<table size='100%' id='managerTable'>
+					<tr>
+						<th>Start Date</th>
+						<th>End Date</th>
+						<th>Employee Name</th>
+						<th>Department</th>
+						<th>Number of Days</th>
+					</tr>
+			<% @reports.each do |r|%>
+					<% sd = (r.SD).to_date  %>
+					<% ed = (r.ED).to_date  %>
+					<% @td = LeaveApplication.exclude_weekends(sd,ed) %>
+					<% @sum_days << @td %>
+					<tr>
+						<td><center><%= sd %></center></td>
+						<td><center><%= ed %></center></td>
+						<td><center><%= r.NAME %></center></td>
+						<td><center><%= r.DEPARTMENT %></center></td>
+						<td><center><%=  @td %></center></td>
+					</tr>
+			<% end %>
+				<tr class="lastRow">
+					<td colspan="4"><center><b>Total Days</b></center></td>
+					<td><center><b><%= @sum_days.sum %></b></center></td>
+				</tr>
+				</table>
+				<br/>
+				<%= link_to "Download PDF", pdfGenEmp_leave_applications_path(format:"pdf")+"?nID="+@nID+"&s="+@s+"&e="+@e+"&sum_days="+@sum_days.sum.to_s %>
+			</fieldset>
+		</div>
+<% end %>
