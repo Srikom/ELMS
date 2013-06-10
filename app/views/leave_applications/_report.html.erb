@@ -45,7 +45,7 @@
 				</tr>
 				</table>
 				<br/>
-				<%= link_to "Download PDF", pdfGenDept_leave_applications_path(format:"pdf")+"?nID="+@nID+"&dID="+@dID+"&s="+@s+"&e="+@e+"&p="+@pending.sum.to_s+"&am="+@approveM.sum.to_s+"&a="+@approve.sum.to_s+"&r="+@reject.sum.to_s %>
+				<%= link_to "Download PDF", pdfGen_leave_applications_path(format:"pdf")+"?nID="+@nID+"&dID="+@dID+"&s="+@s+"&e="+@e+"&p="+@pending.sum.to_s+"&am="+@approveM.sum.to_s+"&a="+@approve.sum.to_s+"&r="+@reject.sum.to_s %>
 			</fieldset>
 		</div>
 		

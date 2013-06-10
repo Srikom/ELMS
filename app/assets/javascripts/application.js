@@ -29,7 +29,7 @@ $(function(){
 
 	$("ul#nav ul li").hover(function(){
 
-		$(this).css("background-color","#fff");
+		$(this).css("background-color","#ccc");
 
 	}).mouseleave(function(){
 		$(this).css({

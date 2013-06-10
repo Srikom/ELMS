@@ -27,7 +27,8 @@ class Rdept < Prawn::Document
 		move_down 10
 		table datas do
 			row(0).font_style = :bold
-			columns(0..4).align = :right
+			columns(0..7).align = :center
+			columns(3..6).width = 78
 			self.row_colors = ["DDDDDD","FFFFFF"]
 			self.header = true
 		end

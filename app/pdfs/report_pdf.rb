@@ -1,11 +1,13 @@
 class ReportPdf < Prawn::Document
 
-	def initialize(reports,a,r)
+	def initialize(reports,a,r,p,am)
 		super(top_margin:70)
 		@reports = reports
-		@sum = a.to_i + r.to_i
+		@sum = a.to_i + r.to_i + p.to_i + am.to_i
 		@approve = a
 		@reject = r
+		@pending = p
+		@approveM = am
 		report_name
 		table_data
 		footer_sig
@@ -25,7 +27,8 @@ class ReportPdf < Prawn::Document
 		move_down 10
 		table datas do
 			row(0).font_style = :bold
-			columns(0..4).align = :right
+			columns(0..7).align = :center
+			columns(3..7).width = 72
 			self.row_colors = ["DDDDDD","FFFFFF"]
 			self.header = true
 		end
@@ -33,11 +36,12 @@ class ReportPdf < Prawn::Document
 	end
 
 	def datas
-		app = [["Year","Month","Employee Name","Department","Approved","Rejected"]] 
+		app = [["Year","Month","Name","Department","Pending","Approved By Manager","Approved","Rejected"]] 
 		app += @reports.map do |r|
-		[r.YEAR,Date.parse(r.MONTH).strftime("%B"),r.NAME,r.DEPARTMENT,r.APPROVED,r.REJECTED]
+		[r.YEAR,Date.parse(r.MONTH).strftime("%B"),r.NAME,r.DEPARTMENT,r.PENDING,r.APPROVEDM,r.APPROVED,r.REJECTED]
 		end
-		app += [[{:content => "Total",:colspan => 4},"#{@approve}","#{@reject}"]]
+		app += [[{:content => "Total Amount Of Each Leave Application Status",:colspan => 4},"#{@pending}","#{@approveM}","#{@approve}","#{@reject}"]]
+		app += [[{:content => "Overall Amount Of Leave Application ",:colspan => 4},{:content => "#{@sum}",:colspan => 4}]]
 	end
 
 	def footer_sig

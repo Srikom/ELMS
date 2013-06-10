@@ -78,7 +78,7 @@ class LeaveApplication < ActiveRecord::Base
     reports = LeaveApplication.select("start_date AS MONTH,strftime('%Y',start_date) AS YEAR, departments.department_name AS DEPARTMENT ,SUM(CASE leave_applications.status_id WHEN 2 THEN 1 ELSE 0 END) AS PENDING,SUM(CASE leave_applications.status_id WHEN 4 THEN 1 ELSE 0 END) AS APPROVEDM,SUM(CASE leave_applications.status_id WHEN 3 THEN 1 ELSE 0 END) AS REJECTED,  
 SUM(CASE leave_applications.status_id WHEN 5 THEN 1 ELSE 0 END) AS APPROVED").joins(:employee => :department).where("status_id = 3 OR status_id = 5 OR status_id = 2 OR status_id = 4")
     reports = filter_reportDept(reports,dept_id,s,e) 
-    reports.group("strftime('%m',start_date)")
+    reports.group("strftime('%m',start_date),departments.department_name")
   end
 
   def self.filter_reportDept(reports,dept_id,s,e)
@@ -118,8 +118,6 @@ SUM(CASE leave_applications.status_id WHEN 5 THEN 1 ELSE 0 END) AS APPROVED").jo
     reports.group("strftime('%m',start_date),employees.name")
   end
 
-  
-  
 
   def self.filterArchive(status,employee)
     select('leave_applications.id,employees.name,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where("status_id = ? AND employee_id = ? " ,status,employee)
