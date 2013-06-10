@@ -118,8 +118,6 @@ SUM(CASE leave_applications.status_id WHEN 5 THEN 1 ELSE 0 END) AS APPROVED").jo
     reports.group("strftime('%m',start_date),employees.name")
   end
 
-  
-  
 
   def self.filterArchive(status,employee)
     select('leave_applications.id,employees.name,department_name,leave_applications.created_at,status_name').joins({:employee => :department}, :status).where("status_id = ? AND employee_id = ? " ,status,employee)

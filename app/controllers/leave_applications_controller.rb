@@ -289,8 +289,8 @@ class LeaveApplicationsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        pdf = ReportPdf.new(@r,params[:a],params[:r])
-        send_data pdf.render, type: "application/pdf", disposition: "inline"
+        pdf = ReportPdf.new(@r,params[:a],params[:r],params[:p],params[:am])
+        send_data pdf.render, filename:"Total_Leave_application.pdf",type: "application/pdf", disposition: "inline"
       end
     end
   end
@@ -383,7 +383,7 @@ class LeaveApplicationsController < ApplicationController
       format.html
       format.pdf do
         pdf = Rdept.new(@r,params[:p],params[:am],params[:a],params[:r])
-        send_data pdf.render, type: "application/pdf", disposition: "inline"
+        send_data pdf.render, filename:"Total_Leave_application_Department.pdf", type: "application/pdf", disposition: "inline"
       end
     end
   end
@@ -430,7 +430,7 @@ class LeaveApplicationsController < ApplicationController
       format.html
       format.pdf do
         pdf = Remp.new(@r,params[:sum_days])
-        send_data pdf.render, type: "application/pdf", disposition: "inline"
+        send_data pdf.render, filename:"Total_Leave_application_Employee.pdf", type: "application/pdf", disposition: "inline"
       end
     end
   end
