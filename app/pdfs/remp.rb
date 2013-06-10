@@ -23,8 +23,7 @@ class Remp < Prawn::Document
 		move_down 10
 		table datas do
 			row(0).font_style = :bold
-			columns(0..7).align = :center
-			columns(0..4).width = 100
+			columns(0..4).align = :right
 			self.row_colors = ["DDDDDD","FFFFFF"]
 			self.header = true
 		end
