@@ -1,3 +1,36 @@
+<head>
+<script  type="text/javascript" src ="jquery.scrollTo-min.js"></script>
+<script >
+$(document).ready(function(){
+
+    // hide #back-top first
+    $("#back-top").hide();
+    
+    // fade in #back-top
+    $(function () {
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('#back-top').fadeIn();
+            } else {
+                $('#back-top').fadeOut();
+            }
+        });
+
+        // scroll body to 0px on click
+        $('#back-top a').click(function () {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+
+});
+</script>
+</head>
+<p id ="back-top">
+<a href ="#top"><span></span>Scroll to Top</a>
+<p>
 <div id='left'>
 <h4>Welcome, <%= current_employee.name %>.</h4>
 <p>List of on-leave employee for the current month</p>
