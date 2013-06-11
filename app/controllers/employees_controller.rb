@@ -1,12 +1,12 @@
 class EmployeesController < ApplicationController
 
- 
+ helper_method :sort_column,:sort_direction
 
   def index
 
     if current_employee.role_id == 4 || current_employee.role_id == 5
       @search = Employee.search(params[:q])
-      @employees = @search.result(:distinct => true).paginate(:page => params[:page], :per_page => 5)
+      @employees = @search.result(:distinct => true).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 5)
     else
       flash[:alert] = "You are not allowed to access this page!"
       redirect_to leave_applications_path
@@ -68,5 +68,11 @@ class EmployeesController < ApplicationController
       render 'edit'
     end
   end
-
+def sort_column
+    Employee.column_names.include?(params[:sort]) ? params[:sort] : "name"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
 end
