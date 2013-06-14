@@ -1,9 +1,49 @@
+<div id ="clockDisplay" class="clockStyle">
 
+</div>
 <div id='welcome'>
 <p> 
 	This system compromises of 4 Users, there are the Administration, Staff, Manager and Management. The aim of this system is to management the staff leave application. The staff is able to create a leave application and submit it to the system for the approval of his/her Manager based on the applicants department. After the approval of the Manager, the application will be received by the Management to finalize the application. The staff can check the status of their application from time to time in the system.
 </p>
 </div>
+<body>
+
+</body>
+</html>
+<script type="text/javascript" language="javascript">
+function renderTime(){
+var currentTime= new Date();
+var diem ="AM";
+var h = currentTime.getHours();
+var m = currentTime.getMinutes();
+var s = currentTime.getSeconds();
+if(h==0){
+h=12;
+
+
+}else if (h>12){
+h=h-12;
+diem = "PM";
+
+}
+
+if(h<10){
+h="0"+ h;
+}
+if(m<10){
+m="0"+ m;
+}
+if(s<10){
+s="0"+ s;
+}
+var myClock = document.getElementById('clockDisplay');
+myClock.textContent = h + ":"+m+ ":"+s+""+diem;
+   setTimeout('renderTime()',1000);
+
+}
+renderTime();
+</script>
+</body>
 <div id='login'>
 	<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 	  <span></span>
